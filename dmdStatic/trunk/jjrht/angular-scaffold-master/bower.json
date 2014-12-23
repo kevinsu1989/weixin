@@ -1,0 +1,25 @@
+{
+  "name": "public",
+  "version": "0.1.0",
+  "dependencies": {
+    "json2": "*",
+    "respond": "https://github.com/scottjehl/Respond.git",
+    "html5shiv": "~3.7.2",
+    "jquery": "~1.11.1",
+    "fontawesome": "~4.1.0",
+    "angular": "~1.2.20",
+    "angular-ui-router": "~0.2.10",
+    "angular-bootstrap": "~0.11.0",
+    "angular-growl": "~0.4.0",
+    "angular-resource": "~1.2.20",
+    "iscroll": "https://github.com/cubiq/iscroll.git",
+    "angular-ui-tinymce": "~0.0.5",
+    "angular-locale": "https://github.com/whosesmile/angular-locale.git",
+    "bootstrap": "https://github.com/whosesmile/bootstrap.git#smile",
+    "tinymce-i18n": "https://github.com/whosesmile/tinymce-i18n.git",
+    "ng-file-upload": "~1.6.5",
+    "angular-bootstrap-datetimepicker": "latest",
+    "animate-css": "~3.2.0"
+  },
+  "devDependencies": {}
+}
