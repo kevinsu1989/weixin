@@ -1,0 +1,30 @@
+<div class="request">
+  <form name="acceptanceForm" ng-submit="submitVerify()">
+    <dl class="terms">
+      <dt class="small text-light">您的装修公司</dt>
+      <dd class="simulate-control">某某某装修公司</dd>
+    </dl>
+    <dl class="terms">
+      <dt class="small text-light">您的个人信息</dt>
+      <dd class="simulate-control clearfix">
+        <span class="pull-left">张三先生</span>
+        <span class="pull-right text-lighter">186****5297</span>
+      </dd>
+    </dl>
+    <dl class="terms">
+      <dt class="small text-light">您的装修房间</dt>
+      <dd class="simulate-control">
+        炫特嘉园3C1905
+      </dd>
+    </dl>
+    <dl class="terms">
+      <dt class="small text-light">您希望的验收日期</dt>
+      <dd>
+        <input class="form-control" type="date" ng-model="date"  placeholder="选择验收日期" required />
+      </dd>
+    </dl>
+    <div class="full-width" style="position:absolute;bottom:10px;padding: 0 15px;">
+      <button type="submit" class="btn btn-primary full-width" ng-disabled="acceptanceForm.$invalid">申请验收</button>
+    </div>
+  </form>
+</div>

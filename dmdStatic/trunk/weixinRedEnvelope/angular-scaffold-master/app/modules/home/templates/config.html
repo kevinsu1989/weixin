@@ -1,0 +1,17 @@
+<div id="config">
+  <div id="content">
+    <ul class="list list-unstyled text-right">
+      <li class="clearfix" ng-repeat="item in installed" ng-click="uninstall(item)">
+        <span class="pull-left">{{ item.name }}</span>
+        <span class="fa fa-minus-circle fa-lg text-danger"></span>
+      </li>
+    </ul>
+    <div class="adds small" ng-if="!(uninstalled|empty)">您还可以添加以下应用：</div>
+    <ul class="list list-unstyled text-right">
+      <li class="clearfix" ng-repeat="item in uninstalled" ng-click="install(item)">
+        <span class="pull-left">{{ item.name }}</span>
+        <span class="fa fa-plus-circle fa-lg text-success"></span>        
+      </li>
+    </ul>
+  </div>
+</div>
