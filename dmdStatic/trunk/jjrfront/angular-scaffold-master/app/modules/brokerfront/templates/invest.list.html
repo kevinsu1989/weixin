@@ -1,0 +1,82 @@
+<div class="webName autoSize textCenter grayButton">
+    <div class="fanhui"  ui-sref="brokerfront.index"><span></span></div>
+    <h5>投资列表</h5>
+</div>
+<div class="textCenter user_list">
+  <table width="90%" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+        <tr style="padding-right: 5%; padding-left: 5%;">
+            <th align="center" scope="col" width="15%" style="background-color: white;border-width: 0px;">
+                <label>日期</label>
+            </th>
+            <th align="left" scope="col" style="background-color: white;border-width: 0px;">
+                <input style="width:80%" type="date" ng-model="InvestTimeBegin" class="ng-pristine ng-valid">
+            </th>
+           <th align="center" scope="col" width="10%" style="background-color: white;border-width: 0px;">
+                <label>--</label>
+            </th>
+            <th align="left" scope="col" style="background-color: white;border-width: 0px;">
+                <input style="width:80%" type="date" ng-model="InvestTimeEnd" class="ng-pristine ng-valid">
+            </th>
+        </tr>
+        <tr style="padding-right: 5%; padding-left: 5%;">
+            <th align="center" scope="col" width="15%" style="background-color: white;border-width: 0px;">
+                <label style="width:18%">手机</label>
+            </th>
+            <th align="left" scope="col" style="background-color: white;border-width: 0px;">
+                <input type="tel" style="width:80%;height: 20px;line-height: 20px;" name="mobile" id="mobile" ng-model="mobile" placeholder="请输入客户手机号" class="ng-pristine ng-valid">
+            </th>
+           <th align="center" scope="col" width="10%" style="background-color: white;border-width: 0px;">
+            </th>
+            <th align="left" scope="col" style="background-color: white;border-width: 0px;">
+                <!-- <input type="button" style="width:80%;height: 20px;" value="筛选 " ng-click="search()"> -->
+                <button class="redButton" style="width:80%;height: 20px;line-height: 20px;" ng-click="investList()">筛选</button>
+            </th>
+        </tr>
+    </tbody>
+</table>
+                   
+ <table width="100%" border="0" cellpadding="0" cellspacing="0">
+     <tbody>
+         <tr>
+             <th align="center" scope="col" width="20%"><a href="" ng-click="predicate = 'name'; reverse=!reverse">姓名</a>
+
+             </th>
+             <th align="center" scope="col" width="26%"><a href="" ng-click="predicate = 'mobile'; reverse=!reverse">手机号</a>
+
+             </th>
+             <th align="center" scope="col" width="14%"><a href="" ng-click="predicate = 'status'; reverse=!reverse">投资总金额</a>
+
+             </th>
+             <th align="center" scope="col" width="24%"><a href="" ng-click="predicate = 'invest_at'; reverse=!reverse">投资总笔数</a>
+
+             </th>
+         </tr>
+         <tr ng-repeat="userInvest in list" class="ng-scope">
+             <td><a ng-click="choose(userInvest)"><span class="ng-binding">{{userInvest.realName}}</span></a>
+
+             </td>
+             <td class="ng-binding">{{userInvest.cellPhone}}</td>
+             <td class="ng-binding">{{userInvest.investSum}}</td>
+             <td class="ng-binding">{{userInvest.investCount}}</td>
+         </tr>
+     </tbody>
+ </table>
+  <div>
+    <a ng-if="total<=page" style="padding-bottom: 35px;" href="javascript:" class="more ng-binding" >木有更多投资啦</a>
+    <a ng-if="total>page" href="javascript:" style="padding-bottom: 35px;" class="more ng-binding" ng-click="displayMore()">点击加载更多</a>
+	</div>
+	<div style="float: right; width: 100%; height: auto">
+		<div class="textCenter" style="float: right; border-top: 3px; width: 100%; position: fixed; left: auto; right: auto; bottom: 10px; _position: absolute; _top: expression(document.documentElement.clientHeight +   document.documentElement.scrollTop -   this.offsetHeight);">
+			<span style="float: right; margin-right: 20px; display: block; font-weight: bold;" class="ng-binding">{{baseInfo.investorCountS}}人/{{baseInfo.investCountS}}笔/{{baseInfo.investSumS}}元</span>
+		</div>
+	</div>
+</div>
+
+</div>
+
+
+
+<!-- 
+昨日：投资列表、预约列表需要修改                  
+今日：首页累计邀请人数    和预约列表的修改 -->

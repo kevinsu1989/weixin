@@ -1,0 +1,37 @@
+{
+  "code": 200,
+  "data": {
+    "installed": [{
+      "name": "美食",
+      "sref": "register.mobile",
+      "notify": 3
+    }, {
+      "name": "生活",
+      "sref": "decorate.history",
+      "notify": 7
+    }, {
+      "name": "娱乐",
+      "sref": "decorate.history"
+    }, {
+      "name": "注册流程",
+      "sref": "register.mobile"
+    }, {
+      "name": "装修手续",
+      "sref": "decorate.houses"
+    }, {
+      "name": "装修履历",
+      "sref": "decorate.history"
+    }],
+    "uninstalled": [{
+      "name": "团购",
+      "sref": "register.mobile",
+      "notify": 3
+    }, {
+      "name": "丽人",
+      "sref": "decorate.houses"
+    }, {
+      "name": "汽车",
+      "sref": "decorate.history"
+    }]
+  }
+}

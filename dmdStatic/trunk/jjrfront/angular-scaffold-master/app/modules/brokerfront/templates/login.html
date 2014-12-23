@@ -1,0 +1,16 @@
+<div class="webName autoSize textCenter grayButton">
+	<div class="fanhui"><span></span></div>
+	<h5>绑定账号</h5>
+    <div class="set" style="display:none;"><span></span></div>
+</div>
+<div class="textCenter logo_1"></div>
+<ul class="nav autoSize">
+    <li><i></i><span>用户名：</span>
+    	<input type="text" ng-model="loginName" class="input8 ng-valid-maxlength ng-dirty ng-valid ng-valid-required" name="name" id="name" placeholder="请输入您的登录密码" required ng-maxlength="12"></li>
+	<li><i class="pawodbg"></i><span>密&nbsp;&nbsp;&nbsp;码：</span>
+		<input type="password"  ng-model="passWord" class="input8 ng-vaild-maxlength ng-valid ng-valid-required" name="pwd" id="pwd" ng-model="user.pwd" placeholder="请输入密码，至少6位数"required ng-maxlength="12"></li>
+</ul>
+<div class="textCenter">
+	<button class="redButton autoSize editBt" ng-click="login()">确认绑定</button>
+</div>
+
