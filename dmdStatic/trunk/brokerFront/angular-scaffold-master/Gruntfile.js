@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 
     config: {
       folder: 'temp',
-      port: 8888,
+      port: 8890,
       livereload: 35740
     },
 
