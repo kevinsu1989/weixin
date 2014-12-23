@@ -1,0 +1,204 @@
+<div id="myachivement" class="padb8 img-rounded mart3 hb_pic radiu_bgcor">
+  <h2 class="text-center">我的成就</h2>
+  <div class="mart2">
+    <img src="http://dev.static.duomeidai.com/redenvelope/img/head_1.png?version=1" width="165" height="165" alt="">
+  </div>
+  <div class="row marginC">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-default bornone mart2">
+      <ul class="nav nav-justified">
+        <li class="{{tabClass}}" ng-click="tabChange(0);"><a href="javascript:">成长成就</a></li>
+        <li class="{{tabClass2}}" ng-click="tabChange(1);"><a>红包成就</a></li>
+      </ul>
+      <div class="panel-tab" ng-if="tab==0">
+        <div class="progress_all">
+          <div class="pull-left"><h4 class="font16">已达成</h4></div>
+          <div class="pull-right">
+            <div class="progress">
+              <div ng-if="times==2&&is_auth=='true'" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{3/3*100}}%;" >
+                3/3
+              </div>
+              <div ng-if="!(times==2&&is_auth=='true')" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{times/3*100}}%;" >
+                {{times}}/3
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix visible-xs-block"></div>
+        <ul class="list-cjul">
+          <li>
+            <div class="nub"><span class="badge">1</span></div>
+            <div class="img-text"><img src="http://dev.static.duomeidai.com/redenvelope/img/kmjx_bg_1.png?version=1" alt="" /></div>
+            <div class="gz_text">
+            <p class="color6">规则：领取种子红包</p>
+            <p class="color6">奖励：1个会长大的红包</p>
+            </div>
+            <div class="state">
+              <div class="complete" ng-if="times==1||times==2||times==3">已达成</div>
+              <div class="go_complete" ng-if="times==0" ui-sref="redenvelope.friend">去达成</div>
+            </div>
+          </li>
+
+          <li>
+            <div class="nub"><span class="badge">2</span></div>
+            <div class="img-text"><img src="http://dev.static.duomeidai.com/redenvelope/img/kmjx_bg_2.png?version=1" alt="" /></div>
+            <div class="gz_text">
+            <p class="color6">规则：绑定账号</p>
+            <p class="color6">奖励：2倍戳红包收益</p>
+            </div>
+            <div class="state">
+              <div class="complete" ng-if="times==2||times==3">已达成</div>
+              <div class="go_complete" ng-if="times==1" ui-sref="redenvelope.regist">去达成</div>
+              <div class="no-yiling" ng-if="times==0">去达成</div>
+            </div>
+          </li>
+
+          <li>
+            <div class="nub"><span class="badge">3</span></div>
+            <div class="img-text"><img src="http://dev.static.duomeidai.com/redenvelope/img/kmjx_bg_3.png?version=1" alt="" /></div>
+            <div class="gz_text">
+            <p class="color6">规则：完成实名认证</p>
+            <p class="color6">奖励：3倍戳红包收益  </p>
+            </div>
+            <div class="state">
+              <div class="complete" ng-if="times==3">已达成</div>
+              <div class="go_complete" ng-if="times==2&&is_auth=='false'" ui-sref="redenvelope.realname">去达成</div>
+              <div class="no-yiling" ng-if="times==1">去达成</div>
+              <div class="complete" ng-if="times==2&&is_auth=='true'">已达成</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="hbcj-tab" ng-if="tab==1">
+        <div class="progress_all">
+          <h4 class="font16">
+            红包：<span class="corred">{{amount|moneyfilter}}</span>元
+            已领取：<span class="corred">{{recieveAmount|moneyfilter}}</span>元
+          </h4>
+        </div>
+
+        <div class="clearfix visible-xs-block"></div>
+
+        <ul class="list-cjul">
+          <li ng-repeat="item in list">
+            <!-- 已领取 -->
+            <div ng-if="item.receive_status==3">
+              <div class="nub"><span class="badge">{{$index+1}}</span></div>
+              <div class="progress_2">
+                <div class="pull-left ic_total">总</div>
+                <h4 class="font16 pull-left"><span class="corred">{{item.endStartAmount}}</span>元</h4>
+                  <p class="pull-right">可领<span class="corred">{{(item.endStartAmount-item.startAmount)|moneyfilter}}</span>元</p>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                      100%
+                    </div>
+                  </div>
+              </div>
+              <div class="state"><div class="complete">已领</div></div>
+            </div>
+            <!-- 未领取且可领取 -->
+            <div ng-if="item.receive_status==2">
+              <div class="nub"><span class="badge">{{$index+1}}</span></div>
+              <div class="progress_2">
+                <div class="pull-left ic_total">总</div>
+                <h4 class="font16 pull-left"><span class="corred">{{item.endStartAmount}}</span>元</h4>
+                <p class="pull-right">可领<span class="corred">{{(item.endStartAmount-item.startAmount)|moneyfilter}}</span>元</p>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                    100%
+                  </div>
+                </div>
+              </div>
+              <div class="state">
+                <div class="yiling" ng-click="getCash($index,item.level)">领取</div>
+              </div>
+            </div>
+
+            <!-- 未领取且不可领取 -->
+            <div ng-if="item.receive_status==0" ng-disabled="true">
+              <div class="nub"><span class="badge">{{$index+1}}</span></div>
+              <div class="progress_2">
+                <div class="pull-left ic_total">总</div>
+                <h4 class="font16 pull-left"><span class="corred">{{item.endStartAmount|moneyfilter}}</span>元</h4>
+                  <p class="pull-right">可领<span class="corred">{{(item.endStartAmount-item.startAmount)|moneyfilter}}</span>元</p>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                      100%
+                    </div>
+                  </div>
+              </div>
+              <div class="state"><div class="no-yiling">领取</div></div>
+            </div>
+
+
+            <!-- 未达到 -->
+            <div ng-if="item.receive_status==1" ng-disabled="true">
+              <div class="nub"><span class="badge">{{$index+1}}</span></div>
+              <div class="progress_2">
+                <div class="pull-left ic_total">总</div>
+                <h4 class="font16 pull-left"><span class="corred">{{item.endStartAmount|moneyfilter}}</span>元</h4>
+                <p class="pull-right">可领<span class="corred">{{(item.endStartAmount-item.startAmount)|moneyfilter}}</span>元</p>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{(amount-item.startAmount)/(item.endStartAmount-item.startAmount)*100}}%;">
+                  {{(amount-item.startAmount)/(item.endStartAmount-item.startAmount)*100|moneyfilter}}%
+                  </div>
+                </div>
+              </div>
+              <div class="state">
+                <p class="cha-money">还差{{item.endStartAmount-amount|moneyfilter}}元</p>
+              </div>
+            </div>
+
+            <!-- 未达到且未知 -->
+            <div ng-if="item.receive_status==4" ng-disabled="true">
+              <div class="nub">
+              <span class="badge">{{$index+1}}</span>
+              </div>
+              <div class="progress_2">
+                <h4 class="font16 text-left unknown"><span class="corred">？</span>元</h4>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <h4 class="tipetex pull-left text-left" ng-if="inviteCode" ng-click="showTips('#inviteWindow','#strategyWindow')" style="width:60%;"><span class="color6">邀请码：</span>{{inviteCode}}<a>?</a></h4>
+        <h4 class="tipetex pull-right text-right" ng-click="showTips('#strategyWindow','#inviteWindow')" style="width:40%;"><span class="color6">领红包攻略</span><a>?</a></h4>
+      </div>
+</div>
+<div class="pub_window tips_t" id="moneyWindow" style="display:none;top:25%;">
+  <h4 class="color6" style="width:280px;">
+    1、每位成功注册的用户都可以获得一个邀请码。
+  </h4>
+  <h4 class="color6" style="width:280px;">
+    2、将邀请代码告诉好友，好友注册时填写你的邀请码，你即可成好友推荐人。
+  </h4>
+  <h4 class="color6" style="width:280px;">
+    3、推荐人有机会获得推荐奖励，请关注多美贷后续活动。
+  </h4>
+</div>
+<div class="pub_window tips_t" id="inviteWindow" ng-click="hideTips('#inviteWindow')" style="display:none;top:25%;">
+  <h4 class="color6" style="width:280px;text-align:left;">
+    1、每位成功注册的用户都可以获得一个邀请码。
+  </h4>
+  <h4 class="color6" style="width:280px;text-align:left;">
+    2、将邀请代码告诉好友，好友注册时填写你的邀请码，你即可成好友推荐人。
+  </h4>
+  <h4 class="color6" style="width:280px;text-align:left;">
+    3、推荐人有机会获得推荐奖励，请关注多美贷后续活动。
+  </h4>
+</div>
+<div class="pub_window tips_t" id="strategyWindow" ng-click="hideTips('#strategyWindow')" style="display:none;top:25%;">
+  <h4 class="color6" style="width:280px;text-align:left;">
+    1、绑定账号的用户可以获得2倍红包收益（无论是戳好友，还是被好友戳，红包都是2倍哦）。
+  </h4>
+  <h4 class="color6" style="width:280px;text-align:left;">
+    2、完成实名认证的用户可以获得3倍红包收益（无论是戳好友，还是被好友戳，红包都是3倍哦）。
+  </h4>
+  <h4 class="color6" style="width:280px;text-align:left;">
+    3、戳红包获得的返利将在90天后收回，赶紧使用返利投资赚钱吧。
+  </h4>
+</div>
+<!--提示弹窗样式-->
+<div class="pub_window tips_t" id="tipsWindow" style="display:none;top:25%;">
+</div>
