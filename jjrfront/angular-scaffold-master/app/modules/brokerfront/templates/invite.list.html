@@ -1,0 +1,36 @@
+<div class="webName autoSize textCenter grayButton">
+  	<div class="fanhui" ui-sref="brokerfront.index"><span></span></div>
+  	<h5>预约列表</h5>
+    <div class="add_user" ui-sref="brokerfront.invite"><span></span></div>
+  </div>
+  
+  <div class="textCenter user_list">
+    <ul>
+      <li ng-class="{this:type==''}" ng-click="invitelist('')" >全部</li>
+      <li ng-class="{this:type==1}" ng-click="invitelist(1)" >预约</li>
+      <li ng-class="{this:type==2}" ng-click="invitelist(2)" >成功</li>
+      <li ng-class="{this:type==3}" ng-click="invitelist(3)" >失败</li>
+    </ul>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <th align="center" scope="col" width="20%">
+          姓名</th>
+        <th align="center" scope="col" width="26%">
+          手机号</th>
+        <th align="center" scope="col" width="14%">
+          状态</th>
+        <th align="center" scope="col" width="24%">
+          操作时间</th>
+        <th align="center" scope="col" width="16%" class="last">
+          剩余时间</th>
+      </tr>
+      <tr ng-repeat="userReserve in list" class="ng-scope">
+        <td>{{userReserve.name}}</td>
+        <td>{{userReserve.mobile}}</td>
+        <td>{{userReserve.status|invitefilter}}</td>
+        <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>
+        <td>{{userReserve.deadline}}</td>
+      </tr>
+  </table>
+    <a class="more ng-binding" ng-click="displayMore()">查看更多</a>
+</div>
