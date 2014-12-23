@@ -62,13 +62,15 @@ brokersModule.factory('brokerService', function ($q,$http,serviceGenerator) {
         addBusiness:function(params){
           return $http({
             url:"/web/a/third/save",
-            params:params
+            params:params,
+            method:'post'
           })
         },
         editBusiness:function(params){
           return $http({
             url:"/web/a/third/update",
-            params:params
+            params:params,
+            method:'post'
           })
         }
       };
