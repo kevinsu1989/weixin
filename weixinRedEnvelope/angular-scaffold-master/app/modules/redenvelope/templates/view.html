@@ -1,0 +1,107 @@
+
+<html>
+<head>
+	<style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <title>微信红包</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="http://dev.static.duomeidai.com/public/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://dev.static.duomeidai.com/public/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://dev.static.duomeidai.com/public/angular-growl/build/angular-growl.min.css">
+    <link rel="stylesheet" href="http://dev.static.duomeidai.com/redenvelope/app.css?version=0.16">
+    <!--[if lt IE 9]>
+    <script src="http://dev.static.duomeidai.com/public/json2/json2.js"></script>
+    <script src="http://dev.static.duomeidai.com/public/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="http://dev.static.duomeidai.com/public/respond/dest/respond.min.js"></script>
+    <link href="http://dev.static.duomeidai.com/public/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+    <link href="http://dev.static.duomeidai.com/public/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+    <script src="http://dev.static.duomeidai.com/public/cross-domain/respond.proxy.js"></script>
+    <![endif]-->
+    <script src="http://dev.static.duomeidai.com/public/jquery/dist/jquery.min.js"></script>
+    <script src="http://dev.static.duomeidai.com/public/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  
+
+  </head>
+
+
+<body>
+	<div class="pub_window hzhb_wind" id="partnerWindow" style="position:fixed;display:none;top:5%;left:6%;">
+	</div>
+</body>
+<script type="text/javascript">
+		var getParam = function() {
+			var Url = window.location.href;
+			var u, g, StrBack = '';
+			if (arguments[arguments.length - 1] == "#") {
+				u = Url.split("#");
+			} else {
+				u = Url.split("#")[0].split("?");
+			}
+			if (u.length == 1) {
+				g = '';
+			} else {
+				g = u[1];
+			}
+			if (g != '') {
+				gg = g.split("&");
+				var MaxI = gg.length;
+				str = arguments[0] + "=";
+				for (xm = 0; xm < MaxI; xm++) {
+					if (gg[xm].indexOf(str) == 0) {
+						StrBack = gg[xm].replace(str, "");
+						break;
+					}
+				}
+			}
+			return StrBack;
+		}
+
+		$.ajax({
+			url: '/path/to/file',
+			data: {'busId': getParam('id')}
+		})
+		.done(function(res) {
+			res=res.data;
+			var html='<div class="closepic"><a>关闭</a></div>';
+			html+='<div class="hb_hd">';
+			html+='<a href='+res.busHref+' ng-if="partner.busHref!=''">';
+			html+='<img src="'+res.busLogo+'" width="50" height="50" />';
+			html+='<h1>'+res.busName+'</h1>';
+			html+='</a>';
+			html+='<div class="clearB"></div>';
+			html+='<div class="hb_detail">';
+			html+='<div class="hb_p">'+res.busDesc+'</div>';
+			if(res.busImage!=''){
+				html+='<img src="'+res.busImage+'" width="256" height="128" />';
+			}
+			html+='</div>';
+			html+='</div>';
+			html+='<div class="ad_gz">';
+			html+='<p style="text-align: center;">我想加入</p>';
+			html+='<h6 class="color6">关注公众账号<a>"多美惠通多美贷"</a>，点击菜单<a>"我要红包"－"合作推广"</a></h6>';
+			html+='</div>';
+
+
+
+			$("#partnerWindow").html(html);
+
+
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+
+</script>
