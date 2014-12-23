@@ -1,0 +1,77 @@
+/* bootstrap */
+
+body { background-color: #F0F0F0; font-size: 16px; }
+body.home { background-color: #FFFFFF; }
+i { font-style: normal; }
+.btn { font-size: 16px; }
+.tiny { font-size: 85%; }
+.form-control { font-size: 16px; height: 36px; }
+.text-overflow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+a:link, a:hover, a:active, a.visited { color: #248be4; text-decoration: none; }
+/* angular */
+input.ng-valid.ng-dirty, textarea.ng-valid.ng-dirty { border-color: #57A235; }
+input.ng-valid.ng-dirty:focus, textarea.ng-valid.ng-dirty:focus { border-color: #579935; }
+input.ng-invalid.ng-dirty, textarea.ng-invalid.ng-dirty { border-color: #EE8800 }
+input.ng-invalid.ng-dirty:focus, textarea.ng-invalid.ng-dirty:focus { border-color: #FF9900; }
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none !important; }
+/* ui-bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+/* metro style */
+.metro_1 { background: rgb(0, 188, 234); }
+.metro_2 { background: rgb(69, 128, 253); }
+.metro_3 { background: rgb(246, 201, 0); }
+.metro_4 { background: rgb(0, 206, 101); }
+.metro_5 { background: rgb(0, 142, 172); }
+.metro_6 { background: rgb(189, 0, 245); }
+.metro_7 { background: rgb(255, 80, 111); }
+.metro_8 { background: rgb(69, 128, 253); }
+.metro_9 { background: rgb(0, 207, 212); }
+.metro_0 { background: rgb(255, 123, 0); }
+/* cusomize */
+.mg-vt-15 { margin: 15px 0; }
+.mg-vt-30 { margin: 30px 0; }
+.full-width { width: 100%; }
+.has-error input { color: #E40; }
+.form-group-first { margin-top: 15px; }
+.no-bg { background: transparent !important; }
+.fa-lg {font-size: 20px;}
+.list li { border-bottom: 1px solid #C8C8C8; background-color: #FFF; padding: 10px 15px;}
+
+/* reference */
+#reference .main { padding: 20px 15px; }
+#reference .main p { margin-bottom: 24px; }
+#reference .main .indent dd { padding-left: 15px }
+#reference .main .indent dd .details { display: block; padding-left: 0.8rem; }
+#reference .main .indent dd .details .item { margin-right: 5px; }
+/* home */
+#header .comunity { display: block; border-bottom: 1px solid #C8C8C8; padding: 0 10px; }
+#header .comunity .title { padding: 15px 0; }
+#header .comunity .indicate .fa { font-size: 40px; margin-top: 5px; }
+#home div[class^="col-"] { border-bottom: 1px solid #EEEEEE; border-right: 1px solid #EEEEEE; padding-left: 0; padding-right: 0; }
+#home div[class^="col-"]:nth-child(3) { border-right: none; }
+#home div[class^="col-"] .cell { display: block; padding: 20px 0; text-align: center; color: #FFF !important; }
+#home div[class^="col-"] .cell.plus { background: #ddd; }
+#home div[class^="col-"] .cell i { font-size: 40px; }
+#home div[class^="col-"] .cell .badge { font-size: 11px; top: 15px; position: absolute; right: 15px; }
+#home div[class^="col-"] .cell i.fa-plus { padding: 11px 0; }
+#home div[class^="col-"] .category { display: block; }
+#config .adds { padding: 10px 15px; border-bottom: 1px solid #C8C8C8;}
+/* decorate */
+#decorate .terms { padding-top: 10px; margin-bottom: 5px; }
+#decorate .title { padding: 20px 15px 0; }
+#decorate .terms dt { padding: 10px 15px; font-weight: normal; }
+#decorate .terms dd { border-top: 1px solid #C8C8C8; background-color: #FFF; }
+#decorate .terms dd:last-child { border-bottom: 1px solid #C8C8C8; }
+#decorate .terms dd.simulate-control { padding: 6px 16px; line-height: 24px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#decorate .terms dd.simulate-control .container-fluid { padding-left: 0; padding-right: 0; }
+#decorate .terms dd .desc { display: block; padding: 10px 15px; }
+#decorate .terms .apartment { display: block; margin-right: 70px; }
+#decorate .terms ul li { padding: 5px 15px; }
+#decorate .correction { margin: 20px 0 0 15px; }
+#decorate .request dd { padding-left: 4px; padding-right: 4px; }
+#decorate .request dd.select { padding-left: 7px; padding-right: 7px; }
+#decorate .request .form-control { border: none; border-radius: 0x; -webkit-box-shadow: none; box-shadow: none; }
+#decorate .notice .message { padding: 20px 15px 0; }
+#decorate .drawing { padding: 0 15px; }
+#decorate .drawing h5 { margin-top: 20px; }
+#decorate .drawing .btn { margin-bottom: 15px; }

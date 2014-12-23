@@ -1,0 +1,8 @@
+<form role="form" name="mobileForm" ng-submit="submit()">
+  <div class="form-group form-group-first">
+    <input type="text" name="mobile" ng-model="mobile" class="form-control" id="inputMobile" placeholder="请输入手机号码" cs-number required ng-pattern="/^\d{11}$/" />
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary full-width" ng-disabled="mobileForm.$invalid">获取验证码</button>
+  </div>
+</form>
