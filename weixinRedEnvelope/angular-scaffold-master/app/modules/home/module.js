@@ -5,8 +5,6 @@ var homeModule = angular.module('homeModule', ['ui.router', 'ui.bootstrap']);
 homeModule.config(['$stateProvider', '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/home");
-
     $stateProvider
       .state('home', {
         url: "/home",

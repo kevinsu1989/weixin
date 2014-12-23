@@ -1,1 +1,28 @@
-<div ui-view></div>
+<!-- <a href="/index2.jsp?v=1" style="font-size:40px;">接口</a> -->
+ <div class="container posit">
+	<div ui-view class="bigbox">
+  </div>
+  <div class="row">
+      <div class="footer">
+          <div class="row" ng-if="footer==0">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <a href="http://www.duomeidai.com"><div class="pull-left fot-logo FadeInR"></div></a>
+                <h4 class="pull-right FadeInR"  style="-webkit-animation-delay: 0.2s">实现平凡人的财富梦想</h4>
+            </div>
+          </div>
+          <div class="row" ng-if="footer==1">
+            <div class="col-xs-12 col-sm-12 col-md-12"><p><span class="FadeInR">不以过高收益来吸引用户</span><br/><span class="FadeInR"  style="-webkit-animation-delay: 0.2s">不因资金站岗而放松风控</span></p></div>
+          </div>
+          <div class="row" ng-if="footer==2">
+            <div class="col-xs-12 col-sm-12 col-md-12 FadeInR"><p>关注"多美惠通多美贷"，寻找更多好戳友</p></div>
+          </div>
+          <div class="row" ng-if="footer==3">
+            <div class="col-xs-12 col-sm-12 col-md-12 FadeInR"><p>邀请好友玩红包，可获取更多奖励</p></div>
+          </div>
+      </div>
+  </div>
+</div>
+<div id="errBox"> 
+	<div id="errBoxShadow"></div>
+	<div id="errBoxText"></div>
+</div>

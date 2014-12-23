@@ -1,7 +1,7 @@
 /* global registerModule:true */
 
-// 输入手机
-registerModule.controller('mobileController', ['$scope', '$state', 'registerService',
+//注册绑定
+registerModule.controller('registController', ['$scope', '$state', 'registerService',
   function ($scope, $state, service) {
 
     $scope.submit = function () {
@@ -15,8 +15,8 @@ registerModule.controller('mobileController', ['$scope', '$state', 'registerServ
   }
 ]);
 
-// 输入验证码
-registerModule.controller('captchaController', ['$scope', '$state', '$timeout', 'registerService',
+//实名认证
+registerModule.controller('realnameController', ['$scope', '$state', '$timeout', 'registerService',
   function ($scope, $state, $timeout, service) {
 
     // $scope.submitText = '注册账号';

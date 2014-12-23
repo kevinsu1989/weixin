@@ -42,7 +42,24 @@ app.config(['$httpProvider',
               if (res.data.message || res.message) {
                 res.data.message = res.data.message || res.message;
               }
-              return [0, 200].indexOf(res.code) !== -1 ? res.data : $q.reject(res.data);
+              //未授权
+              if(res.code==-801){
+                _popAuth();
+                return;
+              }
+              //未授权
+              if(res.code==-802){
+                window.location.href=res.url;
+                return;
+              }
+              //活动过期
+              if(res.data.action_base_info){
+                if(res.data.action_base_info.actionStatus!=1||res.data.action_base_info.currentSystemTime>res.data.action_base_info.action_end_time){
+                  window.location.href="/#/redenvelope/active_end";
+                  return;
+                }
+              }
+              return ["0", "200",0,200].indexOf(res.code) !== -1 ? res.data : $q.reject(res.data);
             }
             return $q.when(response);
           },
@@ -83,10 +100,18 @@ app.config(['growlProvider',
 }]);
 
 // 配置全局样式表 Home页特殊处理
-app.run(['$rootScope',
-  function ($rootScope) {
+app.run(['$rootScope','$timeout',
+  function ($rootScope,$timeout) {
     $rootScope.$on('$stateChangeSuccess', function (event, state) {
       $rootScope.isHome = state.name === 'home';
     });
+
+    var count=0
+    var timeout = function() {
+      $rootScope.footer=count%4;
+      count++;
+      timer = $timeout(timeout, 4000);
+    }
+    timeout();
   }
 ]);

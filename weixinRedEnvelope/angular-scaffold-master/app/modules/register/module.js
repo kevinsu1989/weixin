@@ -8,25 +8,16 @@ registerModule.config(['$stateProvider', '$urlRouterProvider',
     $urlRouterProvider.when("/register", "/register/mobile");
 
     $stateProvider
-      .state('register', {
+      .state('register.regist', {
         abstract: true,
-        url: "/register",
-        templateUrl: "modules/register/templates/register.html"
+        url: "/register/regist",
+        controller: 'registController',
+        templateUrl: "modules/register/templates/regist.html"
       })
-      .state('register.mobile', {
-        url: "/mobile",
-        controller: 'mobileController',
-        templateUrl: "modules/register/templates/mobile.html"
-      })
-      .state('register.captcha', {
-        url: "/verify",
-        controller: 'captchaController',
-        templateUrl: "modules/register/templates/captcha.html"
-      })
-      .state('register.success', {
-        url: "/success",
-        controller: 'successController',
-        templateUrl: "modules/register/templates/success.html"
+      .state('register.realname', {
+        url: "/realname",
+        controller: 'realnameController',
+        templateUrl: "modules/register/templates/realname.html"
       });
   }
 ]);
