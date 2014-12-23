@@ -130,24 +130,49 @@ app.run(function ($rootScope) {
 app.value('menubar', [{
     "id": 8000109000,
     "name": "经纪人管理",
-    "href": "/works/brokers.html#brokers/broker",
+    "href": "#brokers/broker",
     "menus": [{
-      "href": "/works/brokers.html#brokers/broker",
+      "href": "#brokers/broker",
       "name": "经纪人列表",
       "id": 8000109001
     },{
-      "href": "/works/brokers.html#brokers/third",
+      "href": "#brokers/third",
       "name": "第三方网站",
       "id": 8000109002
     }]
   },{
     "id": 8000100000,
     "name": "客户管理",
-    "href": "/works/client.html#client/list",
+    "href": "#client/list",
     "menus": [{
-      "href": "/works/client.html#client/list",
+      "href": "#client/list",
       "name": "客户列表",
       "id": 8000100001
+    }]
+  },{
+    "id": 8000200000,
+    "name": "活动管理",
+    "href": "#activity/actlist",
+    "menus": [{
+      "href": "#activity/actlist",
+      "name": "活动管理",
+      "id": 8000200001
+    },{
+      "href": "#activity/awardlist",
+      "name": "中奖管理",
+      "id": 8000200002
+    },{
+      "href": "#activity/itemlist",
+      "name": "道具管理",
+      "id": 8000200003
+    },{
+      "href": "#activity/ticketlist",
+      "name": "卡券管理",
+      "id": 8000200004
+    },{
+      "href": "#activity/busilist",
+      "name": "商家管理",
+      "id": 8000200005
     }]
   }]
 );

@@ -21,7 +21,7 @@
             </li>
             <li>
               <label class="control-label text-normal text-nowrap txtleft">ID：</label>
-              {{tuserId}}
+              {{userId}}
             </li>
             <li>
               <label class="control-label text-normal text-nowrap txtleft">手机号：</label>
@@ -61,14 +61,18 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>序号</th>
-        <th>ID</th>
-        <th>姓名</th>
-        <th>昵称</th>
-        <th>手机号</th>
-        <th>时间</th>
-        <th>商户名称</th>
-        <th class="text-right">操作</th>
+        <th>客户姓名</th>
+        <th>客户昵称</th>
+        <th>客户ID</th>
+        <th>第三方ID</th>
+        <th>客户手机号</th>
+        <th>投资时间</th>
+        <th>投资项目</th>
+        <th>项目ID</th>
+        <th>投资期限(月)</th>
+        <th>年化利率</th>
+        <th>首次投资</th>
+        <th class="text-right">投资金额</th>
       </tr>
     </thead>
     <tbody>
@@ -83,21 +87,18 @@
         </td>
       </tr>
       <tr ng-repeat="item in list"  ng-if="!loading">
-        <td>{{ $index+1 }}</td>
-        <td>{{ item.TUserId }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.nick }}</td>
-        <td>{{ item.mobile }}</td>
-        <td>{{ item.updateAt|date:'yyyy-MM-dd HH:mm' }}</td>
-        <td>{{ item.brokerType|brokerType }}</td>
-        <td ng-class="{'text-danger': item.isHired === 1}">{{ item.isHired|brokerStatus }}</td>
-        <td class="text-right">
-          <a href="" ng-click="editbroker(item)">编辑</a>
-          <span class="loading-sm" ng-if="item.updating"></span>
-          <i class="text-divider">|</i>
-          <a href="" ng-click="viewbroker(item)">查看</a>
-        </td>
-      </tr>
+        <td>{{ item.realName }}</td>
+        <td>{{ item.userName }}</td>
+        <td>{{ item.tuserId }}</td>
+        <td>{{ item.thirdId }}</td>
+        <td>{{ item.mobilePhone }}</td>
+        <td>{{ item.time|date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ item.projectName }}</td>
+        <td>{{ item.projectId }}</td>
+        <td>{{ item.projectTime }}</td>
+        <td>{{ item.rate }}</td>
+        <td>{{ item.isFirst }}</td>
+        <td>{{ item.amount }}</td>
     </tbody>
   </table>
   <div class="text-right" ng-show="total">

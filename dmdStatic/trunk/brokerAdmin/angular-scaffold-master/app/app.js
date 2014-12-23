@@ -19,7 +19,7 @@ var Modules = {
   }
 };
 
-var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angular-growl', 'templates']);
+var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angular-growl', 'templates','brokersModule']);
 
 // bootstrap
 angular.element(document).ready(function () {

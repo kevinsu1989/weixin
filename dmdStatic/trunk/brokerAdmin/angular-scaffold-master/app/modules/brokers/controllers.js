@@ -15,7 +15,7 @@ brokersModule.controller('loginController', ['$scope','$state','brokerService',f
       }else{
         var date=new Date();
         date.setHours(date.getHours() + 1);
-        document.cookie="userNick="+res.puser.nick+";expires="+ date.toGMTString();;
+        document.cookie="userNick="+res.puser.nick+";expires="+ date.toGMTString();
         $state.go('brokers.broker');
       }
     }, function (rej) {
@@ -325,12 +325,11 @@ brokersModule.controller('thirdController', ['$scope', '$state', 'growl', 'broke
 
   //增加经纪人
   $scope.addthird = function () {
-    $modal.open({
+        $modal.open({
       templateUrl: 'modules/brokers/templates/third.add.html',
       controller: ['$scope',
         function (scope) {
           scope.title = '添加商户';
-          scope.entity = {};
           scope.search = function(){
             if($("#add-phone").val().length!=11){
               messageBox("请输入正确的手机号！");
@@ -340,21 +339,28 @@ brokersModule.controller('thirdController', ['$scope', '$state', 'growl', 'broke
             params["mobilePhone"]=$("#add-phone").val();
             scope.processing=true;
             service.queryOne(params).then(function (res) { 
-            scope.processing=false;
+              scope.processing=false;
               if(res.TUser==""){
                 msgService.messageBox("该用户不存在（请先在前端注册并实名认证）");
               }
-              scope.entity=res.TUser;
+              scope.entity.userId=res.TUser.id;
+              scope.entity.mobilePhone=res.TUser.mobilephone;
+              scope.entity.realName=res.TUser.name;
+              scope.entity.userName=res.TUser.nick;
             });
           }
           scope.confirm = function () {
-            if(!scope.entity["name"]){
+            if(!scope.entity["realName"]){
               msgService.messageBox("请先在前端实名认证！");
               return;
             }
+            if(!scope.entity["businessName"]){
+              msgService.messageBox("请输入商户名称！");
+              return;
+            }
             var params={};
-            if(scope.entity.id){scope.entity
-              params["id"]=scope.entity.id;
+            if(scope.entity.userId){
+              params["id"]=scope.entity.userId;
               params["businessName"]=scope.entity.businessName;
               scope.processing=true;
               service.addBusiness(params).then(function (res) {
@@ -365,10 +371,6 @@ brokersModule.controller('thirdController', ['$scope', '$state', 'growl', 'broke
                   $("#add-phone").val("");
                 }else{
                   msgService.messageBox("添加成功！");
-                  params={};
-                  console.log(res);
-                  params["userId"]=res.user.id;
-                  service.updateBroker(params);
                   $scope.search();
                   scope.$close();
                 }
@@ -414,7 +416,7 @@ brokersModule.controller('thirdController', ['$scope', '$state', 'growl', 'broke
 
 
 //第三方网站详情页
-brokersModule.controller('thirdInfoController', ['$scope', '$state', '$stateParams', 'growl', 'brokerService','msgService',function ($scope, $state, $stateParams, growl, service,msgService) {
+brokersModule.controller('thirdInfoController', ['$scope', '$state', '$stateParams', '$modal','growl', 'brokerService','msgService',function ($scope, $state, $stateParams,$modal, growl, service,msgService) {
   
 
   // 搜索
@@ -429,10 +431,10 @@ brokersModule.controller('thirdInfoController', ['$scope', '$state', '$statePara
     params["moneyBegin"]=$scope.tzmin;
     params["moneyEnd"]=$scope.tzmax;
     if($scope.dts){
-      params["timeBegin"]=new Date($scope.dts.getFullYear()+"/"+($scope.dts.getMonth()+1)+"/"+$scope.dts.getDate())*1;
+      params["timeBegin"]=$scope.dts.getFullYear()+"-"+($scope.dts.getMonth()+1)+"-"+$scope.dts.getDate();
     }
     if($scope.dte){
-      params["timeEnd"]=new Date($scope.dte.getFullYear()+"/"+($scope.dte.getMonth()+1)+"/"+($scope.dte.getDate()+1))*1;
+      params["timeEnd"]=$scope.dte.getFullYear()+"-"+($scope.dte.getMonth()+1)+"-"+$scope.dte.getDate();
     }
     $scope.processing=true;
     $scope.loading = true;
@@ -448,6 +450,7 @@ brokersModule.controller('thirdInfoController', ['$scope', '$state', '$statePara
       $scope.mobilePhone = res.mobilePhone;
       $scope.thirdId = res.thirdId;
       $scope.userId = res.userId;
+      $scope.user=res;
     });
   };
 
@@ -458,7 +461,7 @@ brokersModule.controller('thirdInfoController', ['$scope', '$state', '$statePara
       controller: ['$scope',
         function (scope) {
           scope.title = '修改商户信息';
-          scope.entity = item;
+          scope.entity = $scope.user;
           scope.search = function(){
             if($("#add-phone").val().length!=11){
               messageBox("请输入正确的手机号！");
@@ -472,11 +475,14 @@ brokersModule.controller('thirdInfoController', ['$scope', '$state', '$statePara
               if(res.TUser==""){
                 msgService.messageBox("该用户不存在（请先在前端注册并实名认证）");
               }
-              scope.entity=res.TUser;
+              scope.entity.userId=res.TUser.id;
+              scope.entity.mobilePhone=res.TUser.mobilephone;
+              scope.entity.realName=res.TUser.name;
+              scope.entity.userName=res.TUser.nick;
             });
           }
           scope.confirm = function () {
-            if(!scope.entity["name"]){
+            if(!scope.entity["realName"]){
               msgService.messageBox("请先在前端实名认证！");
               return;
             }
@@ -485,22 +491,19 @@ brokersModule.controller('thirdInfoController', ['$scope', '$state', '$statePara
               return;
             }
             var params={};
-            if(scope.entity.id){scope.entity
+            if(scope.entity.userId){
               params["id"]=scope.entity.id;
+              params["userId"]=scope.entity.userId;
               params["businessName"]=scope.entity.businessName;
               scope.processing=true;
-              service.addBusiness(params).then(function (res) {
+              service.editBusiness(params).then(function (res) {
                 scope.processing=false;
                 if(typeof(res)=="string"){
                   msgService.messageBox(res);
                   scope.entity={};
                   $("#add-phone").val("");
                 }else{
-                  msgService.messageBox("添加成功！");
-                  params={};
-                  console.log(res);
-                  params["userId"]=res.user.id;
-                  service.updateBroker(params);
+                  msgService.messageBox("操作成功！");
                   $scope.search();
                   scope.$close();
                 }
