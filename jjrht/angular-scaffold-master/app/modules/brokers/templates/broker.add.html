@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <a class="close" ng-click="$dismiss()">&times;</a>
+  <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+    <label class="control-label text-normal text-nowrap" style="width:50px;float:left;line-height:30px;" >手机号：</label>
+    <input type="text" class="form-control" id="add-phone" ng-model="phone" ng-pattern="/^[1][2-9]\d{9}$/" style="width:120px;float:left;" />
+    
+    <button type="submit" class="btn btn-primary ml10 mr10" ng-click="search()"  ng-disabled="processing">
+        <i class="fa fa-search"></i> 搜索
+    </button>
+    
+ 	<ul class="info-list">
+ 		<li><span>ID：</span>{{entity.id}}</li>
+ 		<li><span>姓名：</span>{{entity.name}}</li>
+ 		<li><span>昵称：</span>{{entity.nick}}</li>
+    <li><span>手机号：</span>{{entity.mobilephone}}</li>
+    <li><span>类别：</span>
+      <input type="radio" name="status" ng-model="status" value="0" ng-checked="true">全职
+      <input type="radio" name="status" ng-model="status" value="1" style='margin-left:20px;'>兼职
+      <input type="hidden" value="{{status}}" id="rad-status" />
+    </li>
+ 	</ul>
+  
+  
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
+  <button class="btn btn-default" ng-click="close()">取消</button>
+</div>

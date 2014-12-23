@@ -1,0 +1,125 @@
+<div class="account-module">
+  <div class="page-header">
+    <h1>第三方网站</h1>
+  </div>
+  <div class="filter clearfix">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="userInfo">
+          <ul class="se-list">
+            <li>
+              <label class="control-label text-normal text-nowrap txtleft">姓名：</label>
+              {{userInfo.realName}}
+            </li>
+            <li>
+              <label class="control-label text-normal text-nowrap txtleft">昵称：</label>
+              {{userInfo.userName}}
+            </li>
+            <li>
+              <label class="control-label text-normal text-nowrap txtleft">ID：</label>
+              {{userInfo.tuserId}}
+            </li>
+            <li>
+              <label class="control-label text-normal text-nowrap txtleft">手机号：</label>
+              {{userInfo.mobilePhone}}
+            </li>
+          </ul>
+          <p>
+              <label class="control-label text-normal text-nowrap txtleft">经纪人：</label>
+              {{userInfo.investerName|brokerFilter}}
+          </p>
+          <button ng-if="!userInfo.investerName" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="edit('add')">
+            <i class="fa fa-search"></i> 添加
+          </button>
+          <button ng-if="userInfo.investerName" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="edit('update')">
+            <i class="fa fa-search"></i> 修改
+          </button>
+          <button ng-if="userInfo.investerName" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="delete()">
+            <i class="fa fa-search"></i> 删除
+          </button>
+        </div>
+        <div class="form-inline">
+          <ul class="se-list">
+            <li>
+              <button type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="tabChange(1)">
+              <i class="fa fa-search"></i> 投资记录
+              </button>
+            </li>
+            <li>
+              <button type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="tabChange(2)">
+              <i class="fa fa-search"></i> 变更记录
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <table class="table table-hover"  ng-if="detailType==2">
+    <thead>
+      <tr>
+        <th>投资时间</th>
+        <th>投资项目</th>
+        <th>项目ID</th>
+        <th>投资期限(月)</th>
+        <th>年化利率</th>
+        <th>经纪人</th>
+        <th>投资金额</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-if="loading">
+        <td class="loading-holder" colspan="40">
+          <div class="text-center"><span class="loading"></span></div>
+        </td>
+      </tr>
+      <tr ng-if="list.length == 0">
+        <td colspan="40">
+          <div class="text-center">抱歉，没有相关数据</div>
+        </td>
+      </tr>
+      <tr ng-repeat="item in list"  ng-if="!loading">
+        <td>{{ item.investTime|date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ item.borrowTitle }}</td>
+        <td>{{ item.borrowId }}</td>
+        <td>{{ item.deadline }}</td>
+        <td>{{ item.annualRate }}</td>
+        <td>{{ item.investAmount }}</td>
+        <td>{{ item.brokerType|brokerType }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-hover" ng-if="detailType==2">
+    <thead>
+      <tr>
+        <th>操作人</th>
+        <th>操作时间</th>
+        <th>原经纪人</th>
+        <th>现经纪人</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-if="loading">
+        <td class="loading-holder" colspan="40">
+          <div class="text-center"><span class="loading"></span></div>
+        </td>
+      </tr>
+      <tr ng-if="list.length == 0">
+        <td colspan="40">
+          <div class="text-center">抱歉，没有相关数据</div>
+        </td>
+      </tr>
+      <tr ng-repeat="item in list"  ng-if="!loading">
+        <td>{{ item.operator }}</td>
+        <td>{{ item.operateTime|date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ item.content }}</td>
+        <td>{{ item.moduletype }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-right" ng-show="total">
+    <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="search()"></ul>
+  </div>
+</div>
