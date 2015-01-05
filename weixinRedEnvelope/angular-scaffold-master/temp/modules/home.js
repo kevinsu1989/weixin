@@ -1,7 +1,10 @@
-/*! weixin - v0.1.0 - 2014-11-11
+/*! weixin - v0.1.0 - 2014-12-26
 * Copyright (c) 2014 lovemoon@yeah.net; Licensed GPLv2 */
+var callback=function(res) {
+	__callback__=res;
+}
 // Initialize
-var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angular-growl', 'templates', 'homeModule', 'registerModule', 'decorateModule']);
+var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angular-growl', 'templates', 'homeModule', 'registerModule', 'decorateModule', 'redEnvelopeModule']);
 
 // bootstrap
 angular.element(document).ready(function () {
@@ -51,7 +54,24 @@ app.config(['$httpProvider',
               if (res.data.message || res.message) {
                 res.data.message = res.data.message || res.message;
               }
-              return [0, 200].indexOf(res.code) !== -1 ? res.data : $q.reject(res.data);
+              //未授权
+              if(res.code==-801){
+                _popAuth();
+                return;
+              }
+              //未授权
+              if(res.code==-802){
+                window.location.href=res.url;
+                return;
+              }
+              //活动过期
+              if(res.data.action_base_info){
+                if(res.data.action_base_info.actionStatus!=1||res.data.action_base_info.currentSystemTime>res.data.action_base_info.action_end_time){
+                  window.location.href="/#/redenvelope/active_end";
+                  return;
+                }
+              }
+              return ["0", "200",0,200].indexOf(res.code) !== -1 ? res.data : $q.reject(res.data);
             }
             return $q.when(response);
           },
@@ -92,11 +112,26 @@ app.config(['growlProvider',
 }]);
 
 // 配置全局样式表 Home页特殊处理
-app.run(['$rootScope',
-  function ($rootScope) {
+app.run(['$rootScope','$timeout',
+  function ($rootScope,$timeout) {
     $rootScope.$on('$stateChangeSuccess', function (event, state) {
       $rootScope.isHome = state.name === 'home';
     });
+
+    var count=0
+    var timeout = function() {
+      $rootScope.footer=count%4;
+      count++;
+      timer = $timeout(timeout, 4000);
+    }
+    timeout();
+    if (_ENV_ == 'dev') {
+      $rootScope.istrue=false;
+    } else if (_ENV_ == 'test') {
+      $rootScope.istrue=false;
+    } else {
+      $rootScope.istrue=true;
+    }
   }
 ]);
 app.directive('csFocus', ['$timeout',
@@ -342,7 +377,13 @@ app.filter('max', function () {
     return Math.max(num, limit);
   };
 });
-
+app.factory('overAll', ['$http', function($http){
+	return{
+		totalCustomer:function(argument) {
+			
+		}
+	};
+}])
 // Avoid console errors in browsers that lack a console.
 (function () {
   var method;
@@ -550,8 +591,6 @@ var homeModule = angular.module('homeModule', ['ui.router', 'ui.bootstrap']);
 homeModule.config(['$stateProvider', '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/home");
-
     $stateProvider
       .state('home', {
         url: "/home",
@@ -566,6 +605,88 @@ homeModule.config(['$stateProvider', '$urlRouterProvider',
   }
 ]);
 // define module
+var redEnvelopeModule = angular.module('redEnvelopeModule', ['ui.router', 'ui.bootstrap']);
+
+// config router
+redEnvelopeModule.config(['$stateProvider', '$urlRouterProvider',
+  function ($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise("/redenvelope/getSeed");
+
+    $stateProvider
+      .state('redenvelope', {
+        url: '/redenvelope',
+        "abstract": true,
+        template: "<div ui-view></div>"
+      })
+      .state('redenvelope.getSeed', {
+        url: "/getSeed",
+        controller: 'getSeedController',
+        templateUrl: "modules/redenvelope/templates/getSeed.html"
+      })
+      .state('redenvelope.myinfo', {
+        url: "/myinfo/{friendId}/{friendNick}",
+        controller: 'myinfoController',
+        templateUrl: "modules/redenvelope/templates/myinfo.html"
+      })
+      .state('redenvelope.friend', {
+        url: "/friend/{friendId}",
+        controller: 'friendController',
+        templateUrl: "modules/redenvelope/templates/friend.html"
+      })
+      .state('redenvelope.myjab', {
+        url: "/myjab",
+        controller: 'myjabController',
+        templateUrl: "modules/redenvelope/templates/myjab.html"
+      })
+      .state('redenvelope.jabme', {
+        url: "/jabme",
+        controller: 'jabmeController',
+        templateUrl: "modules/redenvelope/templates/jabme.html"
+      })
+      .state('redenvelope.myachivement', {
+        url: "/myachivement{tab:[0-9]+}",
+        controller: 'myachivementController',
+        templateUrl: "modules/redenvelope/templates/myachivement.html"
+      })
+      .state('redenvelope.rule', {
+        url: "/rule",
+        controller: 'ruleController',
+        templateUrl: "modules/redenvelope/templates/rule.html"
+      })
+      .state('redenvelope.regist', {
+        url: "/regist",
+        controller: 'registController',
+        templateUrl: "modules/redenvelope/templates/regist.html"
+      })
+      .state('redenvelope.realname', {
+        url: "/realname",
+        controller: 'realnameController',
+        templateUrl: "modules/redenvelope/templates/realname.html"
+      })
+      .state('redenvelope.regsuccess', {
+        url: "/regsuccess/{regtype:[0-9]+}/{extra}",
+        controller: 'regsuccessController',
+        templateUrl: "modules/redenvelope/templates/regsuccess.html"
+      })
+      .state('redenvelope.actend', {
+        url: "/active_end",
+        controller: 'actendController',
+        templateUrl: "modules/redenvelope/templates/active_end.html"
+      })
+      .state('redenvelope.agreement', {
+        url: "/agreement",
+        controller: 'agreementController',
+        templateUrl: "modules/redenvelope/templates/agreement.html"
+      })
+      .state('redenvelope.award', {
+        url: "/award",
+        controller: 'awardController',
+        templateUrl: "modules/redenvelope/templates/award.html"
+      });
+  }
+]);
+// define module
 var registerModule = angular.module('registerModule', ['ui.router', 'ui.bootstrap']);
 
 // config router
@@ -575,25 +696,16 @@ registerModule.config(['$stateProvider', '$urlRouterProvider',
     $urlRouterProvider.when("/register", "/register/mobile");
 
     $stateProvider
-      .state('register', {
+      .state('register.regist', {
         abstract: true,
-        url: "/register",
-        templateUrl: "modules/register/templates/register.html"
+        url: "/register/regist",
+        controller: 'registController',
+        templateUrl: "modules/register/templates/regist.html"
       })
-      .state('register.mobile', {
-        url: "/mobile",
-        controller: 'mobileController',
-        templateUrl: "modules/register/templates/mobile.html"
-      })
-      .state('register.captcha', {
-        url: "/verify",
-        controller: 'captchaController',
-        templateUrl: "modules/register/templates/captcha.html"
-      })
-      .state('register.success', {
-        url: "/success",
-        controller: 'successController',
-        templateUrl: "modules/register/templates/success.html"
+      .state('register.realname', {
+        url: "/realname",
+        controller: 'realnameController',
+        templateUrl: "modules/register/templates/realname.html"
       });
   }
 ]);
@@ -661,7 +773,38 @@ angular.module('templates', ['common/templates/layout.partials.html', 'modules/h
 
 angular.module("common/templates/layout.partials.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/templates/layout.partials.html",
-    "<div ui-view></div>");
+    "<!-- <a href=\"/index2.jsp?v=1\" style=\"font-size:40px;\">接口</a> -->\n" +
+    " <div class=\"container posit\">\n" +
+    "	<div ui-view class=\"bigbox\">\n" +
+    "  </div>\n" +
+    "  <div class=\"row\">\n" +
+    "      <div class=\"footer\">\n" +
+    "          <div class=\"row\" ng-if=\"footer==0\">\n" +
+    "            <div class=\"col-xs-12 col-sm-12 col-md-12\">\n" +
+    "                <a href=\"http://www.duomeidai.com\"><div class=\"pull-left fot-logo FadeInR\"></div></a>\n" +
+    "                <h4 class=\"pull-right FadeInR\"  style=\"-webkit-animation-delay: 0.2s\">实现平凡人的财富梦想</h4>\n" +
+    "            </div>\n" +
+    "          </div>\n" +
+    "          <div class=\"row\" ng-if=\"footer==1\">\n" +
+    "            <div class=\"col-xs-12 col-sm-12 col-md-12\"><p><span class=\"FadeInR\">不以过高收益来吸引用户</span><br/><span class=\"FadeInR\"  style=\"-webkit-animation-delay: 0.2s\">不因资金站岗而放松风控</span></p></div>\n" +
+    "          </div>\n" +
+    "          <div class=\"row\" ng-if=\"footer==2\">\n" +
+    "            <div class=\"col-xs-12 col-sm-12 col-md-12 FadeInR\"><p>关注\"多美惠通多美贷\"，寻找更多好戳友</p></div>\n" +
+    "          </div>\n" +
+    "          <div class=\"row\" ng-if=\"footer==3\">\n" +
+    "            <div class=\"col-xs-12 col-sm-12 col-md-12 FadeInR\"><p>邀请好友玩红包，可获取更多奖励</p></div>\n" +
+    "          </div>\n" +
+    "      </div>\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "<div class=\"pub_window cshbtip_wind\" style=\"display:block;top:180px;left:0%;\" ng-if=\"!istrue\">\n" +
+    "      <h3 class=\"font16\">本红包为测试使用，请勿传播！</h3>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div id=\"errBox\"> \n" +
+    "	<div id=\"errBoxShadow\"></div>\n" +
+    "	<div id=\"errBoxText\"></div>\n" +
+    "</div>");
 }]);
 
 angular.module("modules/home/templates/config.html", []).run(["$templateCache", function($templateCache) {

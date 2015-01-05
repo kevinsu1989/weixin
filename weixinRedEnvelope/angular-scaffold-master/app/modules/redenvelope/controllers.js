@@ -414,10 +414,13 @@ redEnvelopeModule.controller('friendController', ['$scope','$sce', '$state', '$s
     $scope.fks=__callback__.fks;
     $(".pub_window").css("left", ($(window).width() - 320) / 2 + "px");
     $("#partnerWindow").css("left", ($(window).width() - 280) / 2 + "px");
-    var id = $params.friendId;
-    var timer = null;
-    var clickflag = false;
-    var receiveFlag;
+    var id = $params.friendId
+    , timer = null
+    , clickflag = false
+    , receiveFlag;
+    if(id==-1){
+        $state.go("redenvelope.getSeed");
+    }
     $scope.money = 0;
     $scope.onload = false;
     service.friendRedEnvelope(id).then(function(res) {
@@ -446,10 +449,10 @@ redEnvelopeModule.controller('friendController', ['$scope','$sce', '$state', '$s
       if (res.e.status == -11) {
         $scope.status = 4;
       }
-      if (res.e.redEndTime < res.action_base_info.currentSystemTime) {
+      if (res.e.redEndTime!=0 && res.e.redEndTime < res.action_base_info.currentSystemTime) {
         $scope.status = 9;
       }
-      if (res.e.redReceiveEndTime < res.action_base_info.currentSystemTime) {
+      if (res.e.redReceiveEndTime!=0 && res.e.redReceiveEndTime < res.action_base_info.currentSystemTime) {
         $scope.status = 9;
       }
       if ($scope.status != 9) {
@@ -750,6 +753,31 @@ redEnvelopeModule.controller('agreementController', ['$scope', '$state', 'reEnve
   }
 ]);
 
+//抽奖页面
+redEnvelopeModule.controller('awardController', ['$scope', '$state', 'reEnvelopeService', 
+  function($scope, $state, service) {
+    var year=reward_date.substr(0,4),month=reward_date.substr(4,2),day=reward_date.substr(6,2);
+
+    var dstr=year+'-'+month+'-'+day;
+
+    var date=new Date(dstr);
+
+    var ds=date.getDay()-1,de=7-date.getDay();
+
+    var dateStart=new Date(date*1-3600000*24*ds),dateEnd=new Date(date*1+3600000*24*de);
+
+    $scope.dateStr=dateStart.getFullYear()+'.'+(dateStart.getMonth()+1)+'.'+dateStart.getDate()+' - '+
+    dateEnd.getFullYear()+'.'+(dateEnd.getMonth()+1)+'.'+dateEnd.getDate();
+
+    reward_list.data.list[0].reward_content=reward_list.data.list[0].reward_content.replace('3','1');
+    for(var i=1,len=reward_list.data.list.length;i<len;i++){
+      reward_list.data.list[i].reward_content+="1张";
+    }
+    $scope.list=reward_list.data.list;
+
+  }
+]);
+
 
 //注册绑定
 redEnvelopeModule.controller('registController', ['$scope', '$state', '$timeout', 'reEnvelopeService', 'msgService', 'cookieService',
@@ -768,7 +796,7 @@ redEnvelopeModule.controller('registController', ['$scope', '$state', '$timeout'
     $scope.tabClass2 = "";
     $scope.imgUrl = "/p/imgcode";
     $scope.codeDisabled = false; //验证码发送状态
-    $scope.msgCount = cookieService.getCookie('msgCount') || 0;; //验证码发送次数
+    $scope.msgCount = cookieService.getCookie('msgCount') || 0; //验证码发送次数
     $scope.desableTime = 0; //倒计时
     $scope.tabChange = function(type) {
       $scope.regtype = type;

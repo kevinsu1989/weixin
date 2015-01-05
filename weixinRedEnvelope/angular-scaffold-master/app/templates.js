@@ -1,4 +1,4 @@
-angular.module('templates', ['common/templates/layout.partials.html', 'modules/decorate/templates/acceptance.html', 'modules/decorate/templates/confirm.html', 'modules/decorate/templates/decorate-progress.partial.html', 'modules/decorate/templates/decorate.html', 'modules/decorate/templates/drawing.html', 'modules/decorate/templates/history.html', 'modules/decorate/templates/houses.html', 'modules/decorate/templates/invitation.html', 'modules/decorate/templates/notice-acceptance.html', 'modules/decorate/templates/notice-drawing.html', 'modules/decorate/templates/notice-initiate.html', 'modules/decorate/templates/notice-refund.html', 'modules/decorate/templates/progress.html', 'modules/decorate/templates/reference.html', 'modules/decorate/templates/refund.html', 'modules/home/templates/config.html', 'modules/home/templates/home.html', 'modules/redenvelope/templates/active_end.html', 'modules/redenvelope/templates/agreement.html', 'modules/redenvelope/templates/friend.html', 'modules/redenvelope/templates/getSeed.html', 'modules/redenvelope/templates/jabme.html', 'modules/redenvelope/templates/myachivement.html', 'modules/redenvelope/templates/myinfo.html', 'modules/redenvelope/templates/myjab.html', 'modules/redenvelope/templates/realname.html', 'modules/redenvelope/templates/regist.html', 'modules/redenvelope/templates/regsuccess.html', 'modules/redenvelope/templates/rule.html', 'modules/redenvelope/templates/view.html', 'modules/register/templates/realname.html', 'modules/register/templates/regist.html']);
+angular.module('templates', ['common/templates/layout.partials.html', 'modules/decorate/templates/acceptance.html', 'modules/decorate/templates/confirm.html', 'modules/decorate/templates/decorate-progress.partial.html', 'modules/decorate/templates/decorate.html', 'modules/decorate/templates/drawing.html', 'modules/decorate/templates/history.html', 'modules/decorate/templates/houses.html', 'modules/decorate/templates/invitation.html', 'modules/decorate/templates/notice-acceptance.html', 'modules/decorate/templates/notice-drawing.html', 'modules/decorate/templates/notice-initiate.html', 'modules/decorate/templates/notice-refund.html', 'modules/decorate/templates/progress.html', 'modules/decorate/templates/reference.html', 'modules/decorate/templates/refund.html', 'modules/home/templates/config.html', 'modules/home/templates/home.html', 'modules/redenvelope/templates/active_end.html', 'modules/redenvelope/templates/agreement.html', 'modules/redenvelope/templates/award.html', 'modules/redenvelope/templates/friend.html', 'modules/redenvelope/templates/getSeed.html', 'modules/redenvelope/templates/jabme.html', 'modules/redenvelope/templates/myachivement.html', 'modules/redenvelope/templates/myinfo.html', 'modules/redenvelope/templates/myjab.html', 'modules/redenvelope/templates/realname.html', 'modules/redenvelope/templates/regist.html', 'modules/redenvelope/templates/regsuccess.html', 'modules/redenvelope/templates/rule.html', 'modules/redenvelope/templates/view.html', 'modules/register/templates/captcha.html', 'modules/register/templates/failure.html', 'modules/register/templates/mobile.html', 'modules/register/templates/register.html', 'modules/register/templates/success.html']);
 
 angular.module("common/templates/layout.partials.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/templates/layout.partials.html",
@@ -26,6 +26,10 @@ angular.module("common/templates/layout.partials.html", []).run(["$templateCache
     "      </div>\n" +
     "  </div>\n" +
     "</div>\n" +
+    "<div class=\"pub_window cshbtip_wind\" style=\"display:block;top:180px;left:0%;\" ng-if=\"!istrue\">\n" +
+    "      <h3 class=\"font16\">本红包为测试使用，请勿传播！</h3>\n" +
+    "</div>\n" +
+    "\n" +
     "<div id=\"errBox\"> \n" +
     "	<div id=\"errBoxShadow\"></div>\n" +
     "	<div id=\"errBoxText\"></div>\n" +
@@ -501,6 +505,97 @@ angular.module("modules/redenvelope/templates/agreement.html", []).run(["$templa
     "</div>");
 }]);
 
+angular.module("modules/redenvelope/templates/award.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/redenvelope/templates/award.html",
+    "<div  class=\"padb8 img-rounded mart3 hb_pic radiu_bgcor\">\n" +
+    "            \n" +
+    "            	<h2 class=\"text-center corred\">本周中奖名单</h2>\n" +
+    "                <h3 class=\"text-center jp_period\">{{dateStr}}</h3>\n" +
+    "                \n" +
+    "                <div class=\"row marginC\">\n" +
+    "                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                        <div class=\"panel panel-default bornone\" style=\"background:none;box-shadow:none;margin:0;\">\n" +
+    "                            <ul class=\"list-cjul\">\n" +
+    "                              <li class=\"li_prize\" ng-if=\"list.length>0\">\n" +
+    "                              	<div class=\"row\">\n" +
+    "                                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"nub\"><span class=\"badge\">1</span></div>\n" +
+    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_1.png\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[0].reward_content}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                    	<div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[0].img}}\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[0].nick}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                              </li>\n" +
+    "                              <li class=\"li_prize\" ng-if=\"list.length>1\">\n" +
+    "                              	<div class=\"row\">\n" +
+    "                                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"nub\"><span class=\"badge\">2</span></div>\n" +
+    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_2.png\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[1].reward_content}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                    	<div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[1].img}}\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[1].nick}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                              </li>\n" +
+    "                              <li class=\"li_prize\" ng-if=\"list.length>2\">\n" +
+    "                              	<div class=\"row\">\n" +
+    "                                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"nub\"><span class=\"badge\">3</span></div>\n" +
+    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_3.png\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[2].reward_content}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                    	<div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[2].img}}\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[2].nick}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                              </li>\n" +
+    "                              <li class=\"li_prize\" ng-if=\"list.length>3\">\n" +
+    "                                <div class=\"row\">\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"nub\"><span class=\"badge\">4</span></div>\n" +
+    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_4.png\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[3].reward_content}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[3].img}}\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[3].nick}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                              </li>\n" +
+    "                              <li class=\"li_prize\" ng-if=\"list.length>4\">\n" +
+    "                                <div class=\"row\">\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"nub\"><span class=\"badge\">5</span></div>\n" +
+    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_4.png\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[4].reward_content}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
+    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
+    "                                        <div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[4].img}}\" alt=\"\" /></div>\n" +
+    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[4].nick}}</h4></div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                              </li>\n" +
+    "                            </ul>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "				</div>\n" +
+    "                \n" +
+    "                <a type=\"button\" class=\"btn btn-primary btn-lg btn-block share_but\" href=\"http://mp.weixin.qq.com/s?__biz=MzAxNjEyNzcyMA==&mid=297445210&idx=1&sn=0491577457c7443fc287e11924fcd7eb#rd\">查看抽奖规则</a>\n" +
+    "                \n" +
+    "            </div>");
+}]);
+
 angular.module("modules/redenvelope/templates/friend.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/redenvelope/templates/friend.html",
     "<div id=\"friend\" class=\"padb8 img-rounded mart3 hb_pic radiu_bgcor\" ng-if=\"onload\">\n" +
@@ -668,6 +763,7 @@ angular.module("modules/redenvelope/templates/friend.html", []).run(["$templateC
     "    </div>\n" +
     "\n" +
     "\n" +
+    "                <button type=\"button\" class=\"btn btn-primary btn-lg btn-block share_but\" ui-sref=\"redenvelope.award\">本周红包中奖名单</button>\n" +
     "\n" +
     "\n" +
     "\n" +
@@ -1165,6 +1261,8 @@ angular.module("modules/redenvelope/templates/myinfo.html", []).run(["$templateC
     "            	<h3 class=\"text-right rules-sm\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/bg_4.png?version=1\" alt=\"\" /><a ng-click=\"rule()\">规则说明</a></h3>\n" +
     "            </div>\n" +
     "        </div>\n" +
+    "        \n" +
+    "                <button type=\"button\" class=\"btn btn-primary btn-lg btn-block share_but\" ui-sref=\"redenvelope.award\">本周红包中奖名单</button>\n" +
     "    </div>\n" +
     "\n" +
     "	<div class=\"padb8 img-rounded mart3 hb_pic radiu_bgcor\" ng-if=\"status==1\">\n" +
@@ -1219,6 +1317,7 @@ angular.module("modules/redenvelope/templates/myinfo.html", []).run(["$templateC
     "        <h3 class=\"text-center color6\">请联系客服电话：400-885-7027 处理</h3>\n" +
     "       	<div class=\"padt2\"></div>\n" +
     "    </div>\n" +
+    "\n" +
     "</div>\n" +
     "\n" +
     "\n" +
@@ -1671,8 +1770,35 @@ angular.module("modules/redenvelope/templates/view.html", []).run(["$templateCac
     "");
 }]);
 
-angular.module("modules/register/templates/realname.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("modules/register/templates/realname.html",
+angular.module("modules/register/templates/captcha.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/register/templates/captcha.html",
+    "<form role=\"form\" name=\"captchaForm\" ng-submit=\"submit()\" autocomplete=\"false\">\n" +
+    "  <div class=\"form-group form-group-first\">\n" +
+    "    <input type=\"text\" name=\"captcha\" ng-model=\"captcha\" class=\"form-control\" id=\"inputCapcha\" placeholder=\"请输入验证码\" cs-number cs-focus required ng-pattern=\"/^\\d{4,8}$/\" ng-if=\"!message\" />\n" +
+    "  </div>\n" +
+    "  <div class=\"form-group form-group-first has-error\" ng-if=\"message\" ng-click=\"$parent.message=''\">\n" +
+    "    <input type=\"text\" name=\"message\" ng-model=\"message\" class=\"form-control no-bg\" readonly />\n" +
+    "  </div>\n" +
+    "  <div class=\"form-group\">\n" +
+    "    <button type=\"submit\" class=\"btn btn-primary full-width\" ng-disabled=\"captchaForm.$invalid || processing\">\n" +
+    "      <span ng-hide=\"processing\">{{ submitText || '注册账号' }}</span><span ng-show=\"processing\">请稍后...</span>\n" +
+    "    </button>\n" +
+    "  </div>\n" +
+    "  <div class=\"form-group\">\n" +
+    "    <small ng-if=\"!resend\">{{ remaining }}秒后可重新发送</small>\n" +
+    "    <a ng-if=\"resend\" class=\"small\" ng-click=\"refresh()\">重发验证码</a>\n" +
+    "  </div>\n" +
+    "</form>");
+}]);
+
+angular.module("modules/register/templates/failure.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/register/templates/failure.html",
+    "<p class=\"text-center text-danger mg-vt-30\">验证码输入有误，请重新输入！</p>\n" +
+    "<a ui-sref=\"register.captcha\" class=\"btn btn-primary full-width\">重新验证</a>");
+}]);
+
+angular.module("modules/register/templates/mobile.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/register/templates/mobile.html",
     "<form role=\"form\" name=\"mobileForm\" ng-submit=\"submit()\">\n" +
     "  <div class=\"form-group form-group-first\">\n" +
     "    <input type=\"text\" name=\"mobile\" ng-model=\"mobile\" class=\"form-control\" id=\"inputMobile\" placeholder=\"请输入手机号码\" cs-number required ng-pattern=\"/^\\d{11}$/\" />\n" +
@@ -1683,16 +1809,23 @@ angular.module("modules/register/templates/realname.html", []).run(["$templateCa
     "</form>");
 }]);
 
-angular.module("modules/register/templates/regist.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("modules/register/templates/regist.html",
-    "<button ng-click=\"tabChange(0)\">新用户注册</button><button ng-click=\"tabChange(1)\">已有账户</button>\n" +
+angular.module("modules/register/templates/register.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/register/templates/register.html",
+    "<div id=\"register\">\n" +
+    "  <div class=\"container-fluid\">\n" +
+    "    <div class=\"row\">\n" +
+    "      <div class=\"col-xs-12 col-sm-12\" ui-view></div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "</div>");
+}]);
+
+angular.module("modules/register/templates/success.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/register/templates/success.html",
+    "<p class=\"text-center mg-vt-30\">恭喜你，注册成功！</p>\n" +
+    "<a href=\"\" class=\"btn btn-primary full-width\">立即完善资料</a>\n" +
     "\n" +
-    "<input class=\"form-control\" type=\"text\" placeholder=\"手机号\" name=\"phone\" ng-model=\"phone\" cs-focus autofocus required />\n" +
-    "<input class=\"form-control\" ng-if=\"errcount>3\" type=\"text\" placeholder=\"图形验证码\" name=\"imgcode\" ng-model=\"imgcode\" cs-focus autofocus required />\n" +
-    "<input class=\"form-control\" type=\"text\" placeholder=\"手机验证码\" name=\"msgcode\" ng-model=\"msgcode\" cs-focus autofocus required />\n" +
-    "<input class=\"form-control\" ng-if=\"regtype==0\" type=\"password\" placeholder=\"密码\" name=\"psw\" ng-model=\"psw\" cs-focus autofocus required />\n" +
-    "<input class=\"form-control\" ng-if=\"regtype==0\" type=\"password\" placeholder=\"交易密码\" name=\"tradepsw\" ng-model=\"tradepsw\" cs-focus autofocus required />\n" +
-    "<input class=\"form-control\" ng-if=\"regtype==0\" type=\"text\" placeholder=\"推荐人手机号/邀请代码，如无可不填\" name=\"invitephone\" ng-model=\"invitephone\" cs-focus autofocus required />\n" +
-    "<input type=\"checkbox\" name=\"recieve\" ng-model=\"recieve\" value=\"true\" ng-check=\"true\"/> 我已满18岁，已阅读并接受 服务协议\n" +
-    "<button ng-click=\"singIn()\" ng-disabled=\"recieve\">注册并绑定</button>");
+    "<p class=\"text-center mg-vt-15\">\n" +
+    "  <a href=\"#/home\">返回我的管家</a>\n" +
+    "</p>");
 }]);
