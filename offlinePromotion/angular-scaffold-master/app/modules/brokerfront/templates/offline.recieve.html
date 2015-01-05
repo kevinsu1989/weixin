@@ -1,0 +1,15 @@
+<div id="ReserveApp" class="ng-scope">
+	<div class="webName autoSize textCenter grayButton">
+    	<div class="fanhui"  ui-sref="brokerfront.index"><span></span></div>
+    	<h5>预约客户</h5>
+        <div class="set" style="display:none;"><span></span></div>
+    </div>
+    <div class="textCenter logo_2"></div>
+	<ul class="nav autoSize">
+        <li><i></i><span>姓&nbsp;&nbsp;名：</span><input type="text" class="input8 ng-pristine" ng-model="name" placeholder="请输入您要预约的客户姓名" required="" ng-maxlength="12"></li>
+		<li><i class="phone_bg"></i><span>手&nbsp;&nbsp;机：</span><input type="tel" class="input8 ng-pristine" ng-model="mobile"  ng-pattern="/^\d+$/" placeholder="请输入客户手机号" required=""></li>
+	</ul>
+	<div class="textCenter"><button class="redButton autoSize editBt" ng-click="invite()">确认预约</button></div>
+    
+    </div>
+</div>

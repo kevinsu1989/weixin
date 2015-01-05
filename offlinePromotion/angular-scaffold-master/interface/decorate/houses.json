@@ -1,0 +1,46 @@
+{
+  "code": 200,
+  "data": {
+    "houses": [{
+      "id": 310905,
+      "address": "北京时代天街 10栋1单元1601室",
+      "community": "北京时代天街",
+      "apartment": "10栋1单元1601室",
+      "status": 0
+    }, {
+      "id": 310905,
+      "decorateId": 310905,
+      "address": "北京时代天街 10栋1单元1601室",
+      "community": "北京时代天街",
+      "apartment": "10栋1单元1601室",
+      "status": 1
+    }, {
+      "id": 310905,
+      "decorateId": 310905,
+      "address": "北京时代天街 10栋1单元1601室",
+      "community": "北京时代天街",
+      "apartment": "10栋1单元1601室",
+      "status": 2
+    }, {
+      "id": 310905,
+      "address": "北京长楹天街 10栋1单元1601室",
+      "community": "北京长楹天街",
+      "apartment": "10栋1单元1601室",
+      "status": 0
+    }, {
+      "id": 310905,
+      "decorateId": 310905,
+      "address": "北京像素国际 10栋1单元1601室",
+      "community": "北京像素国际",
+      "apartment": "10栋1单元1601室",
+      "status": 1
+    }, {
+      "id": 310905,
+      "decorateId": 310905,
+      "address": "北京像素国际 10栋1单元1601室",
+      "community": "北京像素国际",
+      "apartment": "10栋1单元1601室",
+      "status": 2
+    }]
+  }
+}
