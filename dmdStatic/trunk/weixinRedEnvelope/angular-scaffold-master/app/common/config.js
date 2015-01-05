@@ -113,5 +113,12 @@ app.run(['$rootScope','$timeout',
       timer = $timeout(timeout, 4000);
     }
     timeout();
+    if (_ENV_ == 'dev') {
+      $rootScope.istrue=false;
+    } else if (_ENV_ == 'test') {
+      $rootScope.istrue=false;
+    } else {
+      $rootScope.istrue=true;
+    }
   }
 ]);

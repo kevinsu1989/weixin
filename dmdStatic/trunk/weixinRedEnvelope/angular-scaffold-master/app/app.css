@@ -662,7 +662,18 @@ body{background:#fad40d;text-align:center;margin:0px auto;font-size:inherit;font
 			.hzhb_wind .ad_gz p{line-height:22px;font-size:1.2em;color:#000;text-align:left;padding:0;margin:0;}
 			.hzhb_wind .ad_gz h6{line-height:22px;font-size:1.2em;color:#666;text-align:left;padding:0;margin:0;}
 				.hzhb_wind .ad_gz h6 a{color:#0a86b0;}
-				
+
+		/*20141225 添加抽奖*/
+		.jp_period{margin:0 0 10px;padding:0;}
+		.list-cjul li.li_prize{padding:0 0 1em;margin:0 0 1em;border-bottom:1px solid #eb9a80;}
+		.jp_name{float:left;width:57%;text-align:left;padding-left:15px;overflow:hidden;}
+			.jp_name h4{line-height:20px;}
+			.hjr_pic{padding-left:20px;}
+			.hjr_name{padding-left:28px;}
+		
+
+		.cshbtip_wind{position:fixed;height:auto;width:100%;background:#333;border:2px solid #cc3333;padding:5px;border-radius:5px;box-shadow:1px 1px 6px #666;}
+			.cshbtip_wind  h3{margin:0;padding:7px 0;color:#fff;}
 @media only all and (max-width: 300px) {
 	.head_sm .posita{left:37%;}
 	.register_nav .posita{left:37%;}

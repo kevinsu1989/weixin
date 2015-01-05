@@ -72,6 +72,11 @@ redEnvelopeModule.config(['$stateProvider', '$urlRouterProvider',
         url: "/agreement",
         controller: 'agreementController',
         templateUrl: "modules/redenvelope/templates/agreement.html"
+      })
+      .state('redenvelope.award', {
+        url: "/award",
+        controller: 'awardController',
+        templateUrl: "modules/redenvelope/templates/award.html"
       });
   }
 ]);
