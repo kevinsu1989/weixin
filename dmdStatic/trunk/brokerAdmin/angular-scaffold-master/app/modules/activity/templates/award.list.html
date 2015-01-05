@@ -1,0 +1,101 @@
+<div class="account-module ng-scope">
+	<div class="page-header"><h1>中奖管理</h1></div>
+    <div class="filter clearfix">
+    	<div class="row">
+        	<div class="col-sm-11">
+            	<div class="form-inline">
+                	<ul class="se-list">
+                    	<li>
+                            <label class="text-normal text-nowrap">活动名称：</label>
+                            <select class="form-control mc-auto-width">
+                              <option>请选择活动名称</option>
+                              <option>幸福来敲门</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text-normal text-nowrap">奖品名称：</label>
+                            <select class="form-control mc-auto-width">
+                              <option>所有奖品</option>
+                              <option>10元投资券</option>
+                              <option>10元现金券</option>
+                              <option>iPhone6</option>
+                              <option>手机充值卡</option>
+                              <option>七彩云南游</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text-normal text-nowrap">奖品发放状态：</label>
+                            <select class="form-control mc-auto-width">
+                              <option>请选择奖品发放状态</option>
+                              <option>已发放</option>
+                              <option>未发放</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text-normal text-nowrap">中奖用户手机号：</label>
+                            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入用户手机号">
+                        </li>
+                        
+                        
+                        <li><button class="btn btn-primary ml10" type="submit"><i class="fa fa-search"></i> 查找</button> <button class="btn btn-primary ml10"><i class="fa fa-search"></i> 发放奖品</button> <button class="btn btn-primary ml10"><i class="fa fa-search"></i> 导出EXCEL</button></li>
+					</ul>
+				</div>
+			</div>
+        </div>
+	</div>
+	<table class="table table-hover">
+    	<thead>
+        	<tr>
+            	<th><input type="checkbox" value="" />全选</th>
+            	<th>序号</th>
+                <th>活动名称</th>
+                <th>奖品</th>
+                <th>中奖用户手机号</th>
+                <th>中奖时间</th>
+                <th>发放状态</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr class="ng-scope">
+            	<td class="ng-binding"><input type="checkbox" value="" /></td>
+            	<td class="ng-binding">1</td>
+                <td class="ng-binding">幸福来敲门</td>
+                <td class="ng-binding">iPHONE6</td>
+                <td class="ng-binding">15710009206</td>
+                <td class="ng-binding">2014-11-26 09:28</td>
+                <td class="ng-binding">未发放</td>
+            </tr>
+            <tr class="ng-scope">
+            	<td class="ng-binding"><input type="checkbox" value="" /></td>
+            	<td class="ng-binding">2</td>
+                <td class="ng-binding">幸福来敲门</td>
+                <td class="ng-binding">10元投资券</td>
+                <td class="ng-binding">15710009206</td>
+                <td class="ng-binding">2014-11-26 09:28</td>
+                <td class="ng-binding">已发放</td>
+            </tr>
+            <tr class="ng-scope">
+            	<td class="ng-binding"><input type="checkbox" value="" /></td>
+            	<td class="ng-binding">3</td>
+                <td class="ng-binding">幸福来敲门</td>
+                <td class="ng-binding">50元投资券</td>
+                <td class="ng-binding">15710009206</td>
+                <td class="ng-binding">2014-11-26 09:28</td>
+                <td class="ng-binding">已发放</td>
+            </tr>
+            <tr class="ng-scope">
+            	<td class="ng-binding"><input type="checkbox" value="" /></td>
+            	<td class="ng-binding">4</td>
+                <td class="ng-binding">幸福来敲门</td>
+                <td class="ng-binding">100元投资券</td>
+                <td class="ng-binding">15710009206</td>
+                <td class="ng-binding">2014-11-26 09:28</td>
+                <td class="ng-binding">已发放</td>
+            </tr>
+        </tbody>
+    </table>
+                        
+    <div ng-show="total" class="text-right">
+        <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="query()"></ul>
+    </div>
+</div>

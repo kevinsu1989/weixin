@@ -29,22 +29,21 @@
               <label class="control-label text-normal text-nowrap">类别：</label>
               <select class="form-control" ng-model="type">
                 <option value="" ng-selected="true">全部</option>
-                <option value="1">经纪人推荐</option>
-                <option value="2">非经纪人推荐</option>
-                <option value="3">无推荐</option>
+                <option value="1">有经纪人</option>
+                <option value="2">无经纪人</option>
               </select>   
             </li>
             <li>
-              <label class="control-label text-normal text-nowrap">有无投资：</label>
+              <label class="control-label text-normal text-nowrap">投资：</label>
               <select class="form-control" ng-model="isInvest">
                 <option value="" ng-selected="true">全部</option>
-                <option value="0">投资</option>
-                <option value="1">未投资</option>
+                <option value="1">投资</option>
+                <option value="0">未投资</option>
               </select>
             </li>
             <li>
-              <label class="control-label text-normal text-nowrap">所属经纪人：</label>
-              <input type="text" class="form-control" ng-model="investerName" placeholder=""经纪人的姓名、手机号或者邀请代码 />
+              <label class="control-label text-normal text-nowrap">经纪人：</label>
+              <input type="text" class="form-control" ng-model="investerName" placeholder="ID/手机号" />
             </li>
             <li>
               <button type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="search()">
@@ -68,7 +67,7 @@
         <th>姓名</th>
         <th>昵称</th>
         <th>手机号</th>
-        <th>注册时间</th>
+        <th style="width:100px;">注册时间</th>
         <th>经纪人姓名</th>
         <th>经纪人ID</th>
         <th>经纪人手机号</th>
@@ -89,23 +88,22 @@
       </tr>
       <tr ng-repeat="item in list"  ng-if="!loading">
         <td>{{ $index+1 }}</td>
-        <td>{{ item.tuserId }}</td>
+        <td>{{ item.id }}</td>
         <td>{{ item.realName }}</td>
-        <td>{{ item.userName }}</td>
+        <td>{{ item.username }}</td>
         <td>{{ item.mobilePhone }}</td> 
-        <td>{{ item.createTime|date:'yyyy-MM-dd HH:mm' }}</td>
-        <td>{{ item.isInvest }}</td>
-        <td>{{ item.investerName  }}</td>
-        <td>{{ item.investerId }}</td>
-        <td>{{ item.investerMobilePhone }}</td>
-        <td>{{ item.updateAt|date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ item.createTime.substr(0,item.createTime.length-2) }}</td>
+        <td>{{ item.broker.realName }}</td>
+        <td>{{ item.broker.id }}</td>
+        <td>{{ item.broker.mobilePhone }}</td>
+        <td>{{ item.broker.creditLimit|date:'yyyy-MM-dd HH:mm' }}</td>
         <td class="text-right">
-          <a href="" ng-click="goDetail(item.tuserId)">查看</a>
+          <a href="" ng-click="goDetail(item.id)">查看</a>
         </td>
       </tr>
     </tbody>
   </table>
   <div class="text-right" ng-show="total">
-    <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="search()"></ul>
+    <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="search(true)"></ul>
   </div>
 </div>

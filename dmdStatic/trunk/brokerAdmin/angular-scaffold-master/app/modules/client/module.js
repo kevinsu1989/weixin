@@ -17,16 +17,11 @@ clientModule.config(function ($stateProvider, $urlRouterProvider) {
     .state('client.list', {
       url: '/list',
       templateUrl: "modules/client/templates/list.html",
-      controller: 'loginController'
+      controller: 'listController'
     })
     .state('client.invest', {
       url: '/invest/{id}',
       templateUrl: "modules/client/templates/invest.html",
-      controller: 'brokerController'
-    })
-    .state('client.change', {
-      url: '/change/{id}',
-      templateUrl: "modules/client/templates/change.html",
-      controller: 'brokerController'
+      controller: 'investController'
     });
 });

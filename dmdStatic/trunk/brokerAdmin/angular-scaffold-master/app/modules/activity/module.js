@@ -6,7 +6,7 @@ var activityModule = Modules.register('activityModule', ['app']);
 // config routes
 activityModule.config(function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise("/activity/list");
+  $urlRouterProvider.otherwise("/activity/actlist");
 
   $stateProvider
     .state('activity', {
@@ -25,43 +25,23 @@ activityModule.config(function ($stateProvider, $urlRouterProvider) {
       controller: 'acteditController'
     })
     .state('activity.awardlist', {
-      url: '/awardlist/{id}',
+      url: '/awardlist',
       templateUrl: "modules/activity/templates/award.list.html",
       controller: 'awardlistController'
     })
-    .state('activity.awardedit', {
-      url: '/awardedit/{id}',
-      templateUrl: "modules/activity/templates/award.edit.html",
-      controller: 'awardeditController'
-    })
     .state('activity.busilist', {
-      url: '/busilist/{id}',
+      url: '/busilist',
       templateUrl: "modules/activity/templates/business.list.html",
       controller: 'busilistController'
     })
-    .state('activity.busiedit', {
-      url: '/busiedit/{id}',
-      templateUrl: "modules/activity/templates/business.edit.html",
-      controller: 'busieditController'
-    })
     .state('activity.itemlist', {
-      url: '/itemlist/{id}',
+      url: '/itemlist',
       templateUrl: "modules/activity/templates/item.list.html",
       controller: 'itemlistController'
     })
-    .state('activity.itemedit', {
-      url: '/itemedit/{id}',
-      templateUrl: "modules/activity/templates/item.edit.html",
-      controller: 'itemeditController'
-    })
     .state('activity.ticketlist', {
-      url: '/ticketlist/{id}',
+      url: '/ticketlist',
       templateUrl: "modules/activity/templates/ticket.list.html",
       controller: 'ticketlistController'
-    })
-    .state('activity.ticketedit', {
-      url: '/ticketedit',
-      templateUrl: "modules/activity/templates/ticket.edit.html",
-      controller: 'ticketeditController'
     });
 });

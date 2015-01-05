@@ -1,0 +1,46 @@
+<div class="account-module ng-scope">
+	<div class="page-header"><h1>商家管理</h1></div>
+    <div class="filter clearfix">
+    	<div class="row">
+        	<div class="col-sm-11">
+            	<div class="form-inline">
+                	<ul class="se-list">
+                        <li>
+                            <label class="text-normal text-nowrap">关键字：</label>
+                            <input type="text" ng-model="name" class="form-control mc-text-width" value="请输入商家名称">
+                        </li>
+                        <li>
+                            <button ng-click="search(true)" class="btn btn-primary ml10" type="submit"><i class="fa fa-search"></i> 查找</button> 
+                            <button ng-click="delete()" class="btn btn-primary ml10"><i class="fa fa-search"></i> 批量删除</button> 
+                            <button ng-click="add()" class="btn btn-primary ml10"><i class="fa fa-search"></i> 新增商家</button></li>
+					</ul>
+				</div>
+			</div>
+        </div>
+	</div>
+	<table class="table table-hover">
+    	<thead>
+        	<tr>
+            	<th><input type="checkbox" value="" />全选</th>
+            	<th>序号</th>
+                <th>商家名称</th>
+                <th>logo</th>
+                <th width="30%">商家介绍</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr class="ng-scope" ng-repeat="item in list">
+            	<td class="ng-binding"><input type="checkbox" value="" /></td>
+                <td class="ng-binding">{{$index+1}}</td>
+            	<td class="ng-binding">{{item.businessName}}</td>
+                <td class="ng-binding"><img ng-src="item.logo"></td>
+                <td class="ng-binding">{{item.desc}}</td>
+                <td class="ng-binding"><a ng-click="edit()">编辑</a> <i class="text-divider">|</i> <a ng-click="delete()">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-show="total" class="text-right">
+        <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="search()"></ul>
+    </div>
+</div>

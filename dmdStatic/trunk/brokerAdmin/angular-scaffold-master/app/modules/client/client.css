@@ -13,6 +13,7 @@ body.brokers-login { background: rgb(22, 62, 76) url(/img/account/login.jpg) cen
 #login .input-group-addon .fa-lock { font-size: 18px; }
 #login .content { box-shadow: 0 0 10px rgba(204, 204, 204, 0.8); background-color: #fff; padding: 20px 30px; border: 1px solid #ddd; border-radius: 5px; position: absolute; top: 20%; left: 50%; width: 340px; margin-left: -170px; }
 #login .content .form-group { margin-bottom: 25px; }
+.w-auto{width: auto !important;}
 .se-list li ul li .ng-isolate-scope{
 	background: #FFF;
 	padding: 4px;

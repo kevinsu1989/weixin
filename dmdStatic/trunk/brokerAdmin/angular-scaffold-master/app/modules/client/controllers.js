@@ -14,12 +14,18 @@ clientModule.controller('listController', ['$scope', '$state', 'clientService',
 			params["type"] = $scope.type;
 			params["isInvest"] = $scope.isInvest;
 			params["investerName"] = $scope.investerName;
-			if ($scope.dts) {
+			if ($scope.registerBegin) {
 				params["registerBegin"] = new Date($scope.registerBegin.getFullYear() + "/" + ($scope.registerBegin.getMonth() + 1) + "/" + $scope.registerBegin.getDate()) * 1;
 			}
-			if ($scope.dte) {
+			if ($scope.registerEnd) {
 				params["registerEnd"] = new Date($scope.registerEnd.getFullYear() + "/" + ($scope.registerEnd.getMonth() + 1) + "/" + ($scope.registerEnd.getDate() + 1)) * 1;
 			}
+			// if ($scope.registerBegin) {
+			// 	params["registerBegin"] = $scope.registerBegin.getFullYear() + "-" + ($scope.registerBegin.getMonth() + 1) + "-" + $scope.registerBegin.getDate();
+			// }
+			// if ($scope.registerEnd) {
+			// 	params["registerEnd"] = $scope.registerEnd.getFullYear() + "-" + ($scope.registerEnd.getMonth() + 1) + "-" + $scope.registerEnd.getDate();
+			// }
 			$scope.processing = true;
 			$scope.loading = true;
 			service.getClientList(params).then(function(res) {
@@ -68,41 +74,78 @@ clientModule.controller('listController', ['$scope', '$state', 'clientService',
 	}
 ]);
 
-clientModule.controller('investController', ['$scope', '$state', '$stateParams', 'msgService',
-	'clientService',
-	function($scope, $state, $stateParams, msgService, service) {
+clientModule.controller('investController', ['$scope', '$state', '$stateParams', 'msgService','clientService','envService','$modal',
+	function($scope, $state, $stateParams, msgService,service,envService, $modal) {
 		var params = {};
-		params["id"] = $stateParams.id;
-		service.getInvestList(params).then(function(res) {
-			$scope.userInfo = res;
-		});
+		params["tUserId"] = $stateParams.id;
+		$scope.env=envService.getEnv();
 		$scope.page = 1;
+		service.getInvestList(params).then(function (res) {
+			$scope.list = res.list;
+			$scope.page = res.page;
+			$scope.total = res.total;
+			$scope.size = res.size;
+		});
+
+		service.queryOne(params).then(function (res) {
+			$scope.userInfo = res.userbroker;
+		})
 		$scope.detailType = 1;
 		$scope.search = function() {
 			var params = {};
 			params["page"] = $scope.page;
 			params["size"] = 10;
-			params["id"] = $stateParams.id;
+			params["tUserId"] = $stateParams.id;
 			if ($scope.detailType == 1) {
 				service.getInvestList(params).then(function(res) {
-					$scope.list = res;
+					$scope.list = res.list;
+					$scope.page = res.page;
+					$scope.total = res.total;
+					$scope.size = res.size;
 				});
 			} else if ($scope.detailType == 2) {
 				service.getLogList(params).then(function(res) {
-					$scope.list = res;
+					$scope.list = res.list;
+					$scope.page = res.page;
+					$scope.total = res.total;
+					$scope.size = res.size;
 				});
 			}
 		}
 		$scope.tabChange = function(type) {
 			$scope.detailType = type;
-			search();
+			$scope.search();
 		}
 		$scope.delete = function() {
 			var params={};
-			params["tuserId"]=$scope.userInfo.tuserId;
-			params["investerId"]=$scope.userInfo.investerId;
-			service.delBroker().then(function(res){
-
+			params["tUserId"]=$scope.userInfo.ID;
+			params["brokerId"]=$scope.userInfo.brokerId;
+			params["brokerUserType"]=1;
+			$modal.open({
+				templateUrl: 'config/templates/confirm.partial.html',
+				controller: ['$scope',
+				function(scope) {
+					scope.title="确认删除";
+					scope.message="确认解除该用户经纪人关系？"
+					scope.confirm=function(argument) {
+						service.delBroker(params).then(function(res){
+							service.queryOne(params).then(function (res) {
+								$scope.userInfo = res.userbroker;
+								if ($scope.detailType == 2) {
+									service.getLogList(params).then(function(res) {
+										$scope.list = res.list;
+										$scope.page = res.page;
+										$scope.total = res.total;
+										$scope.size = res.size;
+									});
+								}
+								scope.$close();
+							})
+						},function(rej) {
+							msgService.messageBox(rej.message);
+						});
+					}
+				}]
 			});
 		}
 		$scope.edit = function(type) {
@@ -110,32 +153,29 @@ clientModule.controller('investController', ['$scope', '$state', '$stateParams',
 				templateUrl: 'modules/client/templates/change.html',
 				controller: ['$scope',
 					function(scope) {
+						scope.title="经纪人";
 						scope.search = function() {
 							if ($("#add-phone").val().length != 11) {
 								msgService.messageBox("请输入正确的手机号！");
 								return;
 							}
 							var params = {};
-							params["mobilePhone"] = $("#add-phone").val();
+							params["mobile"] = $("#add-phone").val();
 							scope.processing = true;
-							service.queryOne(params).then(function(res) {
+							service.getBroker(params).then(function(res) {
 								scope.processing = false;
-								if (res.TUser == "") {
+								if (res.broker == "") {
 									msgService.messageBox("该用户不存在（请先在前端注册并实名认证）");
 								}
-								scope.entity = res.TUser;
+								scope.entity = res.broker;
 							});
 						};
 						scope.confirm = function() {
-							if (!scope.entity["name"]) {
-								msgService.messageBox("请先在前端实名认证！");
-								return;
-							}
 							var params = {};
-							if (scope.entity.id) {
-								params["tuserid"] = scope.entity.id;
-								params["isHired"] = 0;
-								params["brokerType"] = ($("#rad-status").val() == "") ? "0" : $("#rad-status").val();
+							if (scope.entity.ID) {
+								params["tUserId"] = $scope.userInfo.ID;
+								params["brokerId"] = scope.entity.ID;
+								params["brokerUserType"] = 1;
 								scope.processing = true;
 								service.updateBroker(params).then(function(res) {
 									scope.processing = false;
@@ -144,17 +184,23 @@ clientModule.controller('investController', ['$scope', '$state', '$stateParams',
 										scope.entity = {};
 										$("#add-phone").val("");
 									} else {
-										msgService.messageBox("添加成功！");
-										params = {};
-										console.log(res);
-										params["userId"] = res.user.id;
-										service.updateBroker(params);
-										$scope.search();
+										msgService.messageBox("操作成功！");
+										service.queryOne(params).then(function (res) {
+											$scope.userInfo = res.userbroker;
+										})
+										if ($scope.detailType == 2) {
+											service.getLogList(params).then(function(res) {
+												$scope.list = res.list;
+												$scope.page = res.page;
+												$scope.total = res.total;
+												$scope.size = res.size;
+											});
+										}
 										scope.$close();
 									}
 								});
 							} else {
-								msgService.messageBox("请先查询后再添加人员！");
+								msgService.messageBox("请先查询！");
 							}
 						};
 						if (type == 'edit') {

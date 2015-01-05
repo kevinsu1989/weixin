@@ -11,13 +11,13 @@
     </button>
     
   <ul class="info-list">
-    <li><span>ID：</span>{{entity.id}}</li>
-    <li><span>姓名：</span>{{entity.name}}</li>
-    <li><span>昵称：</span>{{entity.nick}}</li>
-    <li><span>手机号：</span>{{entity.mobilephone}}</li>
+    <li><span>ID：</span>{{entity.ID}}</li>
+    <li><span>姓名：</span>{{entity.realName}}</li>
+    <li><span>昵称：</span>{{entity.userName}}</li>
+    <li><span>手机号：</span>{{entity.mobilePhone}}</li>
   </ul>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
-  <button class="btn btn-default" ng-click="close()">取消</button>
+  <button class="btn btn-default" ng-click="$dismiss()">取消</button>
 </div>
