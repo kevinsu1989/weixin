@@ -66,6 +66,13 @@ brokerFrontModule.factory('brokerFrontService', ['$http',
           method: 'post',
           data:params
         });
+      },
+      userInfo: function (params) {
+        return $http({
+          url: '/p/u/a/broker/userbing',
+          method: 'get',
+          params:params
+        });
       }
     };
   }
