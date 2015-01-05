@@ -1,0 +1,54 @@
+<div class="account-module ng-scope">
+	<div class="page-header"><h1>卡券管理</h1></div>
+    <div class="filter clearfix">
+    	<div class="row">
+        	<div class="col-sm-11">
+            	<div class="form-inline">
+                	<ul class="se-list">
+                    	<li>
+                            <label class="text-normal text-nowrap">卡券类型：</label>
+                            <select class="form-control" ng-model="type">
+                              <option value="0" ng-selected="true">所有卡券</option>
+                              <option value="1">返利券</option>
+                              <option value="2">再来一次券</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text-normal text-nowrap">关键字：</label>
+                            <input type="text" ng-model="id" class="form-control mc-text-width" value="请输入卡券名称或者金额">
+                        </li>
+                        <li>
+                            <button class="btn btn-primary ml10" ng-click="search()" type="submit"><i class="fa fa-search"></i> 查找</button> 
+                            <button class="btn btn-primary ml10" ng-click="delete()"><i class="fa fa-search"></i> 批量删除</button> 
+                            <button class="btn btn-primary ml10" ng-click="add()"><i class="fa fa-search"></i> 新增卡券</button></li>
+					</ul>
+				</div>
+			</div>
+        </div>
+	</div>
+	<table class="table table-hover">
+    	<thead>
+        	<tr>
+            	<th><input type="checkbox" value="" />全选</th>
+            	<th>序号</th>
+                <th>卡券类型</th>
+                <th width="30%">名称</th>
+                <th>金额（元）</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr class="ng-scope">
+            	<td class="ng-binding"><input type="checkbox" ng-selected="item.selected" value="" /></td>
+                <td class="ng-binding">{{$index+1}}</td>
+            	<td class="ng-binding">{{item.type}}</td>
+                <td class="ng-binding">{{item.name}}</td>
+                <td class="ng-binding">{{item.money}}</td>
+                <td class="ng-binding"><a ng-click="edit(item)">编辑</a> <i class="text-divider">|</i> <a ng-click="delete(item)">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-right" ng-show="total">
+        <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="search(true)"></ul>
+    </div>
+</div>

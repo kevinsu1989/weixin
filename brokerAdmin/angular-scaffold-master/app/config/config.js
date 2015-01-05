@@ -128,49 +128,49 @@ app.run(function ($rootScope) {
 
 // 配置菜单
 app.value('menubar', [{
-    "id": 8000109000,
+    "id": 8000000000,
     "name": "经纪人管理",
-    "href": "#brokers/broker",
+    "href": "/web/menus/broker#brokers/broker",
     "menus": [{
-      "href": "#brokers/broker",
-      "name": "经纪人列表",
-      "id": 8000109001
+      "href": "/web/menus/broker#brokers/broker",
+      "name": "多美理财师",
+      "id": 8000000001
     },{
-      "href": "#brokers/third",
+      "href": "/web/menus/broker#brokers/third",
       "name": "第三方网站",
-      "id": 8000109002
+      "id": 8000000002
     }]
   },{
     "id": 8000100000,
     "name": "客户管理",
-    "href": "#client/list",
+    "href": "/web/menus/user#client/list",
     "menus": [{
-      "href": "#client/list",
+      "href": "/web/menus/user#client/list",
       "name": "客户列表",
       "id": 8000100001
     }]
   },{
     "id": 8000200000,
     "name": "活动管理",
-    "href": "#activity/actlist",
+    "href": "/web/menus/activity#activity/actlist",
     "menus": [{
-      "href": "#activity/actlist",
+      "href": "/web/menus/activity#activity/actlist",
       "name": "活动管理",
       "id": 8000200001
     },{
-      "href": "#activity/awardlist",
+      "href": "/web/menus/activity#activity/awardlist",
       "name": "中奖管理",
       "id": 8000200002
     },{
-      "href": "#activity/itemlist",
+      "href": "/web/menus/activity#activity/itemlist",
       "name": "道具管理",
       "id": 8000200003
     },{
-      "href": "#activity/ticketlist",
+      "href": "/web/menus/activity#activity/ticketlist",
       "name": "卡券管理",
       "id": 8000200004
     },{
-      "href": "#activity/busilist",
+      "href": "/web/menus/activity#activity/busilist",
       "name": "商家管理",
       "id": 8000200005
     }]

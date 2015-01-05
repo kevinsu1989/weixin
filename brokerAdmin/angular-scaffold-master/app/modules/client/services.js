@@ -9,21 +9,21 @@ clientModule.factory('clientService', function($http) {
 		},
 		getInvestList: function(params) {
 			return $http({
-				url: '/web/a/tuser/investlist',
+				url: '/web/a/tuser/invest/detail/'+params.tUserId,
 				params: params,
 				method: 'get'
 			})
 		},
 		getLogList: function(params) {
 			return $http({
-				url: '/web/a/log/list',
+				url: '/web/a/log/list/'+params.tUserId,
 				params: params,
 				method: 'get'
 			})
 		},
 		getBroker: function(params) {
 			return $http({
-				url: '/web/a/broker',
+				url: '/web/a/broker/detail',
 				params: params,
 				method: 'get'
 			})
@@ -39,13 +39,14 @@ clientModule.factory('clientService', function($http) {
 			return $http({
 				url: '/web/a/tuser/delbroker',
 				params: params,
-				method: 'get'
+				method: 'post'
 			})
 		},
 		queryOne: function(params) {
 			return $http({
-				url: '/web/a/tuser',
-				params: params
+				url: '/web/a/tuser/broker/detail',
+				params: params,
+				method:'get'
 			});
 		}
 	}
@@ -67,3 +68,20 @@ clientModule.factory('msgService',['$modal', function ($modal) {
     }
   }
 }]);
+
+
+clientModule.factory('envService',function () {
+  return{
+    getEnv:function(){
+    	if(location.hostname.indexOf('dev')!=-1){
+    		return 'dev';
+    	}
+    	else if(location.hostname.indexOf('test')!=-1){
+    		return 'test';
+    	}
+    	else{
+    		return 'www';
+    	}
+    }
+  }
+});
