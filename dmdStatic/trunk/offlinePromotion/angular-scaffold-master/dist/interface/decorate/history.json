@@ -1,0 +1,36 @@
+{
+  "code": 200,
+  "data": {
+    "decorates": [{
+      "id": 1,
+      "serialId": "2014070509232213",
+      "userName": "张三",
+      "userMobile": "18888888888",
+      "roomName": "房间名称",
+      "buildingName": "楼栋名称",
+      "provider": "东易日盛北京上地分店",
+      "status": "S10",
+      "time": 1404787259016
+    }, {
+      "id": 2,
+      "serialId": "2014070509232323",
+      "userName": "张三",
+      "userMobile": "18888888888",
+      "roomName": "房间名称",
+      "buildingName": "楼栋名称",
+      "provider": "东易日盛北京上地分店",
+      "status": "S30",
+      "time": 1404787259016
+    }, {
+      "id": 3,
+      "serialId": "2014070609232213",
+      "userName": "张三",
+      "userMobile": "18888888888",
+      "roomName": "房间名称",
+      "buildingName": "楼栋名称",
+      "provider": "东易日盛北京上地分店",
+      "status": "S60",
+      "time": 1404787259016
+    }]
+  }
+}

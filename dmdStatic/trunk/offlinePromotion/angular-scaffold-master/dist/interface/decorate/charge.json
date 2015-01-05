@@ -1,0 +1,18 @@
+{
+  "code": 200,
+  "data": {
+    "charge": {
+      "deposit": [{
+        "name": "押金",
+        "money": 3000.00
+      }, {
+        "name": "其他",
+        "money": 200
+      }],
+      "expense": [{
+        "name": "卫生费",
+        "money": 200
+      }]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "code":200,
+  "data":{
+	"page":1,
+	"size":10,
+	"total":20,
+	"list":[
+		{
+		"id":"1", 
+
+		"clicker_openid":"xxxvvvvv000", 
+
+		"update_at":"1418500000000", 
+
+		"create_at":"1418500000000", 
+
+		"update_by":"111", 
+
+		"create_by":"222", 
+
+		"red_id":"3", 
+
+		"owner_openid":"xxxxzzzz000", 
+
+		"clicker_get_amount":"0.1", 
+
+		"owner_get_amount":"1.1", 
+
+		"clicker_times":"2", 
+
+		"owner_times":"3", 
+
+		"clicker_amount":"11.1", 
+
+		"owner_amount":"22.1", 
+
+		"clicker_level":"3", 
+
+		"owner_level":"4" ,
+		"clicker_nick":"vv",
+		"owner_nick":"xx",
+		"clicker_img":"http://",
+		"owner_img":"http://"
+		}		
+	]
+	}
+}
+
