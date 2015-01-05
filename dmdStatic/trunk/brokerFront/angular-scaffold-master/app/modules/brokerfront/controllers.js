@@ -1,8 +1,8 @@
 /*登录*/
 brokerFrontModule.controller('loginController', ['$scope', '$state', 'brokerFrontService', '$timeout',
   function($scope, $state, service, $timeout) {
-    $scope.loginName = "13439504367";
-    $scope.passWord = "123456";
+    $scope.loginName = "";
+    $scope.passWord = "";
     $scope.login = function() {
       var params = {};
       params["name"] = $scope.loginName;
@@ -19,7 +19,6 @@ brokerFrontModule.controller('loginController', ['$scope', '$state', 'brokerFron
 brokerFrontModule.controller('indexController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
     service.getSta().then(function(res) {
-      console.log(res);
       $scope.count = res.userReservedCount;
     })
   }
@@ -28,16 +27,17 @@ brokerFrontModule.controller('indexController', ['$scope', '$state', 'brokerFron
 /* 个人中心*/
 brokerFrontModule.controller('userController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
-    
-
+    service.userInfo().then(function (res) {
+      $scope.user=res;
+    })
   }
 ]);
 
 /*预约客户*/
 brokerFrontModule.controller('inviteController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
-    $scope.name = "苏衎";
-    $scope.mobile = "18511896430";
+    $scope.name = "";
+    $scope.mobile = "";
     $scope.invite = function() {
       var params = {};
       params["username"] = $scope.name;
@@ -55,6 +55,7 @@ brokerFrontModule.controller('inviteController', ['$scope', '$state', 'brokerFro
 brokerFrontModule.controller('invitelistController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
     $scope.type = "";
+    $scope.more=true;
     var page = 1;
     $scope.invitelist = function(type) {
       $scope.type = type;
@@ -65,16 +66,24 @@ brokerFrontModule.controller('invitelistController', ['$scope', '$state', 'broke
       params["status"] = type;
       service.reserveList(params).then(function(res) {
         $scope.list = res.list;
+        if(res.total/res.size<page){
+          $scope.more=false;
+        }else{
+          $scope.more=true;
+        }
       });
     };
-    $scope.getMore = function() {
+    $scope.displayMore = function() {
       var params = {};
       page++;
       params["page"] = page;
       params["size"] = 10;
       params["status"] = $scope.type;
       service.reserveList(params).then(function(res) {
-        $scope.list = res.list;
+        $scope.list=$scope.list.concat(res.list);
+        if(res.total/res.size<page){
+          $scope.more=false;
+        }
       });
     }
     $scope.invitelist('');
@@ -88,7 +97,7 @@ brokerFrontModule.controller('investlistController', ['$scope', '$state', 'broke
     $scope.InvestTimeBegin = "";
     $scope.InvestTimeEnd = "";
     $scope.page=1;
-    var size=2;
+    var size=10;
     $scope.investList = function() {
       var params = {};
       page=1
@@ -117,8 +126,6 @@ brokerFrontModule.controller('investlistController', ['$scope', '$state', 'broke
       });
     }
 
-
-
     $scope.choose=function (item) {
       $state.go("brokerfront.investdetail",{"id":item.userId,"name":item.realName,"mobile":item.cellPhone});
     }
@@ -135,7 +142,7 @@ brokerFrontModule.controller('investdetailController', ['$scope', '$state','$sta
     $scope.InvestTimeEnd = "";
 
     $scope.page=1;
-    var size=2;
+    var size=10;
     var flag=false;
     $scope.detailList = function() {
       var params = {};

@@ -11,7 +11,7 @@
       <li ng-class="{this:type==2}" ng-click="invitelist(2)" >成功</li>
       <li ng-class="{this:type==3}" ng-click="invitelist(3)" >失败</li>
     </ul>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" ng-if="type!=2&&type!=3">
       <tr>
         <th align="center" scope="col" width="20%">
           姓名</th>
@@ -29,8 +29,27 @@
         <td>{{userReserve.mobile}}</td>
         <td>{{userReserve.status|invitefilter}}</td>
         <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>
-        <td>{{userReserve.deadline}}</td>
+        <td>{{userReserve.deadline+"天"}}</td>
       </tr>
   </table>
-    <a class="more ng-binding" ng-click="displayMore()">查看更多</a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" ng-if="type==2||type==3">
+      <tr>
+        <th align="center" scope="col" width="24%">
+          姓名</th>
+        <th align="center" scope="col" width="30%">
+          手机号</th>
+        <th align="center" scope="col" width="18%">
+          状态</th>
+        <th align="center" scope="col" width="28%" class="last">
+          操作时间</th>
+      </tr>
+      <tr ng-repeat="userReserve in list" class="ng-scope">
+        <td>{{userReserve.name}}</td>
+        <td>{{userReserve.mobile}}</td>
+        <td>{{userReserve.status|invitefilter}}</td>
+        <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>
+      </tr>
+  </table>
+    <a class="more ng-binding" ng-if="more" ng-click="displayMore()">查看更多</a>
+    <a class="more ng-binding" ng-if="!more">木有更多了</a>
 </div>

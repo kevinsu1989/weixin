@@ -1,5 +1,5 @@
-/*! weixin - v0.1.0 - 2014-12-22
-* Copyright (c) 2014 lovemoon@yeah.net; Licensed GPLv2 */
+/*! weixin - v0.1.0 - 2015-01-05
+* Copyright (c) 2015 lovemoon@yeah.net; Licensed GPLv2 */
 // Initialize
 var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angular-growl', 'templates', 'brokerFrontModule']);
 
@@ -527,8 +527,8 @@ brokerFrontModule.config(['$stateProvider', '$urlRouterProvider',
 ]);
 brokerFrontModule.controller('loginController', ['$scope', '$state', 'brokerFrontService', '$timeout',
   function($scope, $state, service, $timeout) {
-    $scope.loginName = "13439504367";
-    $scope.passWord = "123456";
+    $scope.loginName = "";
+    $scope.passWord = "";
     $scope.login = function() {
       var params = {};
       params["name"] = $scope.loginName;
@@ -545,7 +545,6 @@ brokerFrontModule.controller('loginController', ['$scope', '$state', 'brokerFron
 brokerFrontModule.controller('indexController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
     service.getSta().then(function(res) {
-      console.log(res);
       $scope.count = res.userReservedCount;
     })
   }
@@ -554,16 +553,17 @@ brokerFrontModule.controller('indexController', ['$scope', '$state', 'brokerFron
 /* 个人中心*/
 brokerFrontModule.controller('userController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
-    
-
+    service.userInfo().then(function (res) {
+      $scope.user=res;
+    })
   }
 ]);
 
 /*预约客户*/
 brokerFrontModule.controller('inviteController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
-    $scope.name = "苏衎";
-    $scope.mobile = "18511896430";
+    $scope.name = "";
+    $scope.mobile = "";
     $scope.invite = function() {
       var params = {};
       params["username"] = $scope.name;
@@ -581,6 +581,7 @@ brokerFrontModule.controller('inviteController', ['$scope', '$state', 'brokerFro
 brokerFrontModule.controller('invitelistController', ['$scope', '$state', 'brokerFrontService',
   function($scope, $state, service) {
     $scope.type = "";
+    $scope.more=true;
     var page = 1;
     $scope.invitelist = function(type) {
       $scope.type = type;
@@ -591,16 +592,24 @@ brokerFrontModule.controller('invitelistController', ['$scope', '$state', 'broke
       params["status"] = type;
       service.reserveList(params).then(function(res) {
         $scope.list = res.list;
+        if(res.total/res.size<page){
+          $scope.more=false;
+        }else{
+          $scope.more=true;
+        }
       });
     };
-    $scope.getMore = function() {
+    $scope.displayMore = function() {
       var params = {};
       page++;
       params["page"] = page;
       params["size"] = 10;
       params["status"] = $scope.type;
       service.reserveList(params).then(function(res) {
-        $scope.list = res.list;
+        $scope.list=$scope.list.concat(res.list);
+        if(res.total/res.size<page){
+          $scope.more=false;
+        }
       });
     }
     $scope.invitelist('');
@@ -614,7 +623,7 @@ brokerFrontModule.controller('investlistController', ['$scope', '$state', 'broke
     $scope.InvestTimeBegin = "";
     $scope.InvestTimeEnd = "";
     $scope.page=1;
-    var size=2;
+    var size=10;
     $scope.investList = function() {
       var params = {};
       page=1
@@ -643,8 +652,6 @@ brokerFrontModule.controller('investlistController', ['$scope', '$state', 'broke
       });
     }
 
-
-
     $scope.choose=function (item) {
       $state.go("brokerfront.investdetail",{"id":item.userId,"name":item.realName,"mobile":item.cellPhone});
     }
@@ -661,7 +668,7 @@ brokerFrontModule.controller('investdetailController', ['$scope', '$state','$sta
     $scope.InvestTimeEnd = "";
 
     $scope.page=1;
-    var size=2;
+    var size=10;
     var flag=false;
     $scope.detailList = function() {
       var params = {};
@@ -812,6 +819,13 @@ brokerFrontModule.factory('brokerFrontService', ['$http',
           method: 'post',
           data:params
         });
+      },
+      userInfo: function (params) {
+        return $http({
+          url: '/p/u/a/broker/userbing',
+          method: 'get',
+          params:params
+        });
       }
     };
   }
@@ -906,11 +920,11 @@ angular.module("modules/brokerfront/templates/invest.detail.html", []).run(["$te
     "                </th>\n" +
     "            </tr>\n" +
     "            <tr ng-repeat=\"userInvest in list\" class=\"ng-scope\">\n" +
-    "                <td><a href=\"http://www.duomeidai.com/borrowDetail.action?id={{userInvest.borrowId}}\" target=\"blank\"><span ng-bind=\"userInvest.borrowId\" class=\"ng-binding\"></span></a>\n" +
+    "                <td><a href=\"{{baseInfo.url+userInvest.borrowId}}\" target=\"blank\"><span ng-bind=\"userInvest.borrowId\" class=\"ng-binding\"></span></a>\n" +
     "                </td>\n" +
     "                <td class=\"ng-binding\">{{userInvest.deadline}}个月</td>\n" +
-    "                <td class=\"ng-binding\">{{userInvest.investTime}}</td>\n" +
-    "                <td class=\"ng-binding\">{{userInvest.investAmount}}</td>\n" +
+    "                <td class=\"ng-binding\">{{userInvest.investTime.substr(0,userInvest.investTime.length-2)}}</td>\n" +
+    "                <td class=\"ng-binding\">{{userInvest.investAmount+\".00\"}}</td>\n" +
     "            </tr>\n" +
     "        </tbody>\n" +
     "    </table>\n" +
@@ -991,9 +1005,9 @@ angular.module("modules/brokerfront/templates/invest.list.html", []).run(["$temp
     "         </tr>\n" +
     "     </tbody>\n" +
     " </table>\n" +
-    "  <div>\n" +
-    "    <a ng-if=\"total<=page\" style=\"padding-bottom: 35px;\" href=\"javascript:\" class=\"more ng-binding\" >木有更多投资啦</a>\n" +
-    "    <a ng-if=\"total>page\" href=\"javascript:\" style=\"padding-bottom: 35px;\" class=\"more ng-binding\" ng-click=\"displayMore()\">点击加载更多</a>\n" +
+    "    <div>\n" +
+    "        <a ng-if=\"total<=page\" style=\"padding-bottom: 35px;\" href=\"javascript:\" class=\"more ng-binding\" >木有更多投资啦</a>\n" +
+    "        <a ng-if=\"total>page\" href=\"javascript:\" style=\"padding-bottom: 35px;\" class=\"more ng-binding\" ng-click=\"displayMore()\">点击加载更多</a>\n" +
     "	</div>\n" +
     "	<div style=\"float: right; width: 100%; height: auto\">\n" +
     "		<div class=\"textCenter\" style=\"float: right; border-top: 3px; width: 100%; position: fixed; left: auto; right: auto; bottom: 10px; _position: absolute; _top: expression(document.documentElement.clientHeight +   document.documentElement.scrollTop -   this.offsetHeight);\">\n" +
@@ -1004,11 +1018,7 @@ angular.module("modules/brokerfront/templates/invest.list.html", []).run(["$temp
     "\n" +
     "</div>\n" +
     "\n" +
-    "\n" +
-    "\n" +
-    "<!-- \n" +
-    "昨日：投资列表、预约列表需要修改                  \n" +
-    "今日：首页累计邀请人数    和预约列表的修改 -->");
+    "");
 }]);
 
 angular.module("modules/brokerfront/templates/invite.html", []).run(["$templateCache", function($templateCache) {
@@ -1046,7 +1056,7 @@ angular.module("modules/brokerfront/templates/invite.list.html", []).run(["$temp
     "      <li ng-class=\"{this:type==2}\" ng-click=\"invitelist(2)\" >成功</li>\n" +
     "      <li ng-class=\"{this:type==3}\" ng-click=\"invitelist(3)\" >失败</li>\n" +
     "    </ul>\n" +
-    "    <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+    "  <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" ng-if=\"type!=2&&type!=3\">\n" +
     "      <tr>\n" +
     "        <th align=\"center\" scope=\"col\" width=\"20%\">\n" +
     "          姓名</th>\n" +
@@ -1064,10 +1074,29 @@ angular.module("modules/brokerfront/templates/invite.list.html", []).run(["$temp
     "        <td>{{userReserve.mobile}}</td>\n" +
     "        <td>{{userReserve.status|invitefilter}}</td>\n" +
     "        <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>\n" +
-    "        <td>{{userReserve.deadline}}</td>\n" +
+    "        <td>{{userReserve.deadline+\"天\"}}</td>\n" +
     "      </tr>\n" +
     "  </table>\n" +
-    "    <a class=\"more ng-binding\" ng-click=\"displayMore()\">查看更多</a>\n" +
+    "  <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" ng-if=\"type==2||type==3\">\n" +
+    "      <tr>\n" +
+    "        <th align=\"center\" scope=\"col\" width=\"24%\">\n" +
+    "          姓名</th>\n" +
+    "        <th align=\"center\" scope=\"col\" width=\"30%\">\n" +
+    "          手机号</th>\n" +
+    "        <th align=\"center\" scope=\"col\" width=\"18%\">\n" +
+    "          状态</th>\n" +
+    "        <th align=\"center\" scope=\"col\" width=\"28%\" class=\"last\">\n" +
+    "          操作时间</th>\n" +
+    "      </tr>\n" +
+    "      <tr ng-repeat=\"userReserve in list\" class=\"ng-scope\">\n" +
+    "        <td>{{userReserve.name}}</td>\n" +
+    "        <td>{{userReserve.mobile}}</td>\n" +
+    "        <td>{{userReserve.status|invitefilter}}</td>\n" +
+    "        <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>\n" +
+    "      </tr>\n" +
+    "  </table>\n" +
+    "    <a class=\"more ng-binding\" ng-if=\"more\" ng-click=\"displayMore()\">查看更多</a>\n" +
+    "    <a class=\"more ng-binding\" ng-if=\"!more\">木有更多了</a>\n" +
     "</div>");
 }]);
 
@@ -1081,12 +1110,12 @@ angular.module("modules/brokerfront/templates/login.html", []).run(["$templateCa
     "<div class=\"textCenter logo_1\"></div>\n" +
     "<ul class=\"nav autoSize\">\n" +
     "    <li><i></i><span>用户名：</span>\n" +
-    "    	<input type=\"text\" ng-model=\"loginName\" class=\"input8 ng-valid-maxlength ng-dirty ng-valid ng-valid-required\" name=\"name\" id=\"name\" placeholder=\"请输入您的登录密码\" required ng-maxlength=\"12\"></li>\n" +
+    "    	<input type=\"text\" ng-model=\"loginName\" class=\"input8 ng-valid-maxlength ng-dirty ng-valid ng-valid-required\" name=\"name\" id=\"name\" placeholder=\"请输入您的手机号\" required ng-maxlength=\"12\"></li>\n" +
     "	<li><i class=\"pawodbg\"></i><span>密&nbsp;&nbsp;&nbsp;码：</span>\n" +
     "		<input type=\"password\"  ng-model=\"passWord\" class=\"input8 ng-vaild-maxlength ng-valid ng-valid-required\" name=\"pwd\" id=\"pwd\" ng-model=\"user.pwd\" placeholder=\"请输入密码，至少6位数\"required ng-maxlength=\"12\"></li>\n" +
     "</ul>\n" +
     "<div class=\"textCenter\">\n" +
-    "	<button class=\"redButton autoSize editBt\" ng-click=\"login()\">确认绑定</button>\n" +
+    "	<button class=\"redButton autoSize editBt\" ng-click=\"login()\">登录</button>\n" +
     "</div>\n" +
     "\n" +
     "");
@@ -1095,19 +1124,18 @@ angular.module("modules/brokerfront/templates/login.html", []).run(["$templateCa
 angular.module("modules/brokerfront/templates/user.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/brokerfront/templates/user.html",
     "<div class=\"webName autoSize textCenter grayButton\">\n" +
-    "	<div class=\"fanhui\"><span></span></div>\n" +
+    "	<div class=\"fanhui\" ui-sref=\"brokerfront.index\"><span></span></div>\n" +
     "	<h5>个人中心</h5>\n" +
     "    <div class=\"set\" style=\"display:none;\"><span></span></div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"textCenter user_hd\">\n" +
-    "    <div class=\"head_bg\"><img src=\"images/user_head_mid.jpg\" /></div>\n" +
+    "    <div class=\"head_bg\"><img src=\"http://dev.static.duomeidai.com/brokerfront/img/user_head_mid.jpg\" /></div>\n" +
     "</div>\n" +
     "\n" +
     "<ul class=\"nav autoSize\">\n" +
-    "    <li><span class=\"user_infor\">用户名：</span><p class=\"input8 left\" ng-click=\"user()\">XXXX</p></li>\n" +
-    "	<li><span class=\"user_infor\">姓名：</span><p class=\"input8 left\" ng-click=\"name()\">李**</p></li>\n" +
-    "    <li><span class=\"user_infor\">手机号：</span><p class=\"input8 left\" ng-click=\"mobile()\">13234567890</p></li>\n" +
-    "    <li><span class=\"paswd_xgbut\" ng-click=\"password()\">修改密码</span></li>\n" +
+    "    <li><span class=\"user_infor\">用户名：</span><p class=\"input8 left\" ng-click=\"user()\">{{user.nick}}</p></li>\n" +
+    "	<li><span class=\"user_infor\">姓名：</span><p class=\"input8 left\" ng-click=\"name()\">{{user.name}}</p></li>\n" +
+    "    <li><span class=\"user_infor\">手机号：</span><p class=\"input8 left\" ng-click=\"mobile()\">{{user.mobile}}</p></li>\n" +
     "</ul>");
 }]);

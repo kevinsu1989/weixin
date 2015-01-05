@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     config: {
       folder: 'temp',
       port: 8890,
-      livereload: 35740
+      livereload: 35741
     },
 
     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +

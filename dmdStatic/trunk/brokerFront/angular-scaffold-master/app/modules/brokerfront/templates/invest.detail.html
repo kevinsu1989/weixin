@@ -51,11 +51,11 @@
                 </th>
             </tr>
             <tr ng-repeat="userInvest in list" class="ng-scope">
-                <td><a href="http://www.duomeidai.com/borrowDetail.action?id={{userInvest.borrowId}}" target="blank"><span ng-bind="userInvest.borrowId" class="ng-binding"></span></a>
+                <td><a href="{{baseInfo.url+userInvest.borrowId}}" target="blank"><span ng-bind="userInvest.borrowId" class="ng-binding"></span></a>
                 </td>
                 <td class="ng-binding">{{userInvest.deadline}}个月</td>
-                <td class="ng-binding">{{userInvest.investTime}}</td>
-                <td class="ng-binding">{{userInvest.investAmount}}</td>
+                <td class="ng-binding">{{userInvest.investTime.substr(0,userInvest.investTime.length-2)}}</td>
+                <td class="ng-binding">{{userInvest.investAmount+".00"}}</td>
             </tr>
         </tbody>
     </table>
