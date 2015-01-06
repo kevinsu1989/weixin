@@ -1,0 +1,32 @@
+
+<div class="modal-header ng-scope wind_t_pub add_jp"><a class="close">×</a><h4 class="modal-title ng-binding">新增卡券</h4></div>
+<div class="modal-body ng-scope wind_t_pub add_jp">
+    <ul class="se-list">
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>卡券类型：</label>
+            <label class="radio-inline"><input type="radio" name="inlineRadioOptions" value="">返利券</label>
+            <label class="radio-inline"><input type="radio" name="inlineRadioOptions" value="">再来一次券</label>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>卡券名称：</label>
+            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入卡券名称">
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>金额：</label>
+            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入卡券金额">
+            <span class="corred">注：当选择【再来一次券】时，金额非必填</span>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap">返利有效期：</label>
+            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入返利使用有效期"><span>天</span><span style="font-size:12px;color:#999;margin-left:10px;">若不填，则时间不做限制</span>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>卡券图片：</label>
+        </li>
+                               
+    </ul>
+</div>
+<div class="modal-footer ng-scope">
+  <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
+  <button class="btn btn-default" ng-click="$dismiss()">取消</button>
+</div>

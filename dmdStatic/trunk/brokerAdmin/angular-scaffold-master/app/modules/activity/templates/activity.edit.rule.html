@@ -1,0 +1,52 @@
+<div class="modal-header ng-scope wind_t_pub add_jp"><a class="close" ng-click="$dismiss()">×</a><h4 class="modal-title ng-binding">添加奖品及抽奖规则</h4></div>
+<div class="modal-body ng-scope wind_t_pub add_jp">
+    <ul class="se-list">
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>选择奖品：</label>
+            <select ng-modal="award.sourceID" class="form-control mc-auto-width">
+              <option>请选择奖品</option>
+              <option value="1">10元返利券</option>
+              <option value="2">10元现金券</option>
+              <option value="3">iPhone6</option>
+              <option value="4">10元手机充值卡</option>
+              <option value="5">七彩云南游</option>
+            </select>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>抽奖条件：</label>
+            <select ng-modal="award.extraPrizeTypeLimit" class="form-control mc-auto-width">
+              <option>请选抽奖用条件</option>
+              <option value="1">注册用户</option>
+              <option value="2">实名认证用户</option>
+              <option value="3">有投资记录用户</option>
+              <option value="4">累计投资金额满</option>
+              <option value="5">单笔投资金额满</option>
+            </select>
+            <input type="date" ng-model="award.count" class="form-control mc-time-width" value="请选择开始时间"> <span style="float:left;">--</span> 
+            <input type="date" ng-model="award.count" class="form-control mc-time-width" value="请选择结束时间">
+            <input ng-if="award.extraPrizeTypeLimit==4||award.extraPrizeTypeLimit==5" type="text" ng-model="award.count" class="form-control mc-time-width" value="请输入投资金额"> <span style="float:left;">元</span> 
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>奖品数量：</label>
+            <input type="text" ng-model="award.count" class="form-control mc-auto-width" value="请输入奖品数量">
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>中奖概率：</label>
+            <input type="text" ng-model="award.probability" class="form-control mc-auto-width" value="请输入中奖概率"><span style="float:left;">%</span>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap">奖品投放日期：</label>
+            <input type="date" ng-model="award.releaseAt" class="form-control mc-auto-width" value="请选择奖品投放日期">
+            <span style="float:left;font-size:12px;">奖品从投放日期开始，每天平均投放，若不填则从活动上线时刻开始。</span>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap">中奖文案：</label>
+            <input type="text" ng-model="award.document" class="form-control mc-text-width" value="请输入中奖文案">
+        </li>                        
+    </ul>
+</div>
+<div class="modal-footer ng-scope wind_t_pub add_jp">
+  <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
+  <button class="btn btn-default" ng-click="$dismiss()">取消</button>
+</div>
+          
