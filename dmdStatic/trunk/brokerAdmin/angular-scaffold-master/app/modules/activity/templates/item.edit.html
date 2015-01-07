@@ -3,15 +3,15 @@
     <ul class="se-list">
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>道具名称：</label>
-            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入道具名称">
+            <input type="text" ng-model="entity.name" class="form-control mc-auto-width" value="请输入道具名称">
         </li>
         <li>
             <label class="text-normal text-nowrap">金额：</label>
-            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入道具金额">
+            <input type="text" ng-model="entity.money" class="form-control mc-auto-width" value="请输入道具金额">
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>选择商家：</label>
-            <select class="form-control mc-auto-width">
+            <select class="form-control mc-auto-width" ng-model="entity.businessId">
               <option>请选商家名称</option>
               <option>商家A</option>
               <option>商家B</option>
@@ -22,6 +22,7 @@
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>道具图片：</label>
+            <img ng-if="entity.image" ng-src="entity.image">
         </li>
                                
     </ul>

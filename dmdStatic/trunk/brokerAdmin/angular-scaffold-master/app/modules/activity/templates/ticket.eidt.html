@@ -9,19 +9,20 @@
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>卡券名称：</label>
-            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入卡券名称">
+            <input type="text" ng-model="entity.name" class="form-control mc-auto-width" value="请输入卡券名称">
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>金额：</label>
-            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入卡券金额">
+            <input type="text" ng-model="entity.money" class="form-control mc-auto-width" value="请输入卡券金额">
             <span class="corred">注：当选择【再来一次券】时，金额非必填</span>
         </li>
         <li>
             <label class="text-normal text-nowrap">返利有效期：</label>
-            <input type="text" ng-model="id" class="form-control mc-auto-width" value="请输入返利使用有效期"><span>天</span><span style="font-size:12px;color:#999;margin-left:10px;">若不填，则时间不做限制</span>
+            <input type="text" ng-model="entity.deadline" class="form-control mc-auto-width" value="请输入返利使用有效期"><span>天</span><span style="font-size:12px;color:#999;margin-left:10px;">若不填，则时间不做限制</span>
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>卡券图片：</label>
+            <img ng-if="entity.image" ng-src="entity.image">
         </li>
                                
     </ul>

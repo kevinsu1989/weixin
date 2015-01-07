@@ -75,3 +75,26 @@ activityModule.factory('msgService',['$modal', function ($modal) {
     }
   }
 }]);
+
+activityModule.factory('selectService',function () {
+  return{
+    selectAll:function(arr,select){
+      if(arr.length==0){
+        return arr;
+      }
+      var j=0;
+      for(var i=0,len=arr.length;i<len;i++){
+        arr.selected=select;
+      }
+    },
+    init:function(arr){
+      if(arr.length==0){
+        return arr;
+      }
+      for(var i=0,len=arr.length;i<len;i++){
+        arr.selected=false;
+      }
+      return arr;
+    }
+  }
+});
