@@ -18,10 +18,10 @@ redEnvelopeModule.filter('moneyfilter', function () {
 redEnvelopeModule.filter('namefilter', function () {
   return function (name,len) {
     if(name.length>len){
-      return name.substring(0,len);
+      return name.substring(0,len).replace("微信","**");
     }
     else{
-      return name;
+      return name.replace("微信","**");
     }
   };
 });
