@@ -1,4 +1,4 @@
-angular.module('templates', ['common/templates/layout.partials.html', 'modules/decorate/templates/acceptance.html', 'modules/decorate/templates/confirm.html', 'modules/decorate/templates/decorate-progress.partial.html', 'modules/decorate/templates/decorate.html', 'modules/decorate/templates/drawing.html', 'modules/decorate/templates/history.html', 'modules/decorate/templates/houses.html', 'modules/decorate/templates/invitation.html', 'modules/decorate/templates/notice-acceptance.html', 'modules/decorate/templates/notice-drawing.html', 'modules/decorate/templates/notice-initiate.html', 'modules/decorate/templates/notice-refund.html', 'modules/decorate/templates/progress.html', 'modules/decorate/templates/reference.html', 'modules/decorate/templates/refund.html', 'modules/home/templates/config.html', 'modules/home/templates/home.html', 'modules/redenvelope/templates/active_end.html', 'modules/redenvelope/templates/agreement.html', 'modules/redenvelope/templates/award.html', 'modules/redenvelope/templates/friend.html', 'modules/redenvelope/templates/getSeed.html', 'modules/redenvelope/templates/jabme.html', 'modules/redenvelope/templates/myachivement.html', 'modules/redenvelope/templates/myinfo.html', 'modules/redenvelope/templates/myjab.html', 'modules/redenvelope/templates/realname.html', 'modules/redenvelope/templates/regist.html', 'modules/redenvelope/templates/regsuccess.html', 'modules/redenvelope/templates/rule.html', 'modules/redenvelope/templates/view.html', 'modules/register/templates/captcha.html', 'modules/register/templates/failure.html', 'modules/register/templates/mobile.html', 'modules/register/templates/register.html', 'modules/register/templates/success.html']);
+angular.module('templates', ['common/templates/layout.partials.html', 'modules/decorate/templates/acceptance.html', 'modules/decorate/templates/confirm.html', 'modules/decorate/templates/decorate-progress.partial.html', 'modules/decorate/templates/decorate.html', 'modules/decorate/templates/drawing.html', 'modules/decorate/templates/history.html', 'modules/decorate/templates/houses.html', 'modules/decorate/templates/invitation.html', 'modules/decorate/templates/notice-acceptance.html', 'modules/decorate/templates/notice-drawing.html', 'modules/decorate/templates/notice-initiate.html', 'modules/decorate/templates/notice-refund.html', 'modules/decorate/templates/progress.html', 'modules/decorate/templates/reference.html', 'modules/decorate/templates/refund.html', 'modules/home/templates/config.html', 'modules/home/templates/home.html', 'modules/redenvelope/templates/active_end.html', 'modules/redenvelope/templates/agreement.html', 'modules/redenvelope/templates/friend.html', 'modules/redenvelope/templates/getSeed.html', 'modules/redenvelope/templates/jabme.html', 'modules/redenvelope/templates/myachivement.html', 'modules/redenvelope/templates/myinfo.html', 'modules/redenvelope/templates/myjab.html', 'modules/redenvelope/templates/realname.html', 'modules/redenvelope/templates/regist.html', 'modules/redenvelope/templates/regsuccess.html', 'modules/redenvelope/templates/rule.html', 'modules/redenvelope/templates/view.html', 'modules/register/templates/captcha.html', 'modules/register/templates/failure.html', 'modules/register/templates/mobile.html', 'modules/register/templates/register.html', 'modules/register/templates/success.html']);
 
 angular.module("common/templates/layout.partials.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/templates/layout.partials.html",
@@ -503,97 +503,6 @@ angular.module("modules/redenvelope/templates/agreement.html", []).run(["$templa
     "    \n" +
     "   <div class=\"padt2\"></div>\n" +
     "</div>");
-}]);
-
-angular.module("modules/redenvelope/templates/award.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("modules/redenvelope/templates/award.html",
-    "<div  class=\"padb8 img-rounded mart3 hb_pic radiu_bgcor\">\n" +
-    "            \n" +
-    "            	<h2 class=\"text-center corred\">本周中奖名单</h2>\n" +
-    "                <h3 class=\"text-center jp_period\">{{dateStr}}</h3>\n" +
-    "                \n" +
-    "                <div class=\"row marginC\">\n" +
-    "                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                        <div class=\"panel panel-default bornone\" style=\"background:none;box-shadow:none;margin:0;\">\n" +
-    "                            <ul class=\"list-cjul\">\n" +
-    "                              <li class=\"li_prize\" ng-if=\"list.length>0\">\n" +
-    "                              	<div class=\"row\">\n" +
-    "                                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"nub\"><span class=\"badge\">1</span></div>\n" +
-    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_1.png\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[0].reward_content}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                    	<div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[0].img}}\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[0].nick}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                              </li>\n" +
-    "                              <li class=\"li_prize\" ng-if=\"list.length>1\">\n" +
-    "                              	<div class=\"row\">\n" +
-    "                                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"nub\"><span class=\"badge\">2</span></div>\n" +
-    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_2.png\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[1].reward_content}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                    	<div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[1].img}}\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[1].nick}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                              </li>\n" +
-    "                              <li class=\"li_prize\" ng-if=\"list.length>2\">\n" +
-    "                              	<div class=\"row\">\n" +
-    "                                	<div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"nub\"><span class=\"badge\">3</span></div>\n" +
-    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_3.png\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[2].reward_content}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                    	<div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[2].img}}\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[2].nick}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                              </li>\n" +
-    "                              <li class=\"li_prize\" ng-if=\"list.length>3\">\n" +
-    "                                <div class=\"row\">\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"nub\"><span class=\"badge\">4</span></div>\n" +
-    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_4.png\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[3].reward_content}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[3].img}}\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[3].nick}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                              </li>\n" +
-    "                              <li class=\"li_prize\" ng-if=\"list.length>4\">\n" +
-    "                                <div class=\"row\">\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"nub\"><span class=\"badge\">5</span></div>\n" +
-    "                                        <div class=\"img-text\"><img src=\"http://dev.static.duomeidai.com/redenvelope/img/cj_4.png\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"jp_name\"><h4 class=\"fon13 corred mar0\">奖品：{{list[4].reward_content}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                    <div class=\"padt1\" style=\"clear:both;\"></div>\n" +
-    "                                    <div class=\"col-sm-12 col-md-12 col-lg-12\">\n" +
-    "                                        <div class=\"pull-left hjr_pic\"><img width=\"60\" ng-src=\"{{list[4].img}}\" alt=\"\" /></div>\n" +
-    "                                        <div class=\"pull-left hjr_name\"><h4 class=\"fon13 color6 mar0\" style=\"line-height:20px;\">获奖者：{{list[4].nick}}</h4></div>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                              </li>\n" +
-    "                            </ul>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "				</div>\n" +
-    "                \n" +
-    "                <a type=\"button\" class=\"btn btn-primary btn-lg btn-block share_but\" href=\"http://mp.weixin.qq.com/s?__biz=MzAxNjEyNzcyMA==&mid=297445210&idx=1&sn=0491577457c7443fc287e11924fcd7eb#rd\">查看抽奖规则</a>\n" +
-    "                \n" +
-    "            </div>");
 }]);
 
 angular.module("modules/redenvelope/templates/friend.html", []).run(["$templateCache", function($templateCache) {
@@ -1645,7 +1554,7 @@ angular.module("modules/redenvelope/templates/rule.html", []).run(["$templateCac
     "	    <p class=\"text-left font16\">1、参与活动的用户都可以获得1个会长大的种子红包。</p>\n" +
     "	    <p class=\"text-left font16\">2、把红包分享给好友，好友每天首次点击都可为红包增加金额，同时好友自己也可获得红包。\n" +
     "		</p>\n" +
-    "	    <p class=\"text-left font16\">3、通过微信绑定账号，每次点击增加红包为普通红包的2倍。通过微信注册并完成实名认证，增加红包为普通红包的3倍。如果好友之间存在邀请关系，且有一方是通过微信红包活动新注册的用户，那么增加红包为普通红包的10倍。\n" +
+    "	    <p class=\"text-left font16\">3、通过微信绑定账号，每次点击增加红包为普通红包的2倍。通过微信注册并完成实名认证，增加红包为普通红包的3倍。如果好友之间存在邀请关系，且有一方是通过多美贷红包活动新注册的用户，那么增加红包为普通红包的10倍。\n" +
     "		</p>\n" +
     "	    <p class=\"text-left font16\">4、戳新用户奖励更高。</p>\n" +
     "	    <p class=\"text-left font16\">5、红包达到一定金额即可领取，领取的红包可在多美贷账户“返利余额”中查看，最高可达1000元。返利使用规则，请登录官网（http://www.duomeidai.com）查看。</p>\n" +
