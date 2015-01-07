@@ -46,7 +46,7 @@
 	<table class="table table-hover">
     	<thead>
         	<tr>
-            	<th><input type="checkbox" value="" />全选</th>
+                <th><input type="checkbox" ng-model="selected" ng-change="selectAll()" value="" />全选</th>
             	<th>序号</th>
                 <th>活动名称</th>
                 <th>奖品</th>
@@ -57,7 +57,7 @@
         </thead>
         <tbody>
         	<tr class="ng-scope">
-            	<td class="ng-binding"><input type="checkbox" value="" /></td>
+                <td class="ng-binding"><input type="checkbox" ng-selected="item.selected"/></td>
             	<td class="ng-binding">1</td>
                 <td class="ng-binding">幸福来敲门</td>
                 <td class="ng-binding">iPHONE6</td>
