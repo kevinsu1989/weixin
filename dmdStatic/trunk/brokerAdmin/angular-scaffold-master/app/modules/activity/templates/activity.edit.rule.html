@@ -1,0 +1,53 @@
+<div class="modal-header ng-scope wind_t_pub add_jp"><a class="close" ng-click="$dismiss()">×</a><h4 class="modal-title ng-binding">添加奖品及抽奖规则</h4></div>
+<div class="modal-body ng-scope wind_t_pub add_jp">
+    <ul class="se-list">
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>选择奖品：</label>
+            <select ng-model="entity.id" class="form-control mc-auto-width">
+              <option>请选择奖品</option>
+              <option ng-repeat="item in awardlist" ng-selected="entity.id==item.id" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>抽奖条件：</label>
+            <select ng-model="entity.extraPrizeTypeLimit" class="form-control mc-auto-width">
+              <option>请选抽奖用条件</option>
+              <option value="1">注册用户</option>
+              <option value="2">实名认证用户</option>
+              <option value="3">有投资记录用户</option>
+              <option value="4">累计投资金额满</option>
+              <option value="5">单笔投资金额满</option>
+            </select>
+
+            <input type="text" class="form-control mc-time-width" datepicker-popup="yyyy-MM-dd" ng-model="entity.limitStartAt" is-open="dateArr[0].opened" close-text="Close" ng-click="dateOpen($event,0)" /> 
+            <span style="float:left;">--</span> 
+            <input type="text" class="form-control mc-time-width" datepicker-popup="yyyy-MM-dd" ng-model="entity.limitEndAt" is-open="dateArr[1].opened" close-text="Close" ng-click="dateOpen($event,1)" /> 
+            <input ng-if="entity.extraPrizeTypeLimit==4||entity.extraPrizeTypeLimit==5" type="text" ng-model="entity.limitInvestAmount" class="form-control mc-time-width" placeholder="请输入投资金额"> <span ng-if="entity.extraPrizeTypeLimit==4||entity.extraPrizeTypeLimit==5" style="float:left;">元</span> 
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>奖品数量：</label>
+            <input type="text" ng-model="entity.count" onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" class="form-control mc-auto-width" placeholder="请输入奖品数量">
+        </li>
+        <li>
+            <label class="text-normal text-nowrap"><i class="corred">*</i>中奖概率：</label>
+            <input type="text" ng-model="entity.probability" class="form-control mc-auto-width" placeholder="请输入中奖概率"><span style="float:left;">%</span>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap">奖品投放日期：</label>
+
+            
+            <input type="text" class="form-control mc-auto-width" datepicker-popup="yyyy-MM-dd" ng-model="entity.releaseAt" is-open="dateArr[2].opened" close-text="Close" ng-click="dateOpen($event,2)" />
+
+            <span style="float:left;font-size:12px;">奖品从投放日期开始，每天平均投放，若不填则从活动上线时刻开始。</span>
+        </li>
+        <li>
+            <label class="text-normal text-nowrap">中奖文案：</label>
+            <input type="text" ng-model="entity.document" class="form-control mc-text-width" placeholder="请输入中奖文案">
+        </li>                        
+    </ul>
+</div>
+<div class="modal-footer ng-scope wind_t_pub add_jp">
+  <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
+  <button class="btn btn-default" ng-click="$dismiss()">取消</button>
+</div>
+          
