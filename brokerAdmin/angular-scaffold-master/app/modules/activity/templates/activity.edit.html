@@ -11,17 +11,23 @@
                                 <input ng-disabled="!isEdit" type="text" ng-model="activity.name" class="form-control mc-text-width" placeholder="请输入活动名称">
                             </div>
                         </li>
-                        <li>
+                        <li style="overflow: inherit;">
                             <label class="text-normal text-nowrap col-sm-2"><i class="corred">*</i>活动时间：</label>
                             <div class="col-sm-10">
-                                <input ng-disabled="!isEdit||started" type="date" ng-model="activity.startAt" class="form-control mc-auto-width" placeholder="请选择开始时间"> -- </label><input type="date" ng-model="activity.endAt" class="form-control mc-auto-width" ng-disabled="!isEdit" placeholder="请选择结束时间">
+                                <input type="text" ng-disabled="!isEdit||started" class="form-control mc-auto-width" datepicker-popup="yyyy-MM-dd" ng-model="activity.startAt" is-open="dateArr[0].opened" close-text="Close" ng-click="dateOpen($event,0)" />
+
+                                --
+
+                                <input type="text" ng-disabled="!isEdit||started" class="form-control mc-auto-width" datepicker-popup="yyyy-MM-dd" ng-model="activity.endAt" is-open="dateArr[1].opened" close-text="Close" ng-click="dateOpen($event,1)" />
                         	</div>
                         </li>
                     	<li>
                             <label class="text-normal text-nowrap col-sm-2"><i class="corred">*</i>活动banner：</label>
                             <div class="col-sm-10">
-                                <button ng-if="isEdit" type="button" class="btn btn-default">+添加活动banner</button>
+                                <button ng-if="isEdit&&!activity.logoUrl" ng-click="updateImg()" type="button" class="btn btn-default">+添加活动banner</button>
+                                
                             </div>
+                            <img ng-click="updateImg()" ng-if="activity.logoUrl" src="{{activity.logoUrl}}" id="__logoImg__"/>
                             <input type="hidden" ng-model="activity.logoUrl">
                         </li>
                     	<li>
@@ -40,32 +46,35 @@
                             <label class="text-normal text-nowrap col-sm-2"><i class="corred">*</i>抽奖次数设置：</label>
                             <div class="col-sm-10">
                                 <i>用户</i>
-                                <select ng-disabled="!isEdit||started" class="form-control mc-auto-width" ng-model="activity.rule[0].basicPrizeDrawType">
-                                  <option value="0" ng-selected="true">每天</option>
+                                <select ng-disabled="!isEdit||started" class="form-control mc-auto-width" ng-model="activity.rules[0].basePrizeDrawType">
+                                  <option value="0">每天</option>
                                   <option value="1">共</option>
                                 </select>
                                 <i>可抽奖</i>
-                                <input ng-disabled="!isEdit||started" ng-model="activity.rule[0].basicPrizeDrawTime" class="form-control mc-auto-width">次
+                                <input ng-disabled="!isEdit||started" onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" ng-model="activity.rules[0].basePrizeDrawTime" class="form-control mc-auto-width">次
                             </div>
                         </li>
-                    	<li>
+                    	<li style="overflow: inherit;">
                         	<label class="text-normal text-nowrap col-lg-2">额外抽奖次数设置：</label>
                             <div class="col-sm-10">
                             	<p>当用户满足下列条件可设置增加抽奖次数</p>
                                 <div class="clearfix">
                                     <p>
-                                        <input ng-disabled="!isEdit||started" type="date" ng-model="activity.rule[0].exPrizeDrawStartAt" class="form-control mc-auto-width" placeholder="请选择开始时间"> -- </label>
-                                        <input ng-disabled="!isEdit||started" type="date" ng-model="activity.rule[0].exPrizeDrawEndAt" class="form-control mc-auto-width" placeholder="请选择结束时间">
+                                        <input type="text" ng-disabled="!isEdit" class="form-control mc-auto-width" datepicker-popup="yyyy-MM-dd" ng-model="activity.rules[0].exPrizeDrawStartAt" is-open="dateArr[2].opened" close-text="Close" ng-click="dateOpen($event,2)" />
+                                        --
+
+                                        <input type="text" ng-disabled="!isEdit" class="form-control mc-auto-width" datepicker-popup="yyyy-MM-dd" ng-model="activity.rules[0].exPrizeDrawEndAt" is-open="dateArr[3].opened" close-text="Close" ng-click="dateOpen($event,3)" />
+
                                     </p>
                                     <p>
-                                    	<select ng-disabled="!isEdit||started" ng-model="activity.rule[0].exPrizeDrawType" class="form-control mc-auto-width">
-                                          <option value="" ng-selected="selected">请选择条件</option>
-                                          <option>每投资满</option>
-                                          <option>累计投资金额满</option>
-                                          <option>单笔投资金额满</option>
+                                    	<select ng-disabled="!isEdit||started" ng-model="activity.rules[0].exPrizeDrawType" class="form-control mc-auto-width">
+                                          <option value="">请选择条件</option>
+                                          <option value="1">每投资满</option>
+                                          <option value="2">累计投资金额满</option>
+                                          <option value="3">单笔投资金额满</option>
                                         </select>
-                                        <input ng-disabled="!isEdit||started" type="text" ng-model="activity.rule[0].exPrizeDrawAmount" class="form-control mc-auto-width" placeholder="请输入投资金额">元
-                                        <input ng-disabled="!isEdit||started" ng-model="activity.rule[0].extraPrizeDrawTime" class="form-control mc-auto-width">次
+                                        <input ng-disabled="!isEdit||started" type="text" onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" ng-model="activity.rules[0].exPrizeDrawAmount" class="form-control mc-auto-width" placeholder="请输入投资金额">元
+                                        <input ng-disabled="!isEdit||started" onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" ng-model="activity.rules[0].exPrizeDrawTime" class="form-control mc-auto-width">次
                                     </p>
                                 </div>
                             </div>
@@ -73,8 +82,8 @@
                     	<li>
                             <label class="text-normal text-nowrap col-sm-2"><i class="corred">*</i>活动奖励及规则：</label>
                             <div class="col-sm-10">
-                                <p><button type="button" ng-if="isEdit" ng-click="addAward()" class="btn btn-default">+添加活动奖品及抽奖规则</button></p>
-                                <table class="table table-hover" ng-if="activity.award.length>0">
+                                <p><button type="button" ng-if="isEdit" ng-click="editAward()" class="btn btn-default">+添加活动奖品及抽奖规则</button></p>
+                                <table class="table table-hover" ng-if="activity.awards.length>0">
                                     <thead>
                                         <tr>
                                             <th>奖品名称</th>
@@ -87,12 +96,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="ng-scope" ng-repeat="item in activity.award">
-                                            <td class="ng-binding">{{item.name}}</td>
+                                        <tr class="ng-scope" ng-repeat="item in activity.awards">
+                                            <td class="ng-binding">{{item.awardName}}</td>
                                             <td class="ng-binding">{{item.extraPrizeTypeLimit}}</td>
                                             <td class="ng-binding">{{item.count}}</td>
                                             <td class="ng-binding">{{item.probability}}%</td>
-                                            <td class="ng-binding">{{item.releaseAt}}</td>
+                                            <td class="ng-binding">{{item.releaseAt|date:"yyyy-MM-dd"}}</td>
                                             <td class="ng-binding">{{item.document}}</td>
                                             <td class="text-right" ng-if="isEdit"><a ng-click="editAward($index)">编辑</a> <i class="text-divider">|</i> <a ng-click="deleteAward($index)">删除</a></td>
                                         </tr>
@@ -164,3 +173,10 @@
         <ul class="pagination-sm" pagination ng-model="page" items-per-page="size" total-items="total" ng-change="query()"></ul>
     </div>
 </div>
+<form style="display:none;" action="/upload" method="post" enctype="multipart/form-data" target="_uploadIFrame">
+    <input type="file" name="file" id="imgFile" />
+    <input type="submit" value="upload" id="imgSubmit" />
+</form>
+<iframe name="_uploadIFrame" style="display:none;"></iframe>
+
+

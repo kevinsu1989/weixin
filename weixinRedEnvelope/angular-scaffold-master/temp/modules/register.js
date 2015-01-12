@@ -1,5 +1,5 @@
-/*! weixin - v0.1.0 - 2014-12-26
-* Copyright (c) 2014 lovemoon@yeah.net; Licensed GPLv2 */
+/*! weixin - v0.1.0 - 2015-01-07
+* Copyright (c) 2015 lovemoon@yeah.net; Licensed GPLv2 */
 var callback=function(res) {
 	__callback__=res;
 }

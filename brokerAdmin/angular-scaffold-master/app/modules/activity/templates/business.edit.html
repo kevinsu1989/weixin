@@ -8,15 +8,15 @@
         </li>
         <li>
             <label class="text-normal text-nowrap">商家网址：</label>
-            <input type="text" ng-model="entity.url" class="form-control mc-name-width" value="请输入商家网址">
+            <input type="text" ng-model="entity.domain" class="form-control mc-name-width" value="请输入商家网址">
         </li>
         <li>
-            <label class="text-normal text-nowrap"><i class="corred">*</i>商家地址：</label>
+            <label class="text-normal text-nowrap">商家地址：</label>
             <input type="text" ng-model="entity.address" class="form-control mc-name-width" value="请输入商家地址">
         </li>
         <li>
             <label class="text-normal text-nowrap">商家电话：</label>
-            <input type="text" ng-model="entity.mobile" class="form-control mc-name-width" value="请输入商家电话">
+            <input type="text" ng-model="entity.tel"  onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" class="form-control mc-name-width" value="请输入商家电话">
         </li>
         <li>
             <label class="text-normal text-nowrap">商家传真：</label>
@@ -28,20 +28,21 @@
         </li>
         <li>
             <label class="text-normal text-nowrap">公众号：</label>
-            <input type="text" ng-model="entity.weixin" class="form-control mc-name-width" value="请输入商家微信公众号">
+            <input type="text" ng-model="entity.wechat" class="form-control mc-name-width" value="请输入商家微信公众号">
         </li>
         <li>
             <label class="text-normal text-nowrap">邮箱：</label>
-            <input type="text" ng-model="entity.email" class="form-control mc-name-width" value="请输入商家邮箱">
+            <input type="text" ng-model="entity.mail" class="form-control mc-name-width" value="请输入商家邮箱">
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>商家介绍：</label>
-            <textarea cols="80" ng-model="entity.desc" rows="5" class="form-control mc-name-width">请输入商家介绍</textarea>
+            <textarea cols="80" ng-model="entity.description" rows="5" class="form-control mc-name-width">请输入商家介绍</textarea>
         </li>
         
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>商家logo：</label>
-            <img ng-if="entity.logo" ng-src="entity.logo">
+            <button class="btn btn-primary" ng-click="updateImg()" ng-disabled="processing">添加图片</button>
+            <img ng-if="entity.logoUrl" ng-src="entity.logoUrl" id="__logoImg__"/>
         </li>
                                
     </ul>
@@ -50,4 +51,9 @@
   <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
   <button class="btn btn-default" ng-click="$dismiss()">取消</button>
 </div>
+<form style="display:none;" action="/upload" method="post" enctype="multipart/form-data" target="_uploadIFrame">
+    <input type="file" name="file" id="imgFile" />
+    <input type="submit" value="upload" id="imgSubmit" />
+</form>
+<iframe name="_uploadIFrame" style="display:none;"></iframe>
             

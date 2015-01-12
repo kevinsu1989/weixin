@@ -7,22 +7,23 @@
         </li>
         <li>
             <label class="text-normal text-nowrap">金额：</label>
-            <input type="text" ng-model="entity.money" class="form-control mc-auto-width" value="请输入道具金额">
+            <input type="text" ng-model="entity.amount" onkeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"  class="form-control mc-auto-width" value="请输入道具金额">
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>选择商家：</label>
-            <select class="form-control mc-auto-width" ng-model="entity.businessId">
-              <option>请选商家名称</option>
-              <option>商家A</option>
-              <option>商家B</option>
-              <option>商家C</option>
-              <option>商家D</option>
-              <option>商家E</option>
-            </select>
+            <select class="form-control mc-auto-width" ng-model="entity.partnerID" >
+              <option value="">请选商家名称</option>
+              <option ng-repeat="item in businessList" ng-selected="entity.partnerID==item.id" value="{{item.id}}">{{item.name}}</option>
+            </select><!-- 
+            <input type="hidden" ng-model="entity.partnerID"> -->
         </li>
         <li>
             <label class="text-normal text-nowrap"><i class="corred">*</i>道具图片：</label>
-            <img ng-if="entity.image" ng-src="entity.image">
+            
+            <button class="btn btn-primary" ng-click="updateImg()" ng-disabled="processing">添加图片</button>
+            <img ng-if="entity.logoUrl" ng-src="entity.logoUrl" id="__logoImg__"/>
+
+            <img ng-if="!entity.logoUrl" id="__logoImg__"/>
         </li>
                                
     </ul>
@@ -31,3 +32,9 @@
   <button class="btn btn-primary" ng-click="confirm()" ng-disabled="processing">确定</button>
   <button class="btn btn-default" ng-click="$dismiss()">取消</button>
 </div>
+
+<form style="display:none;" action="/upload" method="post" enctype="multipart/form-data" target="_uploadIFrame">
+    <input type="file" name="file" id="imgFile" />
+    <input type="submit" value="upload" id="imgSubmit" />
+</form>
+<iframe name="_uploadIFrame" style="display:none;"></iframe>

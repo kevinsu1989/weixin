@@ -2,51 +2,22 @@ activityModule.factory('activityService', function($http) {
 	return {
     activityList: function(params) {
       return $http({
-        url: '/web/a/activity/list',
-        params: params,
-        method: 'get'
-      })
-    },
-    businessList: function(params) {
-      return $http({
-        url: '/web/a/business/list',
-        params: params,
-        method: 'get'
-      })
-    },
-    awardList: function(params) {
-      return $http({
-        url: '/web/a/award/list',
-        params: params,
-        method: 'get'
-      })
-    },
-    itemList: function(params) {
-      return $http({
-        url: '/web/a/prop/list',
-        params: params,
-        method: 'get'
-      })
-    },
-    ticketList: function(params) {
-      return $http({
-        url: '/web/a/card/list',
+        url: '/web/a/activity',
         params: params,
         method: 'get'
       })
     },
     activityDetail:function(params) {
       return $http({
-        url: '/web/a/activity/detail',
-        params: params,
+        url: '/web/a/tblActivity/'+params.id,
         method: 'get'
       })
     },
-    activityEdit:function(params) {
+    activityEdit:function(params,method) {
       return $http({
-        url: '/web/a/activity/edit',
+        url: '/web/a/tblActivity'+(params.id?"/"+params.id:""),
         params: params,
-        method: 'get'
+        method: method
       })
     },
     activityBanner:function(params) {
@@ -54,6 +25,124 @@ activityModule.factory('activityService', function($http) {
         url: '/web/a/activity/banner',
         params: params,
         method: 'get'
+      })
+    },
+    activityStatus:function(params) {
+      return $http({
+        url: '/web/a/activity/'+params.id,
+        params: params,
+        method: 'put'
+      })
+    },
+    awardList: function(params) {
+      return $http({
+        url: '/web/c/tblActivityWinnerItem',
+        params: params,
+        method: 'get'
+      })
+    },
+    awardMark:function(params) {
+      return $http({
+        url: '/web/a/award',
+        data: params,
+        method: 'post'
+      })
+    },
+    awardExcel:function(params) {
+      return $http({
+        url: '/web/a/award',
+        data: params,
+        method: 'post'
+      })
+    },
+    awardSel:function(params) {
+      return $http({
+        url: '/web/a/tblActivityAward/list',
+        params: params,
+        method: 'get'
+      })
+    },
+    awardGive:function(params) {
+      return $http({
+        url: '/web/c/tblActivityWinnerItem/lottery',
+        data: params,
+        method: 'post'
+      })
+    },
+    awardMobile:function(params) {
+      return $http({
+        url: '/web/c/tblActivityWinnerItem/lottery/'+params.mobile,
+        method: 'get'
+      })
+    },
+    businessList: function(params) {
+      return $http({
+        url: '/web/a/tblBusinessPartner/list',
+        params: params,
+        method: 'get'
+      })
+    },
+    itemList: function(params) {
+      return $http({
+        url: '/web/a/tblBusinessPartnerGoods/list',
+        params: params,
+        method: 'get'
+      })
+    },
+    ticketList: function(params) {
+      return $http({
+        url: '/web/a/tblCard/list',
+        params: params,
+        method: 'get'
+      })
+    },
+
+    businessOne: function(params,method) {
+      return $http({
+        url: '/web/a/tblBusinessPartner'+(params.id?"/"+params.id:""),
+        method: method,
+        params: (method=="post")?"":params,
+        data:(method=="post")?params:""
+      })
+    },
+    itemOne: function(params,method) {
+      return $http({
+        url: '/web/a/tblBusinessPartnerGoods'+(params.id?"/"+params.id:""),
+        method: method,
+        params: (method=="post")?"":params,
+        data:(method=="post")?params:""
+      })
+    },
+    ticketOne: function(params,method) {
+      return $http({
+        url: '/web/a/tblCard'+(params.id?"/"+params.id:""),
+        method: method,
+        params: (method=="post")?"":params,
+        data:(method=="post")?params:""
+      })
+    },
+    businessGroup: function(params,method) {
+      return $http({
+        url: '/web/a/tblBusinessPartner/batch',
+        method: method,
+        params: (method=="post")?"":params,
+        data:(method=="post")?params:""
+      })
+    },
+    itemGroup: function(params,method) {
+      return $http({
+        url: '/web/a/tblBusinessPartnerGoods/batch',
+        method: method,
+        params: (method=="post")?"":params,
+        data:(method=="post")?params:""
+      })
+    },
+    ticketGroup: function(params,method) {
+      return $http({
+        url: '/web/a/tblCard/batch',
+        method: method,
+        params: (method=="post")?"":params,
+        data:(method=="post")?params:""
       })
     }
 	}
@@ -82,17 +171,26 @@ activityModule.factory('selectService',function () {
       if(arr.length==0){
         return arr;
       }
-      var j=0;
       for(var i=0,len=arr.length;i<len;i++){
-        arr.selected=select;
+        arr[i].selected=select;
       }
+      return arr;
+    },
+    getSelected:function(arr,select){
+      var _arr=[];
+      for(var i=0,len=arr.length;i<len;i++){
+        if(arr[i].selected){
+          _arr.push(arr[i]);
+        }
+      }
+      return _arr;
     },
     init:function(arr){
       if(arr.length==0){
         return arr;
       }
       for(var i=0,len=arr.length;i<len;i++){
-        arr.selected=false;
+        arr[i].selected=false;
       }
       return arr;
     }

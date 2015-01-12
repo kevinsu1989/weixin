@@ -29,6 +29,16 @@ brokerFrontModule.filter('timeLine', function () {
   };
 });
 
+brokerFrontModule.filter('deadlineFilter', function () {
+  return function (day) {
+    if(day*1<0){
+      return "0天";
+    }else{
+      return day+"天";
+    }
+  };
+});
+
 brokerFrontModule.filter('invitefilter', function () {
   return function (type) {
     if(type==1){
@@ -38,6 +48,9 @@ brokerFrontModule.filter('invitefilter', function () {
       return "成功";
     }
     if(type==3){
+      return "失败";
+    }
+    if(type==4){
       return "失败";
     }
   };

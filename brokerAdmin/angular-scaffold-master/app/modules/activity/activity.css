@@ -55,6 +55,13 @@ ul.se-list li{
 	padding: 0px;
 	float: left;
 	margin-bottom: 5px;
+	margin-right: 5px;
+}
+ul.se-list li label.first-label{
+	width: 120px;
+}
+ul.se-list li select{
+	width: 100px;
 }
 .text-danger{
 	color: #F00;

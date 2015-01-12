@@ -232,7 +232,7 @@ angular.module("modules/brokerfront/templates/invite.list.html", []).run(["$temp
     "        <th align=\"center\" scope=\"col\" width=\"14%\">\n" +
     "          状态</th>\n" +
     "        <th align=\"center\" scope=\"col\" width=\"24%\">\n" +
-    "          操作时间</th>\n" +
+    "          预约时间</th>\n" +
     "        <th align=\"center\" scope=\"col\" width=\"16%\" class=\"last\">\n" +
     "          剩余时间</th>\n" +
     "      </tr>\n" +
@@ -240,8 +240,8 @@ angular.module("modules/brokerfront/templates/invite.list.html", []).run(["$temp
     "        <td>{{userReserve.name}}</td>\n" +
     "        <td>{{userReserve.mobile}}</td>\n" +
     "        <td>{{userReserve.status|invitefilter}}</td>\n" +
-    "        <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>\n" +
-    "        <td>{{userReserve.deadline+\"天\"}}</td>\n" +
+    "        <td>{{userReserve.reserveAt|date:'yyyy-MM-dd HH:mm'}}</td>\n" +
+    "        <td>{{userReserve.deadline|deadlineFilter}}</td>\n" +
     "      </tr>\n" +
     "  </table>\n" +
     "  <table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" ng-if=\"type==2||type==3\">\n" +
@@ -253,13 +253,13 @@ angular.module("modules/brokerfront/templates/invite.list.html", []).run(["$temp
     "        <th align=\"center\" scope=\"col\" width=\"18%\">\n" +
     "          状态</th>\n" +
     "        <th align=\"center\" scope=\"col\" width=\"28%\" class=\"last\">\n" +
-    "          操作时间</th>\n" +
+    "          预约时间</th>\n" +
     "      </tr>\n" +
     "      <tr ng-repeat=\"userReserve in list\" class=\"ng-scope\">\n" +
     "        <td>{{userReserve.name}}</td>\n" +
     "        <td>{{userReserve.mobile}}</td>\n" +
     "        <td>{{userReserve.status|invitefilter}}</td>\n" +
-    "        <td>{{userReserve.updateAt|date:'yyyy-MM-dd HH:mm'}}</td>\n" +
+    "        <td>{{userReserve.reserveAt|date:'yyyy-MM-dd HH:mm'}}</td>\n" +
     "      </tr>\n" +
     "  </table>\n" +
     "    <a class=\"more ng-binding\" ng-if=\"more\" ng-click=\"displayMore()\">查看更多</a>\n" +
@@ -277,9 +277,9 @@ angular.module("modules/brokerfront/templates/login.html", []).run(["$templateCa
     "<div class=\"textCenter logo_1\"></div>\n" +
     "<ul class=\"nav autoSize\">\n" +
     "    <li><i></i><span>用户名：</span>\n" +
-    "    	<input type=\"text\" ng-model=\"loginName\" class=\"input8 ng-valid-maxlength ng-dirty ng-valid ng-valid-required\" name=\"name\" id=\"name\" placeholder=\"请输入您的手机号\" required ng-maxlength=\"12\"></li>\n" +
+    "    	<input type=\"text\" ng-model=\"loginName\" class=\"input8 ng-valid-maxlength ng-dirty ng-valid ng-valid-required\" name=\"name\" id=\"name\" placeholder=\"请输入您的手机号\"></li>\n" +
     "	<li><i class=\"pawodbg\"></i><span>密&nbsp;&nbsp;&nbsp;码：</span>\n" +
-    "		<input type=\"password\"  ng-model=\"passWord\" class=\"input8 ng-vaild-maxlength ng-valid ng-valid-required\" name=\"pwd\" id=\"pwd\" ng-model=\"user.pwd\" placeholder=\"请输入密码，至少6位数\"required ng-maxlength=\"12\"></li>\n" +
+    "		<input type=\"password\"  ng-model=\"passWord\" class=\"input8 ng-vaild-maxlength ng-valid ng-valid-required\" name=\"pwd\" id=\"pwd\" ng-model=\"user.pwd\" placeholder=\"请输入密码，至少6位数\"></li>\n" +
     "</ul>\n" +
     "<div class=\"textCenter\">\n" +
     "	<button class=\"redButton autoSize editBt\" ng-click=\"login()\">登录</button>\n" +
