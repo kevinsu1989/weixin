@@ -5,6 +5,14 @@ brokerFrontModule.controller('loginController', ['$scope', '$state', 'brokerFron
     $scope.passWord = "";
     $scope.login = function() {
       var params = {};
+      if(!$scope.loginName){
+        alert('请输入用户名！');
+        return;
+      }
+      if(!$scope.passWord||$scope.passWord.length<6){
+        alert('请输入合法密码！');
+        return;
+      }
       params["name"] = $scope.loginName;
       params["pwd"] = $scope.passWord;
       service.login(params).then(function(res) {
@@ -42,6 +50,10 @@ brokerFrontModule.controller('inviteController', ['$scope', '$state', 'brokerFro
       var params = {};
       params["username"] = $scope.name;
       params["mobile"] = $scope.mobile;
+      if($scope.mobile.length!=11){
+        alert('请输入正确的手机号！');
+        return;
+      }
       service.invite(params).then(function(res) {
         alert(res.message);
       },function(rej) {
@@ -98,31 +110,46 @@ brokerFrontModule.controller('investlistController', ['$scope', '$state', 'broke
     $scope.InvestTimeEnd = "";
     $scope.page=1;
     var size=10;
+    var flag=false;
     $scope.investList = function() {
+      if(flag){
+        return;
+      }
       var params = {};
-      page=1
+      $scope.page=1
       params["page"] = $scope.page;
       params["size"] = size;
       params["mobile"] = $scope.mobile;      
       params["InvestTimeBegin"] = ($scope.InvestTimeBegin*1!=0)?$scope.InvestTimeBegin+" 00:00:00":"";
       params["InvestTimeEnd"] = ($scope.InvestTimeEnd*1!=0)?$scope.InvestTimeEnd+" 23:59:59":"";
+      flag=true;
       service.investList(params).then(function(res) {
+        flag=false;
         $scope.list=res.list;
         $scope.baseInfo=res;
         $scope.total=res.total/res.size;
+      },function(rej) {
+        flag=false;
       });
     }
     $scope.displayMore = function() {
+      if(flag){
+        return;
+      }
       var params = {};
-      page++;
+      $scope.page++;
       params["page"] = $scope.page;
       params["size"] = size;
       params["mobile"] = $scope.mobile;      
       params["InvestTimeBegin"] = ($scope.InvestTimeBegin*1!=0)?$scope.InvestTimeBegin+" 00:00:00":"";
       params["InvestTimeEnd"] = ($scope.InvestTimeEnd*1!=0)?$scope.InvestTimeEnd+" 23:59:59":"";
+      flag=true;
       service.investList(params).then(function(res) {
+        flag=false;
         $scope.list=$scope.list.concat(res.list);
         $scope.total=res.total/res.size;
+      },function(rej) {
+        flag=false;
       });
     }
 
