@@ -38,5 +38,25 @@ brokersModule.config(function ($stateProvider, $urlRouterProvider) {
       url: '/thirdinfo/{id}',
       templateUrl: "modules/brokers/templates/third.info.html",
       controller: 'thirdInfoController'
+    })
+    .state('brokers.offline', {
+      url: '/offline',
+      templateUrl: "modules/brokers/templates/offline.html",
+      controller: 'offlineController'
+    })
+    .state('brokers.offlinedetail', {
+      url: '/offlinedetail/{id}',
+      templateUrl: "modules/brokers/templates/offline.detail.html",
+      controller: 'offlineDetailController'
+    })
+    .state('brokers.qrcode', {
+      url: '/qrcode',
+      templateUrl: "modules/brokers/templates/tools.qrcode.html",
+      controller: 'qrcodeController'
+    })
+    .state('brokers.qrcodeview', {
+      url: '/qrcodeview/{id}',
+      templateUrl: "modules/brokers/templates/tools.qrcode.view.html",
+      controller: 'qrcodeViewController'
     });
 });
