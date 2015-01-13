@@ -75,6 +75,14 @@ activityModule.factory('activityService', function($http) {
         method: 'get'
       })
     },
+
+    awardExcel:function(params) {
+      return $http({
+        url: '/export/activity/winnerItem',
+        method: 'get',
+        params:params
+      })
+    },
     businessList: function(params) {
       return $http({
         url: '/web/a/tblBusinessPartner/list',

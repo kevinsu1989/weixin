@@ -103,12 +103,21 @@ activityModule.controller('acteditController', ['$scope', '$state', '$stateParam
 						scope.dateArr[index].opened = true;
 					};
 					scope.confirm = function() {
+
 						var getAward = function(id) {
 							for (var i = 0, len = awardlist.length; i < len; i++) {
 								if (awardlist[i].id == id) {
 									return awardlist[i];
 								}
 							}
+						}
+						var percent=0;
+						for(var i=0,len=$scope.activity.awards.length;i<len;i++){
+							percent+=$scope.activity.awards[i].probability*1;
+						}
+						if(percent+scope.entity.probability*1>100){
+							msgService.messageBox("中奖概率之和不能大于100%");
+							return;
 						}
 						var _award = getAward(scope.entity.id);
 						scope.entity.awardName = _award.name;
@@ -176,10 +185,12 @@ activityModule.controller('acteditController', ['$scope', '$state', '$stateParam
 			if ($scope.activity.id) {
 				service.activityEdit(params, "put").then(function(res) {
 					msgService.messageBox("修改成功！");
+					$scope.isEdit=false;
 				});
 			} else {
 				service.activityEdit(params, "post").then(function(res) {
 					msgService.messageBox("添加成功！");
+					$scope.isEdit=false;
 				});
 			}
 
@@ -293,9 +304,6 @@ activityModule.controller('awardlistController', ['$scope', '$state', 'activityS
 			}, function(rej) {
 				msgService.messageBox('发奖失败');
 			});
-
-
-
 		}
 		$scope.giveAward = function() { /*派奖*/
 			if (!$scope._activityId) {
@@ -337,6 +345,26 @@ activityModule.controller('awardlistController', ['$scope', '$state', 'activityS
 					});
 				}
 			})
+		}
+		$scope.excel=function(){
+			if(!$scope.activityId){
+				msgService.messageBox("请选择要导出的活动！");
+				return;
+			}
+			var url='/export/activity/winnerItem';
+			url+= (!$scope.activityId)?"":"?activityID="+$scope.activityId;
+			if($scope.activityId){
+				url+= (!$scope.awardId)?"":"&awardID="+$scope.awardId;
+			}else{
+				url+= (!$scope.awardId)?"":"?awardID="+$scope.awardId;
+			}
+			window.open(url);
+			// var params={};
+			// params["activityID"] = $scope.activityId;
+			// params["awardID"] = $scope.awardId;
+			// service.awardExcel(params).then(function(res){
+
+			// })
 		}
 		$scope.getAwardSel = function() {
 			var params = {};
@@ -405,15 +433,15 @@ activityModule.controller('busilistController', ['$scope', '$state', '$statePara
 					}
 					scope.confirm = function() {
 						scope.entity.logoUrl=__imgUrl__;
-						if(scope.entity.name){
+						if(!scope.entity.name){
 							msgService.messageBox('请输入商户名！');
 							return;
 						}
-						if(scope.entity.logoUrl){
+						if(!scope.entity.logoUrl){
 							msgService.messageBox('请输上传商户图片！');
 							return;
 						}
-						if(scope.entity.description){
+						if(!scope.entity.description){
 							msgService.messageBox('请输入商户介绍！');
 							return;
 						}
@@ -525,6 +553,18 @@ activityModule.controller('itemlistController', ['$scope', '$state', '$statePara
 						$("#imgFile").click();
 					}
 					scope.confirm = function() {
+						if(!scope.entity.name){
+							msgService.messageBox('请输入卡券名！');
+							return;
+						}
+						if(!scope.entity.partnerID){
+							msgService.messageBox('请选择道具提供商！');
+							return;
+						}
+						if(!scope.entity.logoUrl){
+							msgService.messageBox('请输上传道具图片！');
+							return;
+						}
 						scope.entity.logoUrl=__imgUrl__;
 						if (scope.entity.id) { /*编辑*/
 							service.itemOne(scope.entity, 'put').then(function(res) {
@@ -574,7 +614,6 @@ activityModule.controller('itemlistController', ['$scope', '$state', '$statePara
 					}
 					var params = {};
 					params["ids"] = ids;
-
 					scope.message = "确认删除道具：" + names + "吗？";
 					scope.confirm = function() {
 						service.itemGroup(params, 'delete').then(function(res) {
@@ -627,6 +666,7 @@ activityModule.controller('ticketlistController', ['$scope', '$state', '$statePa
 				templateUrl: 'modules/activity/templates/ticket.edit.html',
 				controller: ['$scope', function(scope) {
 					scope.entity = item ? item : {};
+					scope.entity.type=10;
 					scope.updateImg = function(argument) {
 						$("#imgFile").change(function(){
 							$("#imgSubmit").click();
@@ -635,6 +675,18 @@ activityModule.controller('ticketlistController', ['$scope', '$state', '$statePa
 						$("#imgFile").click();
 					}
 					scope.confirm = function() {
+						if(!scope.entity.name){
+							msgService.messageBox('请输入卡券名！');
+							return;
+						}
+						if(!scope.entity.value){
+							msgService.messageBox('请输入卡券金额！');
+							return;
+						}
+						if(!scope.entity.logoUrl){
+							msgService.messageBox('请输上传卡券图片！');
+							return;
+						}
 						scope.entity.logoUrl=__imgUrl__;
 						if (scope.entity.id) { /*编辑*/
 							service.ticketOne(scope.entity, 'put').then(function(res) {
