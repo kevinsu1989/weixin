@@ -1,3 +1,35 @@
+//地推列表页
+brokersModule.controller('offlineController', ['$scope', '$state', '$modal','growl', 'brokerService','msgService',
+function ($scope, $state,$modal, growl, service,msgService) {
+
+
+}]);
+
+//地推详情页
+brokersModule.controller('offlineDetailController', ['$scope', '$state', '$modal','growl', 'brokerService','msgService',
+function ($scope, $state,$modal, growl, service,msgService) {
+
+
+}]);
+
+//二维码生成页
+brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal','growl', 'brokerService','msgService',
+function ($scope, $state,$modal, growl, service,msgService) {
+
+
+}]);
+
+//二维码预览页
+brokersModule.controller('qrcodeViewController', ['$scope', '$state', '$modal','growl', 'brokerService','msgService',
+function ($scope, $state,$modal, growl, service,msgService) {
+
+
+}]);
+
+
+
+
+//登录页
 brokersModule.controller('loginController', ['$scope','$state','brokerService',function ($scope, $state, service) {
 
   $scope.remember = true;
@@ -27,7 +59,7 @@ brokersModule.controller('loginController', ['$scope','$state','brokerService',f
 
 }]);
 
-// brokers.logout
+// 登出页
 brokersModule.controller('logoutController', ['$scope', '$state', 'growl', 'brokerService',function ($scope, $state, growl, service) {
   service.logout().then(function (res) {
     document.cookie="userNick=";
@@ -39,7 +71,7 @@ brokersModule.controller('logoutController', ['$scope', '$state', 'growl', 'brok
 }]);
 
 
-// broker
+// 多美经纪人列表页
 brokersModule.controller('brokerController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'controllerGenerator',function ($scope, $state, $modal, growl, service, controllerGenerator) {
   // 给$scope添加标准化CRUD操作
   // brokerService.listShow().then(function (res) {
@@ -539,3 +571,24 @@ brokersModule.controller('thirdInfoController', ['$scope', '$state', '$statePara
   $scope.maxDate=new Date();
   $scope.search(false);
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
