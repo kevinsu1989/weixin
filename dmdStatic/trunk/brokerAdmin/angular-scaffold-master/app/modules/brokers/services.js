@@ -72,6 +72,20 @@ brokersModule.factory('brokerService', function ($q,$http,serviceGenerator) {
             params:params,
             method:'post'
           })
+        },
+        createQrcode:function(params){
+          return $http({
+            url:"/web/a/qrcode/genlist",
+            params:params,
+            method:'post'
+          })
+        },
+        qrcodeList:function(params){
+          return $http({
+            url:"/web/a/qrcode/list",
+            params:params,
+            method:'get'
+          })
         }
       };
     }

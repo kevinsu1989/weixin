@@ -17,8 +17,89 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$modal
 //二维码生成页
 brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'msgService',
   function($scope, $state, $modal, growl, service, msgService) {
+    $scope.qrcodeValue = 1;
+    $scope.createQrcode = function() {
+      $scope.processing = true;
+      $scope.error = false;
+      var params = {};
+      params["size"] = $scope.qrcodeValue;
+      service.createQrcode(params).then(function(res) {
+        $scope.error = false;
+      }, function(rej) {
+        $scope.error = true;
+      })['finally'](function() {
 
+      });
+    };
+    $scope.dateOpen = function($event, type) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      if (type === 1) {
+        $scope.opened = true;
+        $scope.opened2 = false;
+      } else if (type === 2) {
+        $scope.opened = false;
+        $scope.opened2 = true;
+      }
+    };
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      startingDay: 1
+    };
+    $scope.maxDate = new Date();
 
+    $scope.page = 1;
+    $scope.status = 0;
+    $scope.id = "";
+    $scope.status = "";
+    $scope.dts = "";
+    $scope.dte = "";
+    $scope.create_from = "";
+    $scope.create_end = "";
+    $scope.exports_count_from = "";
+    $scope.exports_count_end = "";
+    $scope.search = function() {
+      $scope.allchecked = false;
+      var params = {};
+      params["page"] = $scope.page;
+      params["size"] = 10;
+      params["status"] = $scope.status;     
+      if ($scope.dts) {
+        params["use_from"] = new Date($scope.dts.getFullYear() + "/" + ($scope.dts.getMonth() + 1) + "/" + $scope.dts.getDate()) * 1;
+      }
+      if ($scope.dte) {
+        params["use_end"] = new Date($scope.dte.getFullYear() + "/" + ($scope.dte.getMonth() + 1) + "/" + ($scope.dte.getDate() + 1)) * 1;
+      }
+      params["id"] = $scope.id;
+      params["create_from"] = $scope.create_end;
+      params["create_end"] = $scope.create_end;
+      params["exports_count_from"] = $scope.exports_count_from;
+      params["exports_count_end"] = $scope.exports_count_end;
+
+      $scope.processing = true;
+      $scope.loading = true;
+      service.qrcodeList(params).then(function(res) {
+        $scope.processing = false;
+        $scope.loading = false;
+        $scope.list = res.list;
+        for (var i = 0; i < $scope.list.length; i++) {
+          $scope.list[i].checked = false;
+        };
+        $scope.total = res.total;
+        $scope.size = res.size;
+      });
+    };
+    $scope.selectItem = {};
+    $scope.checkedAll = function(checked,list) {
+      angular.forEach(list, function(value, key) {
+        value.checked = !checked;
+      });
+      $scope.selectItem = list;
+    };
+    $scope.exportQrcodes = function() {};
+    $scope.viewQrcode = function(item) {};
+    $scope.startQrcode = function(item) {};
+    $scope.search();
   }
 ]);
 
@@ -59,7 +140,6 @@ brokersModule.controller('loginController', ['$scope', '$state', 'brokerService'
       $scope.processing = false;
     });
   };
-
 }]);
 
 // 登出页
@@ -371,6 +451,7 @@ brokersModule.controller('thirdController', ['$scope', '$state', 'growl', 'broke
               return;
             }
             var params = {};
+            scope.entity = {};
             params["mobilePhone"] = $("#add-phone").val();
             scope.processing = true;
             service.queryOne(params).then(function(res) {
