@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <a class="close" ng-click="$dismiss()">&times;</a>
+</div>
+<div class="modal-body">
+  <label>序号第{{ entity.id }}组二维码状态修改为"{{ entity.codeStatus|qrcodeChange}}"</label>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="item.processing">确认</button>
+</div>

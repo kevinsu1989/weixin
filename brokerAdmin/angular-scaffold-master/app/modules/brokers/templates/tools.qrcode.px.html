@@ -1,0 +1,29 @@
+<div class="modal-header">
+	<a class="close" ng-click="$dismiss()">&times;</a>
+	<center>
+		<label>{{ title }}</label>
+	</center>
+</div>
+<div class="modal-body">
+	<center>
+		<table>
+			<tr>
+				<td style="width:100px;">
+					<input type="radio" ng-model="px" value="400"/>
+					{{ 400 }}*{{ 400 }}
+				</td>
+				<td style="width:100px;">
+					<input type="radio" ng-model="px" value="360"/>
+					{{ 360 }}*{{ 360 }}
+				</td>
+				<td style="width:100px;">
+					<input type="radio" ng-model="px" value="200"/>
+					{{ 200 }}*{{ 200 }}
+				</td>
+			</tr>
+		</table>
+	</center>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()" ng-disabled="item.processing">确认</button>
+</div>

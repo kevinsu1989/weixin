@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <a class="close" ng-click="$dismiss()">&times;</a>
+  <h4 class="modal-title">查看二维码</h4>
+</div>
+<div class="modal-body">
+  <table>
+    <thead>
+      <tr>
+        <th>编号A</th>
+        <th>编号B</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>400*400</td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>
+          <img ng-src="{{entity.aCodeUrl}}" style="width:400px;height:400px;"/>
+        </td>
+        <td>
+          <img ng-src="{{entity.bCodeUrl}}" style="width:400px;height:400px;"/>
+        </td>
+      </tr>
+      <tr>
+        <td>360*360</td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>
+          <img ng-src="{{entity.aCodeUrl}}" style="width:360px;height:360px;"/>
+        </td>
+        <td>
+          <img ng-src="{{entity.aCodeUrl}}" style="width:360px;height:360px;"/>
+        </td>
+      </tr>
+      <tr>
+        <td>200*200</td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>
+          <img ng-src="{{entity.aCodeUrl}}" style="width:200px;height:200px;"/>
+        </td>
+        <td>
+          <img ng-src="{{entity.aCodeUrl}}" style="width:200px;height:200px;"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="close()" ng-disabled="item.processing">关闭</button>
+</div>
