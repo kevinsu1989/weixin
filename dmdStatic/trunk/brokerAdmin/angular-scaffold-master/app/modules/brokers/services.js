@@ -1,7 +1,7 @@
-brokersModule.factory('brokerService', function ($q,$http,serviceGenerator) {
+brokersModule.factory('brokerService', function($q, $http, serviceGenerator) {
   //var host="http://devinterface.duomeidai.com";
 
- return serviceGenerator().$actions({
+  return serviceGenerator().$actions({
 
     query: '/web/a/brokerlist',
 
@@ -10,16 +10,16 @@ brokersModule.factory('brokerService', function ($q,$http,serviceGenerator) {
     update: '/web/a/updateuser'
 
   }).$methods(['$q', '$http',
-    function ($q, $http) {
+    function($q, $http) {
       return {
-        login: function (params) {
+        login: function(params) {
           return $http({
             url: '/a/login',
-            params:params,
+            params: params,
             method: 'post'
           });
         },
-        logout: function (username, password, remember) {
+        logout: function(username, password, remember) {
           return $q.when({
             code: 200
           });
@@ -29,62 +29,97 @@ brokersModule.factory('brokerService', function ($q,$http,serviceGenerator) {
           //   method: 'post'
           // });
         },
-        queryOne:function(params){
+        queryOne: function(params) {
           return $http({
             url: '/web/a/tuser',
-            params:params
+            params: params
           });
         },
-        updateBroker:function(params){
+        updateBroker: function(params) {
           return $http({
             url: '/web/a/updatebrokerreserve',
-            params:params
+            params: params
           });
         },
-        thirdList:function(params){
+        thirdList: function(params) {
           return $http({
-            url:"/web/a/third/list",
-            params:params
+            url: "/web/a/third/list",
+            params: params
           })
         },
-        thirdDetailList:function(params){
+        thirdDetailList: function(params) {
           return $http({
-            url:"/web/a/third/detail",
-            params:params
+            url: "/web/a/third/detail",
+            params: params
           })
         },
-        getOneThird:function(params){
+        getOneThird: function(params) {
           return $http({
-            url:"/web/a/third/query",
-            params:params
+            url: "/web/a/third/query",
+            params: params
           })
         },
-        addBusiness:function(params){
+        addBusiness: function(params) {
           return $http({
-            url:"/web/a/third/save",
-            params:params,
-            method:'post'
+            url: "/web/a/third/save",
+            params: params,
+            method: 'post'
           })
         },
-        editBusiness:function(params){
+        editBusiness: function(params) {
           return $http({
-            url:"/web/a/third/update",
-            params:params,
-            method:'post'
+            url: "/web/a/third/update",
+            params: params,
+            method: 'post'
           })
         },
-        createQrcode:function(params){
+        createQrcode: function(params) {
           return $http({
-            url:"/web/a/qrcode/genlist",
-            params:params,
-            method:'post'
+            url: "/web/a/qrcode/genlist",
+            params: params,
+            method: 'post'
           })
         },
-        qrcodeList:function(params){
+        qrcodeList: function(params) {
           return $http({
-            url:"/web/a/qrcode/list",
-            params:params,
-            method:'get'
+            url: "/web/a/qrcode/list",
+            params: params,
+            method: 'get'
+          })
+        },
+        changeQrcode: function(params) {
+          return $http({
+            url: "/web/a/qrcode/change",
+            params: params,
+            method: 'post'
+          })
+        },
+        promotionList: function(params) {
+          return $http({
+            url: "/web/a/promotion/list",
+            params: params,
+            method: 'get'
+          })
+        },
+        brokerDetail: function(params) {
+          return $http({
+            url: "/web/a/tuser/broker/detail",
+            params: params,
+            method: 'get'
+          })
+        },
+        userList: function(params,tuserid) {
+          return $http({
+            url: "/web/a/promotion/userlist/"+tuserid,
+            params: params,
+            method: 'get'
+          })
+        },
+        foundrecordList: function(params,brokerId) {
+          return $http({
+            url: "/web/a/promotion/foundrecordlist/"+brokerId,
+            params: params,
+            method: 'get'
           })
         }
       };
@@ -92,15 +127,15 @@ brokersModule.factory('brokerService', function ($q,$http,serviceGenerator) {
   ]);
 });
 
-brokersModule.factory('msgService',['$modal', function ($modal) {
-  return{
-    messageBox:function(msg){
+brokersModule.factory('msgService', ['$modal', function($modal) {
+  return {
+    messageBox: function(msg) {
       $modal.open({
         templateUrl: 'config/templates/message.partial.html',
-        controller: ['$scope',function (scop) {
-          scop.title="消息";
-          scop.message="<div style='color:red;width:100%;text-align:center;'>"+msg+"</div>";
-          scop.confirm=function(){
+        controller: ['$scope', function(scop) {
+          scop.title = "消息";
+          scop.message = "<div style='color:red;width:100%;text-align:center;'>" + msg + "</div>";
+          scop.confirm = function() {
             scop.$close();
           }
         }]
@@ -108,53 +143,53 @@ brokersModule.factory('msgService',['$modal', function ($modal) {
     }
   }
 }]);
- /*
-  var host="";
-  return {
-    //经纪人列表搜索
-    listSearch: function (params) {
-      return $http({
-        url: host+'/web/a/brokerlist',
-        // url: '/brokers/member/list',
-        method: 'get',
-        cache: true,
-        params:params
-      });
-    },
-    //经纪人搜索
-    brokerSearchByPhone: function (params) {
-      return $http({
-        url: host+'/web/a/tuser?callback=JSON_CALLBACK',
-        //url: '/brokers/member/listSearch',
-        method: 'get',
-        cache: true,
-        params:params
-      });
-    },
-    //经纪人新增
-    brokerAdd: function (params) {
-      return $http({
-        url: host+'/web/a/adduser?callback=JSON_CALLBACK',
-        //url: '/brokers/member/listSearch',
-        method: 'get',
-        cache: true,
-        params:params
-      });
-    },
-    //经纪人编辑（离职）
-    brokerEdit: function (params) {
-      return $http({
-        url: host+'/web/a/updateuser?callback=JSON_CALLBACK',
-        //url: '/brokers/member/listSearch',
-        method: 'JSONP',
-        cache: true,
-        params:params
-      });
-    },
-    login: function (username, password, remember) {
-      return $q.when({
-        code: 200
-      });
-    }
-  };
-  */
+/*
+ var host="";
+ return {
+   //经纪人列表搜索
+   listSearch: function (params) {
+     return $http({
+       url: host+'/web/a/brokerlist',
+       // url: '/brokers/member/list',
+       method: 'get',
+       cache: true,
+       params:params
+     });
+   },
+   //经纪人搜索
+   brokerSearchByPhone: function (params) {
+     return $http({
+       url: host+'/web/a/tuser?callback=JSON_CALLBACK',
+       //url: '/brokers/member/listSearch',
+       method: 'get',
+       cache: true,
+       params:params
+     });
+   },
+   //经纪人新增
+   brokerAdd: function (params) {
+     return $http({
+       url: host+'/web/a/adduser?callback=JSON_CALLBACK',
+       //url: '/brokers/member/listSearch',
+       method: 'get',
+       cache: true,
+       params:params
+     });
+   },
+   //经纪人编辑（离职）
+   brokerEdit: function (params) {
+     return $http({
+       url: host+'/web/a/updateuser?callback=JSON_CALLBACK',
+       //url: '/brokers/member/listSearch',
+       method: 'JSONP',
+       cache: true,
+       params:params
+     });
+   },
+   login: function (username, password, remember) {
+     return $q.when({
+       code: 200
+     });
+   }
+ };
+ */

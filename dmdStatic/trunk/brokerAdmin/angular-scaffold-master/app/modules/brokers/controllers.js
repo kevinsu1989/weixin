@@ -1,16 +1,143 @@
 //地推列表页
 brokersModule.controller('offlineController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'msgService',
   function($scope, $state, $modal, growl, service, msgService) {
+    //选择时间
+    $scope.dateOpen = function($event, type) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      if (type === 1) {
+        $scope.opened = true;
+        $scope.opened2 = false;
+      } else if (type === 2) {
+        $scope.opened = false;
+        $scope.opened2 = true;
+      }
+    };
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      startingDay: 1
+    };
+    $scope.maxDate = new Date();
 
+    $scope.clear = function() {
+      $scope.id = "";
+      $scope.name = "";
+      $scope.phone = "";
+      $scope.dts = "";
+      $scope.dte = "";
+    };
 
+    $scope.page = 1;
+    $scope.search = function() {
+      var params = {};
+      params["id"] = $scope.id;
+      params["name"] = $scope.name;
+      params["phone"] = $scope.phone;
+      if ($scope.dts) {
+        params["reg_from"] = new Date($scope.dts.getFullYear() + "/" + ($scope.dts.getMonth() + 1) + "/" + $scope.dts.getDate()) * 1;
+      }
+      if ($scope.dte) {
+        params["reg_end"] = new Date($scope.dte.getFullYear() + "/" + ($scope.dte.getMonth() + 1) + "/" + ($scope.dte.getDate() + 1)) * 1;
+      }
+
+      $scope.processing = true;
+      $scope.loading = true;
+      service.promotionList(params).then(function(res) {
+        $scope.processing = false;
+        $scope.loading = false;
+        $scope.list = res.list;
+        $scope.total = res.total;
+        $scope.size = res.size;
+      });
+    };
+    $scope.search();
+
+    $scope.goDetail = function(id) {
+      $state.go('brokers.offlinedetail', {
+        'id': id
+      })
+    }
   }
 ]);
 
 //地推详情页
-brokersModule.controller('offlineDetailController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'msgService',
-  function($scope, $state, $modal, growl, service, msgService) {
+brokersModule.controller('offlineDetailController', ['$scope', '$state', '$stateParams', '$modal', 'growl', 'brokerService', 'msgService',
+  function($scope, $state, $stateParams, $modal, growl, service, msgService) {
+    $scope.layout = 'list';
 
+    var params = {};
+    params["tUserId"] = $stateParams.id;
+    service.brokerDetail(params).then(function(res) {
+      $scope.userbroker = res.userbroker;
+    });
 
+    $scope.clear = function() {
+      $scope.create_from = "";
+      $scope.create_end = "";
+      $scope.name_from = "";
+      $scope.name_end = "";
+      $scope.id = "";
+      $scope.phone = "";
+      $scope.broker = "";
+      $scope.status = 0;
+    };
+
+    $scope.pageList = 1;
+    $scope.searchList = function() {
+      $scope.layout = 'list';
+      var params = {};
+      params["id"] = $scope.id;
+      params["phone"] = $scope.phone;
+      params["broker"] = $scope.broker;
+      if ($scope.dts) {
+        params["reg_from"] = new Date($scope.dts.getFullYear() + "/" + ($scope.dts.getMonth() + 1) + "/" + $scope.dts.getDate()) * 1;
+      }
+      if ($scope.dte) {
+        params["reg_end"] = new Date($scope.dte.getFullYear() + "/" + ($scope.dte.getMonth() + 1) + "/" + ($scope.dte.getDate() + 1)) * 1;
+      }
+
+      if ($scope.namedts) {
+        params["auth_from"] = new Date($scope.namedts.getFullYear() + "/" + ($scope.namedts.getMonth() + 1) + "/" + $scope.namedts.getDate()) * 1;
+      }
+      if ($scope.namedte) {
+        params["auth_end"] = new Date($scope.namedte.getFullYear() + "/" + ($scope.namedte.getMonth() + 1) + "/" + ($scope.namedte.getDate() + 1)) * 1;
+      }
+      $scope.processing = true;
+      $scope.loading = true;
+      service.userList(params, $stateParams.id).then(function(res) {
+        $scope.processing = false;
+        $scope.loading = false;
+        $scope.list = res.list;
+        $scope.total = res.total;
+        $scope.size = res.size;
+      });
+    };
+    $scope.searchList();
+
+    $scope.pageDetail = 1;
+    $scope.searchDetail = function() {
+      $scope.layout = 'detail';
+      var params = {};
+      params["type"] = $scope.status;
+
+      if ($scope.time_from) {
+        params["time_from"] = new Date($scope.time_from.getFullYear() + "/" + ($scope.time_from.getMonth() + 1) + "/" + $scope.time_from.getDate()) * 1;
+      }
+      if ($scope.time_end) {
+        params["time_end"] = new Date($scope.time_end.getFullYear() + "/" + ($scope.time_end.getMonth() + 1) + "/" + ($scope.time_end.getDate() + 1)) * 1;
+      }
+      $scope.processing = true;
+      $scope.loading = true;
+      console.log($scope.status);
+      console.log(params,$scope.status);
+      service.foundrecordList(params, $scope.userbroker.brokerId).then(function(res) {
+        $scope.processing = false;
+        $scope.loading = false;
+        $scope.list = res.list;
+        $scope.total = res.total;
+        $scope.size = res.size;
+      });
+    };
   }
 ]);
 
@@ -28,9 +155,12 @@ brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'gro
       }, function(rej) {
         $scope.error = true;
       })['finally'](function() {
-
+        $scope.page = 1;
+        $scope.search();
       });
     };
+
+    //选择时间
     $scope.dateOpen = function($event, type) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -49,32 +179,24 @@ brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'gro
     $scope.maxDate = new Date();
 
     $scope.page = 1;
-    $scope.status = 0;
-    $scope.id = "";
-    $scope.status = "";
-    $scope.dts = "";
-    $scope.dte = "";
-    $scope.create_from = "";
-    $scope.create_end = "";
-    $scope.exports_count_from = "";
-    $scope.exports_count_end = "";
+    $scope.selectItem = {};
     $scope.search = function() {
       $scope.allchecked = false;
       var params = {};
+      params["id"] = $scope.id;
       params["page"] = $scope.page;
       params["size"] = 10;
-      params["status"] = $scope.status;     
+      params["status"] = $scope.status;
       if ($scope.dts) {
-        params["use_from"] = new Date($scope.dts.getFullYear() + "/" + ($scope.dts.getMonth() + 1) + "/" + $scope.dts.getDate()) * 1;
+        params["create_from"] = new Date($scope.dts.getFullYear() + "/" + ($scope.dts.getMonth() + 1) + "/" + $scope.dts.getDate()) * 1;
       }
       if ($scope.dte) {
-        params["use_end"] = new Date($scope.dte.getFullYear() + "/" + ($scope.dte.getMonth() + 1) + "/" + ($scope.dte.getDate() + 1)) * 1;
+        params["create_end"] = new Date($scope.dte.getFullYear() + "/" + ($scope.dte.getMonth() + 1) + "/" + ($scope.dte.getDate() + 1)) * 1;
       }
-      params["id"] = $scope.id;
-      params["create_from"] = $scope.create_end;
-      params["create_end"] = $scope.create_end;
-      params["exports_count_from"] = $scope.exports_count_from;
-      params["exports_count_end"] = $scope.exports_count_end;
+      params["use_from"] = "";
+      params["use_end"] = "";
+      params["exports_count_from"] = "";
+      params["exports_count_end"] = "";
 
       $scope.processing = true;
       $scope.loading = true;
@@ -84,21 +206,102 @@ brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'gro
         $scope.list = res.list;
         for (var i = 0; i < $scope.list.length; i++) {
           $scope.list[i].checked = false;
+          $scope.list[i].index = i;
         };
         $scope.total = res.total;
         $scope.size = res.size;
+        $scope.selectItem = $scope.list;
       });
     };
-    $scope.selectItem = {};
-    $scope.checkedAll = function(checked,list) {
+
+    $scope.checkedAll = function(checked, list) {
       angular.forEach(list, function(value, key) {
         value.checked = !checked;
       });
-      $scope.selectItem = list;
     };
-    $scope.exportQrcodes = function() {};
-    $scope.viewQrcode = function(item) {};
-    $scope.startQrcode = function(item) {};
+
+    $scope.viewQrcode = function(item) {
+      $modal.open({
+        templateUrl: 'modules/brokers/templates/tools.qrcode.view.html',
+        controller: ['$scope',
+          function(scope) {
+            scope.entity = item;
+            scope.close = function() {
+              scope.$close();
+            }
+          }
+        ]
+      });
+    };
+    //-1停用、1启用
+    $scope.changeQrcode = function(item) {
+      $modal.open({
+        templateUrl: 'modules/brokers/templates/tools.qrcode.change.html',
+        controller: ['$scope',
+          function(scope) {
+            scope.entity = item;
+            scope.ok = function() {
+              var params = {};
+              params["ids"] = scope.entity.id;
+              if (scope.entity.codeStatus == '-1') {
+                params["status"] = '1';
+              } else {
+                params["status"] = '-1';
+              };
+              scope.$close();
+              service.changeQrcode(params).then(function(res) {
+                $scope.error = false;
+              }, function(rej) {
+                $scope.error = true;
+                $scope.search();
+              })['finally'](function() {});
+            }
+          }
+        ]
+      });
+    };
+    //导出二维码
+    $scope.exportQrcodes = function() {
+      $scope.ids = '';
+      var count = 0;
+      $scope.grounp = '确认导出';
+      for (var i = 0; i < $scope.selectItem.length; i++) {
+        if ($scope.selectItem[i].checked) {
+          if (i == ($scope.selectItem.length - 1)) {
+            $scope.ids += $scope.selectItem[i].id;
+          } else {
+            $scope.ids += $scope.selectItem[i].id + ',';
+          }
+          $scope.grounp += $scope.selectItem[i].id + ' ';
+          count = i + 1;
+        };
+        if (i == ($scope.selectItem.length - 1)) {
+          $scope.grounp += '的二维码';
+        };
+      };
+
+
+      if (count == 0) {
+        msgService.messageBox("请先选择您需要导出的二维码!");
+      } else {
+        $modal.open({
+          templateUrl: 'modules/brokers/templates/tools.qrcode.px.html',
+          controller: ['$scope',
+            function(scope) {
+              scope.title = $scope.grounp;
+              scope.px = '400';
+              scope.ok = function() {
+                var url = '/web/a/qrcode/exports';
+                url += "?ids=" + $scope.ids + "&px=" + scope.px;
+                window.open(url);
+                scope.$close();
+              }
+            }
+          ]
+        });
+      };
+    };
+
     $scope.search();
   }
 ]);
@@ -106,7 +309,6 @@ brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'gro
 //二维码预览页
 brokersModule.controller('qrcodeViewController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'msgService',
   function($scope, $state, $modal, growl, service, msgService) {
-
 
   }
 ]);
@@ -503,14 +705,11 @@ brokersModule.controller('thirdController', ['$scope', '$state', 'growl', 'broke
     });
   };
 
-
-
   $scope.goDetail = function(id) {
     $state.go('brokers.thirdinfo', {
       'id': id
     })
   }
-
 
   $scope.dateOpen = function($event, type) {
     $event.preventDefault();

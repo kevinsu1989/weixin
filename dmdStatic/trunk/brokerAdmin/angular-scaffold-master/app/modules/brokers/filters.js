@@ -46,10 +46,10 @@ brokersModule.filter("codeStatus",function(){
           ret="全部";
           break;
           case 1:
-          ret="已使用";
+          ret="未使用";
           break;
           case 2:
-          ret="未使用";
+          ret="已使用";
           break;
         default:
           ret="全部";
@@ -61,9 +61,27 @@ brokersModule.filter("codeStatus",function(){
 brokersModule.filter("userTime",function(){
   return function (a) {
       if (a == "-1") {
-        return "";
+        return "-";
       }else{
         return "date:'yyyy-MM-dd HH:mm'";
+      };
+  };
+})
+brokersModule.filter("qrcodeStatus",function(){
+  return function (a) {
+      if (a == '-1') {
+        return "启动";
+      }else{
+        return "停用";
+      };
+  };
+})
+brokersModule.filter("qrcodeChange",function(){
+  return function (a) {
+      if (a == '-1') {
+        return "启动";
+      }else{
+        return "停用";
       };
   };
 })
