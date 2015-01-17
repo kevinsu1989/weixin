@@ -71,6 +71,112 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       $scope.userbroker = res.userbroker;
     });
 
+    //移除
+    $scope.delete = function() {
+      var params = {};
+      params["tUserId"] = $scope.userbroker.ID;
+      params["brokerId"] = $scope.userbroker.brokerId;
+      params["brokerUserType"] = 1;
+      $modal.open({
+        templateUrl: 'config/templates/confirm.partial.html',
+        controller: ['$scope',
+          function(scope) {
+            scope.title = "确认删除";
+            scope.message = "确认解除该用户经纪人关系？"
+            scope.confirm = function(argument) {
+              service.delBroker(params).then(function(res) {
+                service.queryOne(params).then(function(res) {
+                  $scope.userInfo = res.userbroker;
+                  if ($scope.detailType == 2) {
+                    service.getLogList(params).then(function(res) {
+                      $scope.list = res.list;
+                      $scope.page = res.page;
+                      $scope.total = res.total;
+                      $scope.size = res.size;
+                    });
+                  }
+                  scope.$close();
+                })
+              }, function(rej) {
+                msgService.messageBox(rej.message);
+              });
+            }
+          }
+        ]
+      });
+    }
+
+    //修改
+    $scope.edit = function(type) {
+      $modal.open({
+        //modules/client/templates/offline.change.html
+        //modules/brokers/templates/offline.change.html
+        templateUrl: 'modules/brokers/templates/offline.change.html',
+        controller: ['$scope',
+          function(scope) {
+            scope.title = "经纪人";
+            scope.search = function() {
+              if ($("#add-phone").val().length != 11) {
+                msgService.messageBox("请输入正确的手机号！");
+                return;
+              }
+              var params = {};
+              params["mobile"] = $("#add-phone").val();
+              scope.processing = true;
+              service.getBroker(params).then(function(res) {
+                scope.processing = false;
+                if (res.broker == "") {
+                  msgService.messageBox("该用户不存在（请先在前端注册并实名认证）");
+                }
+                scope.entity = res.broker;
+              });
+            };
+            scope.confirm = function() {
+              var params = {};
+              if (scope.entity.ID) {
+                params["tUserId"] = $scope.userInfo.ID;
+                params["brokerId"] = scope.entity.ID;
+                params["brokerUserType"] = 1;
+                scope.processing = true;
+                service.updateBroker(params).then(function(res) {
+                  scope.processing = false;
+                  if (typeof(res) == "string") {
+                    msgService.messageBox(res);
+                    scope.entity = {};
+                    $("#add-phone").val("");
+                  } else {
+                    msgService.messageBox("操作成功！");
+                    service.queryOne(params).then(function(res) {
+                      $scope.userInfo = res.userbroker;
+                    })
+                    if ($scope.detailType == 2) {
+                      service.getLogList(params).then(function(res) {
+                        $scope.list = res.list;
+                        $scope.page = res.page;
+                        $scope.total = res.total;
+                        $scope.size = res.size;
+                      });
+                    }
+                    scope.$close();
+                  }
+                });
+              } else {
+                msgService.messageBox("请先查询！");
+              }
+            };
+            if (type == 'edit') {
+              service.queryOne({
+                "mobilePhone": $scope.userInfo.investerPhone
+              }).then(function(res) {
+                scope.processing = false;
+                scope.entity = res.TUser;
+              });
+            }
+          }
+        ]
+      });
+    }
+
     $scope.clear = function() {
       $scope.create_from = "";
       $scope.create_end = "";
@@ -82,6 +188,25 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       $scope.status = 0;
     };
 
+    //选择时间
+    $scope.dateOpen = function($event, type) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      if (type === 1) {
+        $scope.opened = true;
+        $scope.opened2 = false;
+      } else if (type === 2) {
+        $scope.opened = false;
+        $scope.opened2 = true;
+      }
+    };
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      startingDay: 1
+    };
+    $scope.maxDate = new Date();
+
+    //客户列表
     $scope.pageList = 1;
     $scope.searchList = function() {
       $scope.layout = 'list';
@@ -114,6 +239,7 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
     };
     $scope.searchList();
 
+    //对账明细
     $scope.pageDetail = 1;
     $scope.searchDetail = function() {
       $scope.layout = 'detail';
@@ -126,11 +252,15 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       if ($scope.time_end) {
         params["time_end"] = new Date($scope.time_end.getFullYear() + "/" + ($scope.time_end.getMonth() + 1) + "/" + ($scope.time_end.getDate() + 1)) * 1;
       }
+
+      params["type"] = '1001';
+      params["time_from"] = '1001';
+      params["time_end"] = '1001';
+
       $scope.processing = true;
       $scope.loading = true;
-      console.log($scope.status);
-      console.log(params,$scope.status);
-      service.foundrecordList(params, $scope.userbroker.brokerId).then(function(res) {
+      //$scope.userbroker.brokerId
+      service.foundrecordList(params, '12345').then(function(res) {
         $scope.processing = false;
         $scope.loading = false;
         $scope.list = res.list;
@@ -308,9 +438,7 @@ brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'gro
 
 //二维码预览页
 brokersModule.controller('qrcodeViewController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'msgService',
-  function($scope, $state, $modal, growl, service, msgService) {
-
-  }
+  function($scope, $state, $modal, growl, service, msgService) {}
 ]);
 
 
