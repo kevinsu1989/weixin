@@ -108,18 +108,32 @@ brokersModule.factory('brokerService', function($q, $http, serviceGenerator) {
             method: 'get'
           })
         },
-        userList: function(params,tuserid) {
+        userList: function(params, tuserid) {
           return $http({
-            url: "/web/a/promotion/userlist/"+tuserid,
+            url: "/web/a/promotion/userlist/" + tuserid,
             params: params,
             method: 'get'
           })
         },
-        foundrecordList: function(params,brokerId) {
+        foundrecordList: function(params, brokerId) {
           return $http({
-            url: "/web/a/promotion/foundrecordlist/"+brokerId,
+            url: "/web/a/promotion/foundrecordlist/" + brokerId,
             params: params,
             method: 'get'
+          })
+        },
+        delBroker: function(params) {
+          return $http({
+            url: '/web/a/tuser/delbroker',
+            params: params,
+            method: 'post'
+          })
+        },
+        updateBroker: function(params) {
+          return $http({
+            url: '/web/a/tuser/updatebroker',
+            params: params,
+            method: 'post'
           })
         }
       };
