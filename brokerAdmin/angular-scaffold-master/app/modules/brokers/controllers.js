@@ -85,18 +85,12 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
             scope.message = "确认解除该用户经纪人关系？"
             scope.confirm = function(argument) {
               service.delBroker(params).then(function(res) {
-                service.queryOne(params).then(function(res) {
-                  $scope.userInfo = res.userbroker;
-                  if ($scope.detailType == 2) {
-                    service.getLogList(params).then(function(res) {
-                      $scope.list = res.list;
-                      $scope.page = res.page;
-                      $scope.total = res.total;
-                      $scope.size = res.size;
-                    });
-                  }
+                var params = {};
+                params["tUserId"] = $stateParams.id;
+                service.brokerDetail(params).then(function(res) {
+                  $scope.userbroker = res.userbroker;
                   scope.$close();
-                })
+                });
               }, function(rej) {
                 msgService.messageBox(rej.message);
               });
@@ -134,11 +128,11 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
             scope.confirm = function() {
               var params = {};
               if (scope.entity.ID) {
-                params["tUserId"] = $scope.userInfo.ID;
+                params["tUserId"] = $scope.userbroker.ID;
                 params["brokerId"] = scope.entity.ID;
                 params["brokerUserType"] = 1;
                 scope.processing = true;
-                service.updateBroker(params).then(function(res) {
+                service.updateBrokerUser(params).then(function(res) {
                   scope.processing = false;
                   if (typeof(res) == "string") {
                     msgService.messageBox(res);
@@ -146,9 +140,11 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
                     $("#add-phone").val("");
                   } else {
                     msgService.messageBox("操作成功！");
-                    service.queryOne(params).then(function(res) {
-                      $scope.userInfo = res.userbroker;
-                    })
+                    var params = {};
+                    params["tUserId"] = $stateParams.id;
+                    service.brokerDetail(params).then(function(res) {
+                      $scope.userbroker = res.userbroker;
+                    });
                     if ($scope.detailType == 2) {
                       service.getLogList(params).then(function(res) {
                         $scope.list = res.list;
@@ -195,9 +191,23 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       if (type === 1) {
         $scope.opened = true;
         $scope.opened2 = false;
+        $scope.opened3 = false;
+        $scope.opened4 = false;
       } else if (type === 2) {
         $scope.opened = false;
         $scope.opened2 = true;
+        $scope.opened3 = false;
+        $scope.opened4 = false;
+      }else if (type === 3) {
+        $scope.opened = false;
+        $scope.opened2 = false;
+        $scope.opened3 = true;
+        $scope.opened4 = false;
+      }else if (type === 4) {
+        $scope.opened = false;
+        $scope.opened2 = false;
+        $scope.opened3 = false;
+        $scope.opened4 = true;
       }
     };
     $scope.dateOptions = {
@@ -252,10 +262,6 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       if ($scope.time_end) {
         params["time_end"] = new Date($scope.time_end.getFullYear() + "/" + ($scope.time_end.getMonth() + 1) + "/" + ($scope.time_end.getDate() + 1)) * 1;
       }
-
-      params["type"] = '1001';
-      params["time_from"] = '1001';
-      params["time_end"] = '1001';
 
       $scope.processing = true;
       $scope.loading = true;

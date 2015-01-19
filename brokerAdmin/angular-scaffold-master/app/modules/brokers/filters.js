@@ -85,3 +85,12 @@ brokersModule.filter("qrcodeChange",function(){
       };
   };
 })
+brokersModule.filter("investerFilter",function(){
+  return function (a) {
+      if(a==''){
+        return '暂无';
+      }else{
+        return a;
+      }
+  };
+})
