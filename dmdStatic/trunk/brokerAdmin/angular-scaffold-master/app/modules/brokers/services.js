@@ -122,6 +122,13 @@ brokersModule.factory('brokerService', function($q, $http, serviceGenerator) {
             method: 'get'
           })
         },
+        getBroker: function(params) {
+          return $http({
+            url: '/web/a/broker/detail',
+            params: params,
+            method: 'get'
+          })
+        },
         delBroker: function(params) {
           return $http({
             url: '/web/a/tuser/delbroker',
@@ -129,7 +136,7 @@ brokersModule.factory('brokerService', function($q, $http, serviceGenerator) {
             method: 'post'
           })
         },
-        updateBroker: function(params) {
+        updateBrokerUser: function(params) {
           return $http({
             url: '/web/a/tuser/updatebroker',
             params: params,
