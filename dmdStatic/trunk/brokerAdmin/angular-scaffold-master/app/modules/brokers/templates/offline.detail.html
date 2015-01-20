@@ -29,10 +29,11 @@
               {{userbroker.brokerName|investerFilter}}
             </li>
             <li>
-              <button ng-if="userbroker.brokerName" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="edit()"> 
+              <button ng-if="userbroker.ID" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="edit()"> <i class="fa fa-search"></i>
                 变更
               </button>
-              <button ng-if="userbroker.brokerName" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="delete()"> 
+              <button ng-if="userbroker.brokerName" type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="delete()">
+                <i class="fa fa-search"></i>
                 删除
               </button>
             </li>

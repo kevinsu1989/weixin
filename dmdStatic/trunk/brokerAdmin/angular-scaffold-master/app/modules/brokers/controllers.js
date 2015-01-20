@@ -160,14 +160,6 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
                 msgService.messageBox("请先查询！");
               }
             };
-            if (type == 'edit') {
-              service.queryOne({
-                "mobilePhone": $scope.userInfo.investerPhone
-              }).then(function(res) {
-                scope.processing = false;
-                scope.entity = res.TUser;
-              });
-            }
           }
         ]
       });
