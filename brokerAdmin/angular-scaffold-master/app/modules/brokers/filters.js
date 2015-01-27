@@ -76,15 +76,6 @@ brokersModule.filter("qrcodeStatus",function(){
       };
   };
 })
-brokersModule.filter("qrcodeChange",function(){
-  return function (a) {
-      if (a == '-1') {
-        return "启动";
-      }else{
-        return "停用";
-      };
-  };
-})
 brokersModule.filter("investerFilter",function(){
   return function (a) {
       if(a==''){

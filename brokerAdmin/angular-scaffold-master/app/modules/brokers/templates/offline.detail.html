@@ -101,12 +101,12 @@
                 <label class="text-normal text-nowrap">时间：</label>
                 <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="time_from" is-open="opened" max-date='{{maxDate}}' close-text="Close" ng-click="dateOpen($event,1)" />
                 <label class="control-label text-normal text-nowrap" style="width:8px;">-</label>
-                <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="time_from" is-open="opened2" max-date='{{maxDate}}' close-text="Close" ng-click="dateOpen($event,2)" />
+                <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="time_end" is-open="opened2" max-date='{{maxDate}}' close-text="Close" ng-click="dateOpen($event,2)" />
               </li>
               <li>
                 <label class="control-label text-normal text-nowrap">状态：</label>
                 <select class="form-control" ng-model="status">
-                  <option value="0" ng-selected="true">全部</option>
+                  <option value="" ng-selected="true">全部</option>
                   <option value="1001">提现</option>
                   <option value="1002">投资</option>
                   <option value="1003">入金</option>
@@ -117,7 +117,7 @@
                   <i class="fa fa-search"></i>
                   清空
                 </button>
-                <button type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="search()">
+                <button type="submit" class="btn btn-primary ml10" ng-disabled="form.$invalid || processing" ng-click="searchDetail()">
                   <i class="fa fa-search"></i>
                   搜索
                 </button>
@@ -138,16 +138,15 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>序号</th>
-          <th>ID</th>
-          <th>姓名</th>
-          <th>昵称</th>
-          <th>手机号</th>
+          <th>客户姓名</th>
+          <th>客户昵称</th>
+          <th>客户ID</th>
+          <th>客户手机号</th>
           <th>注册时间</th>
-          <th>经济人(ID)</th>
-          <th>经济人姓名</th>
-          <th>经济人手机号</th>
-          <th class="text-right">操作</th>
+          <th>实名时间</th>
+          <th>经纪人姓名</th>
+          <th>手机号</th>
+          <th>ID</th>
         </tr>
       </thead>
       <tbody>
@@ -164,23 +163,20 @@
           </td>
         </tr>
         <tr ng-repeat="item in list"  ng-if="!loading">
-          <td>{{ $index+1 }}</td>
-          <td>{{ item.id }}</td>
-          <td>{{ item.realName }}</td>
+          <td>{{ item.realName  }}</td>
           <td>{{ item.username }}</td>
+          <td>{{ item.id }}</td>
           <td>{{ item.mobilePhone }}</td>
           <td>{{ item.createTime|date:'yyyy-MM-dd HH:mm' }}</td>
-          <td>{{ item["broker"].id}}</td>
+          <td>{{ item.creditLimit|date:'yyyy-MM-dd HH:mm' }}</td>
           <td>{{ item["broker"].realName}}</td>
-          <td>{{ item["broker"].mobilePhone}}</td>
-          <td class="text-right">
-            <a href="" ng-click="goDetail(item.id)">查看</a>
-          </td>
+          <td>{{ item["broker"].mobilePhone}}</td>          
+          <td>{{ item["broker"].id}}</td>
         </tr>
       </tbody>
     </table>
     <div class="text-right" ng-show="total">
-      <ul class="pagination-sm" pagination ng-model="pageList" items-per-page="size" total-items="total" ng-change="query()"></ul>
+      <ul class="pagination-sm" pagination ng-model="pageList" items-per-page="size" total-items="total" ng-change="searchList()"></ul>
     </div>
   </div>
 
@@ -188,13 +184,10 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>序号</th>
-          <th>ID</th>
-          <th>姓名</th>
-          <th>昵称</th>
-          <th>手机号</th>
-          <th>注册时间</th>
-          <th class="text-right">操作</th>
+          <th>时间</th>
+          <th>类型</th>
+          <th>发生金额</th>
+          <th>剩余金额</th>
         </tr>
       </thead>
       <tbody>
@@ -211,23 +204,15 @@
           </td>
         </tr>
         <tr ng-repeat="item in list"  ng-if="!loading">
-          <td>{{ $index+1 }}</td>
-          <td>{{ item.id }}</td>
-          <td>{{ item.realName }}</td>
-          <td>{{ item.username }}</td>
-          <td>{{ item.mobilePhone }}</td>
-          <td>{{ item.createTime|date:'yyyy-MM-dd HH:mm' }}</td>
-          <td>{{ item["broker"].id}}</td>
-          <td>{{ item["broker"].realName}}</td>
-          <td>{{ item["broker"].mobilePhone}}</td>
-          <td class="text-right">
-            <a href="" ng-click="goDetail(item.id)">查看</a>
-          </td>
+          <td>{{ item.createAt|date:'yyyy-MM-dd HH:mm' }}</td>
+          <td>{{ item.remarks }}</td>
+          <td>{{ item.handleSum }}</td>
+          <td>{{ item.usableSum }}</td>
         </tr>
       </tbody>
     </table>
     <div class="text-right" ng-show="total">
-      <ul class="pagination-sm" pagination ng-model="pageList" items-per-page="size" total-items="total" ng-change="query()"></ul>
+      <ul class="pagination-sm" pagination ng-model="pageList" items-per-page="size" total-items="total" ng-change="searchDetail()"></ul>
     </div>
   </div>
 

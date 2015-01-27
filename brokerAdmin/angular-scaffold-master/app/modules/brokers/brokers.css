@@ -74,3 +74,7 @@ ul.se-list li{
 .bar a.active{
 	color:#000000;
 }
+
+a.red{
+	color:#ff0000;
+}

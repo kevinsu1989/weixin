@@ -105,7 +105,7 @@
         <a href="" ng-click="viewQrcode(item)">查看</a>
         <span class="loading-sm" ng-if="item.updating"></span>
         <i class="text-divider">|</i>
-        <a href="" ng-click="changeQrcode(item)">{{ item.codeStatus|qrcodeStatus}}</a>
+        <a href="" ng-class="{red: item.codeStatus != '-1'}" ng-click="changeQrcode(item)">{{ item.codeStatus|qrcodeStatus}}</a>
       </td>
     </tr>
   </tbody>
