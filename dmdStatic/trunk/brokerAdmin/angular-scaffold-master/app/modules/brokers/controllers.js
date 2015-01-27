@@ -173,7 +173,9 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       $scope.id = "";
       $scope.phone = "";
       $scope.broker = "";
-      $scope.status = 0;
+      $scope.status = "";
+      $scope.time_from = "";
+      $scope.time_end = "";
     };
 
     //选择时间
@@ -246,19 +248,19 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
     $scope.searchDetail = function() {
       $scope.layout = 'detail';
       var params = {};
-      params["type"] = $scope.status;
+      params["operateType"] = $scope.status;
 
       if ($scope.time_from) {
-        params["time_from"] = new Date($scope.time_from.getFullYear() + "/" + ($scope.time_from.getMonth() + 1) + "/" + $scope.time_from.getDate()) * 1;
+        params["createAtBegin"] = new Date($scope.time_from.getFullYear() + "/" + ($scope.time_from.getMonth() + 1) + "/" + $scope.time_from.getDate()) * 1;
       }
       if ($scope.time_end) {
-        params["time_end"] = new Date($scope.time_end.getFullYear() + "/" + ($scope.time_end.getMonth() + 1) + "/" + ($scope.time_end.getDate() + 1)) * 1;
+        params["createAtEnd"] = new Date($scope.time_end.getFullYear() + "/" + ($scope.time_end.getMonth() + 1) + "/" + ($scope.time_end.getDate() + 1)) * 1;
       }
 
       $scope.processing = true;
       $scope.loading = true;
       //$scope.userbroker.brokerId
-      service.foundrecordList(params, '12345').then(function(res) {
+      service.foundrecordList(params, $scope.userbroker.brokerId).then(function(res) {
         $scope.processing = false;
         $scope.loading = false;
         $scope.list = res.list;
@@ -273,7 +275,15 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
 brokersModule.controller('qrcodeController', ['$scope', '$state', '$modal', 'growl', 'brokerService', 'msgService',
   function($scope, $state, $modal, growl, service, msgService) {
     $scope.qrcodeValue = 1;
+    //生成二维码
     $scope.createQrcode = function() {
+      if ($scope.qrcodeValue >= 0 && $scope.qrcodeValue <= 10) {
+        console.log($scope.qrcodeValue);
+      }else{
+        msgService.messageBox("请输入1-10的数字!");
+        console.log('"请输入的数字!"');
+        return;
+      };
       $scope.processing = true;
       $scope.error = false;
       var params = {};
