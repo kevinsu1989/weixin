@@ -233,6 +233,10 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       }
       $scope.processing = true;
       $scope.loading = true;
+
+      params["page"] = $scope.pageList;
+      params["size"] = 10;
+
       service.userList(params, $stateParams.id).then(function(res) {
         $scope.processing = false;
         $scope.loading = false;
@@ -260,6 +264,9 @@ brokersModule.controller('offlineDetailController', ['$scope', '$state', '$state
       $scope.processing = true;
       $scope.loading = true;
       //$scope.userbroker.brokerId
+      params["page"] = $scope.pageDetail;
+      params["size"] = 10;
+
       service.foundrecordList(params, $scope.userbroker.brokerId).then(function(res) {
         $scope.processing = false;
         $scope.loading = false;
