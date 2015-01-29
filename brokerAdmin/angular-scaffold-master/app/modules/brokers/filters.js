@@ -58,15 +58,6 @@ brokersModule.filter("codeStatus",function(){
         return ret;
   };
 })
-brokersModule.filter("userTime",function(){
-  return function (a) {
-      if (a == "-1") {
-        return "-";
-      }else{
-        return "date:'yyyy-MM-dd HH:mm'";
-      };
-  };
-})
 brokersModule.filter("qrcodeStatus",function(){
   return function (a) {
       if (a == '-1') {
